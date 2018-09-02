@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=
+comment0.target=PacMan()
+comment1.params=d
+comment1.target=void\ changeDirection(int)
+comment2.params=
+comment2.target=boolean\ canMove()
+comment3.params=
+comment3.target=void\ move()
+comment4.params=
+comment4.target=boolean\ foundFood()
+comment5.params=
+comment5.target=void\ eatFood()
+comment6.params=
+comment6.target=void\ act()
+numComments=7

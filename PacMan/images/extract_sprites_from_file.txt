@@ -1,0 +1,39 @@
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+
+public class Testando{
+	public static void main (String [] args) {
+		try {
+			BufferedImage img = ImageIO.read(new File("src/pac_man.png"));
+
+			for(int i = 0; i < 8; i++) {		
+				for(int j = 0; j < 14; j++) {String name = "sprite" + Integer.toString(i+1) + "x" + Integer.toString(j+1)+".png";
+				BufferedImage sprite = img.getSubimage(456+16*j, 16*i, 16, 16);
+				for(int x = 0; x < 16; x++) {
+					for(int y = 0; y < 16; y++) {
+						int pixel = sprite.getRGB(x,y);
+						int a = (pixel>>24) & 0xFF;
+						int r = (pixel>>16) & 0xFF;
+						int g = (pixel>>8) & 0xFF;
+						int b = pixel & 0xFF;
+						if(r == 0 & g == 0 & b == 0) {
+							a = 0;
+							pixel = (a<<24)|(r<<16)|(g<<8)|b;
+							sprite.setRGB(x, y, pixel);
+						}
+					}
+				}
+				ImageIO.write(sprite, "png", new File("src/sprites/"+name));
+				}
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}	
+}
