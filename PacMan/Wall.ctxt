@@ -2,6 +2,4 @@
 comment0.params=pos
 comment0.target=Wall(int)
 comment0.text=\r\n\ \ \ \ 0\ ->\ esquina\ superior\ esquerda\r\n\ \ \ \ 1\ ->\ parede\ superior\r\n\ \ \ \ 2\ ->\ esquina\ superior\ direita\r\n\ \ \ \ 3\ ->\ parede\ esquerda\r\n\ \ \ \ 4\ ->\ parede\ direita\r\n\ \ \ \ 5\ ->\ esquina\ inferior\ esquerda\r\n\ \ \ \ 6\ ->\ parede\ inferior\r\n\ \ \ \ 7\ ->\ esquina\ inferior\ direita\r\n
-comment1.params=
-comment1.target=void\ act()
-numComments=2
+numComments=1

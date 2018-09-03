@@ -9,18 +9,22 @@ Domínio do problema: Criar um jogo em que um objeto controlável pelo usuário 
 
 Classes:
 PacManWorld extends World: Representa o cenário em que os objetos irão interagir;
-PacMan extends Actor: Movimenta-se com os comandos do usuário, consome as pastilhas pelo cenário e ocasionalmente os fantasmas;
-Fantasma extends Actor: Movimenta-se pelo cenário, perseguindo o PacMan;
+Personagem extends Actor: Cria os movimentos básicos e a animação básica
+PacMan extends Personagem: Movimenta-se com os comandos do usuário, consome as pastilhas pelo cenário e ocasionalmente os fantasmas;
+Fantasma extends Personagem: Movimenta-se pelo cenário, perseguindo o PacMan;
 Pastilha extends Actor: Permanece imóvel no cenário, em caso de colisão com o PacMan é removido do PacManWorld e acrescenta pontos ao jogador.
 PastilhaEspecial extends Pastilha: Permanece imóvel no cenário, em caso de colisão com o PacMan é removido do PacManWorld, acrescenta pontos ao jogador e torna temporariamente os fantasmas em consumíveis pelo PacMan.
 Wall extends Actor: representa as paredes do labirinto, impedindo a passagem do PacMan e dos fantasmas.
 
 Recursos/Técnicas: Criação de classes e objetos; interação entre os objetos e o mundo, e entre si; manipulação de objetos através do teclado; utilização de recursos musicais.
+
 Ferramentas: Greenfoot.
+
 Cronograma:
 01/09 ~ 17/09 : Animações e implementação de Classes
 17/09 ~ 24/09 : Som
 24/09 ~ 01/10 : Implementação da mecânica do Jogo
 01/10 ~ 08/10 : Entrega do protótipo para avaliação
 08/10 ~ 15/10 : Correção de bugs, melhorias e entrega final
+
 

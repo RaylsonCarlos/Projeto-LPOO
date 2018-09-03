@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=direction
+comment0.target=void\ changeDirection(int)
+comment1.params=
+comment1.target=boolean\ changeSprite()
+comment2.params=
+comment2.target=boolean\ canMove()
+comment3.params=
+comment3.target=void\ move()
+comment4.params=
+comment4.target=void\ act()
+numComments=5
