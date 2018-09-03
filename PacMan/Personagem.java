@@ -53,7 +53,7 @@ public class Personagem extends Actor
             case SOUTH:
             y = y+2;
             if(myWorld.getObjectsAt(x+1,y,Wall.class).size() > 0){return false;}
-            if(myWorld.getObjectsAt(x+1,y,Wall.class).size() > 0){return false;}
+            if(myWorld.getObjectsAt(x-1,y,Wall.class).size() > 0){return false;}
             break;
         }        
         if(x < 0 || y < 0 || x > myWorld.getWidth() || y > myWorld.getHeight()){

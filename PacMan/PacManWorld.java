@@ -55,14 +55,14 @@ public class PacManWorld extends World
        addObject(new Fantasma(1),2,2);
        addObject(new Fantasma(2),2,2);
        addObject(new Fantasma(3),2,2);
-       addObject(new Wall(0),80,51);
-       for(int i = 81; i < 120; i++){ addObject(new Wall(6),i,50);}
-       addObject(new Wall(2),120,51);
-       for(int i = 52; i < 69; i++){addObject(new Wall(4),120,i);}
-       addObject(new Wall(5),80,69);
-       for(int i = 81; i < 120; i++){addObject(new Wall(1),i,70);}
-       addObject(new Wall(7),120,69);
-       for(int i = 52; i < 69; i++){addObject(new Wall(3),80,i);}
+       addObject(new Wall(0),80,50);
+       addObject(new Wall(2),120,50);
+       addObject(new Wall(5),80,70);
+       addObject(new Wall(7),120,70);
+       for(int i = 81; i < 120; i++){ addObject(new Wall(6),i,50);addObject(new Wall(1),i,70);}
+       for(int i = 51; i < 70; i++){addObject(new Wall(4),120,i);addObject(new Wall(3),80,i);}
+       //for(int i = 81; i < 120; i++){}
+      // for(int i = 51; i < 70; i++){}
        addObject(new Fantasma(0),82,52);
        addObject(new Fantasma(1),82,52);
        addObject(new Fantasma(2),82,52);
