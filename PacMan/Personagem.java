@@ -23,7 +23,7 @@ public class Personagem extends Actor
     }
     
     public boolean changeSprite(){        
-        if(tick == 0){
+        if(tick <= 0){
             return true;
         } else {
             return false;
@@ -34,37 +34,56 @@ public class Personagem extends Actor
         World myWorld = getWorld();
         int x = getX();
         int y = getY();
+        /*To which cell?*/
         switch(direction){
             case EAST:
-            x = x+2;
-            if(myWorld.getObjectsAt(x,y+1,Wall.class).size() > 0){return false;}
-            if(myWorld.getObjectsAt(x,y-1,Wall.class).size() > 0){return false;}
+            x = x+2;            
             break;
             case WEST:
-            x = x-2;
-            if(myWorld.getObjectsAt(x,y+1,Wall.class).size() > 0){return false;}
-            if(myWorld.getObjectsAt(x,y-1,Wall.class).size() > 0){return false;}
+            x = x-3;           
             break;
             case NORTH:
-            y = y-2;
-            if(myWorld.getObjectsAt(x+1,y,Wall.class).size() > 0){return false;}
-            if(myWorld.getObjectsAt(x-1,y,Wall.class).size() > 0){return false;}
+            y = y-3;            
             break;
             case SOUTH:
-            y = y+2;
-            if(myWorld.getObjectsAt(x+1,y,Wall.class).size() > 0){return false;}
-            if(myWorld.getObjectsAt(x-1,y,Wall.class).size() > 0){return false;}
+            y = y+2;            
             break;
         }        
-        if(x < 0 || y < 0 || x > myWorld.getWidth() || y > myWorld.getHeight()){
-            return false;
-        }
         
-        if(myWorld.getObjectsAt(x,y,Wall.class).size() > 0){
-            return false;
-        } else {
-            return true;
-        }
+        boolean outsideOfWorld = x < 0 || y < 0 || x > myWorld.getWidth() || y > myWorld.getHeight();
+        if(outsideOfWorld){
+            
+            return false;}
+        
+        /*checks if there is a wall there*/
+        
+        switch(direction){
+            case EAST:
+            if(myWorld.getObjectsAt(x,y+1,null).size() > 0){ return false;}
+            if(myWorld.getObjectsAt(x,y,null).size() > 0){ return false;}
+            if(myWorld.getObjectsAt(x,y-1,null).size() > 0){return false;}
+            if(myWorld.getObjectsAt(x,y-2,null).size() > 0){return false;}
+            break;
+            case WEST:
+            if(myWorld.getObjectsAt(x,y+1,null).size() > 0){return false;}
+            if(myWorld.getObjectsAt(x,y,null).size() > 0){return false;}
+            if(myWorld.getObjectsAt(x,y-1,null).size() > 0){ return false;}
+            if(myWorld.getObjectsAt(x,y-2,null).size() > 0){return false;}
+            break;
+            case NORTH:            
+            if(myWorld.getObjectsAt(x-2,y,null).size() > 0){return false;}
+            if(myWorld.getObjectsAt(x-1,y,null).size() > 0){ return false;}
+            if(myWorld.getObjectsAt(x,y,null).size() > 0){return false;}
+            if(myWorld.getObjectsAt(x+1,y,null).size() > 0){return false;}
+            break;
+            case SOUTH:
+            if(myWorld.getObjectsAt(x+1,y,null).size() > 0){return false;}
+            if(myWorld.getObjectsAt(x,y,null).size() > 0){return false;}
+            if(myWorld.getObjectsAt(x-1,y,null).size() > 0){ return false;}
+            if(myWorld.getObjectsAt(x-2,y,null).size() > 0){return false;}
+            break;
+        }       
+        return true;        
     }
     
     public void move(){

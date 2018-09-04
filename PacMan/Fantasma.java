@@ -54,12 +54,26 @@ public class Fantasma extends Personagem
     public void act() 
     {
         super.act();
+        int X = Math.abs(getX()-100);
+        int Y = Math.abs(getY()-60);
+        int rand = Greenfoot.getRandomNumber(600);
+        
+        //System.out.println(x*y);
+        //System.out.println(rand);
+        
+        if(!canMove()){
+            int x = getX();
+            int y = getY();
+           if(x<120 && x>80 && y >50 && y<70){direction = Greenfoot.getRandomNumber(4);}
+           if(x<75 && y < 45){if(X*Y/20 < rand){direction = 2;}else {direction = 0;}}
+           if(x>125 && y > 73){if(X*Y/20 < rand){direction = 3;}else {direction = 1;}}
+           if(x<75&& y > 73){if(X*Y/20 < rand){direction = 1;}else {direction = 2;}}
+           if(x>125 && y < 45){if(X*Y/20 < rand){direction = 0;}else {direction = 3;}}
+        }
         if(changeSprite()){
             setImage(sprites[color][direction][turn%2]);
             turn++;
         }
-        if(!canMove()){
-            direction = Greenfoot.getRandomNumber(4);
-        }
+        
     }    
 }
