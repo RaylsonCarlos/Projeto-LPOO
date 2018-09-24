@@ -2,5 +2,15 @@
 comment0.params=color
 comment0.target=Fantasma(int)
 comment1.params=
-comment1.target=void\ act()
-numComments=2
+comment1.target=void\ setSprite()
+comment2.params=direction
+comment2.target=int\ oppositeDirection(int)
+comment3.params=
+comment3.target=boolean\ preso()
+comment4.params=
+comment4.target=void\ rotaPreso()
+comment5.params=
+comment5.target=void\ rotaNormal()
+comment6.params=
+comment6.target=void\ act()
+numComments=7

@@ -1,20 +1,22 @@
 import greenfoot.*;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Just a Fantasma class that will haunt the PackMan
  * 
- * @author Raylson, Carlos, Weydson 
- * @version 1.0
+ * @author Raylson, Carlos, Weydson
+ * @version 2.0
  */
 public class Fantasma extends Personagem
 {
-    private final static int RED = 0;
-    private final static int PINK = 1;
-    private final static int BLUE = 2;
-    private final static int BROWN = 3;
+    public final static int RED = 0;
+    public final static int PINK = 1;
+    public final static int BLUE = 2;
+    public final static int BROWN = 3;
     
     private int color;
-    private int turn = 0;
+    private int offset = 0;
     
     private final static GreenfootImage [][] spritesRed = new GreenfootImage[][]{
                                                                                  {new GreenfootImage("ghost_red_east_0.png"),new GreenfootImage("ghost_red_east_1.png")},
@@ -43,37 +45,107 @@ public class Fantasma extends Personagem
     private final static GreenfootImage[][][] sprites = new GreenfootImage[][][]{spritesRed,spritesPink,spritesBlue,spritesBrown};
     
     public Fantasma(int color){
-        if(color < 0 || color > 3){
-            color = 0;
+        super(3);
+        if(color != RED && color != PINK && color != BLUE && color != BROWN ){
+            this.color = RED;
+        } else {
+            this.color = color;
         }
-        this.color = color;
-        direction = 0;
-        setImage(sprites[color][direction][0]);
+        setSprite();
     }
     
-    public void act() 
+    private void setSprite(){
+        switch(getDirection()){
+            case Personagem.NORTH:
+                setImage(sprites[color][2][offset%2]);
+            break;
+            case Personagem.SOUTH:
+                setImage(sprites[color][3][offset%2]);
+            break;
+            case Personagem.EAST:
+                setImage(sprites[color][0][offset%2]);
+            break;
+            case Personagem.WEST:
+                setImage(sprites[color][1][offset%2]);
+            break;
+        }
+    }
+    
+    private int oppositeDirection(int direction){
+        int oppositeDirection = Personagem.NORTH;
+        switch(direction){
+            case Personagem.NORTH:
+            oppositeDirection = Personagem.SOUTH;
+            break;
+            case Personagem.SOUTH:
+            oppositeDirection = Personagem.NORTH;
+            break;
+            case Personagem.EAST:
+            oppositeDirection = Personagem.WEST;
+            break;
+            case Personagem.WEST:
+            oppositeDirection = Personagem.EAST;
+            break;
+        }
+        return oppositeDirection;
+    }
+    
+    private boolean preso(){
+        int x = getX();
+        int y = getY();        
+        if(x > 22  && x < 34 && y > 26 && y < 32){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private void rotaPreso(){
+        if(!canMoveNorth()){
+            changeDirection(Personagem.SOUTH);
+        }
+        if(!canMoveSouth()){
+            changeDirection(Personagem.NORTH);
+        }
+    }
+    
+    private void rotaNormal(){
+        List<Integer> rotas = new ArrayList<Integer>();
+        int direction = getDirection();
+        int oppositeDirection = oppositeDirection(direction);
+        
+        if(canMoveNorth()){
+            rotas.add(Personagem.NORTH);
+        }
+        if(canMoveSouth()){
+            rotas.add(Personagem.SOUTH);
+        }
+        if(canMoveEast()){
+            rotas.add(Personagem.EAST);
+        }
+        if(canMoveWest()){
+            rotas.add(Personagem.WEST);
+        }
+        if(rotas.size() != 0){
+            if(rotas.size() >= 2){
+                rotas.remove(Integer.valueOf(oppositeDirection));
+            }            
+            int rand = Greenfoot.getRandomNumber(rotas.size());
+            changeDirection(rotas.get(rand));
+        }
+    }
+    
+    public void act()
     {
+        if(preso()){
+            rotaPreso();
+        } else {
+            rotaNormal();
+        }
+        if(timeToChangeSprite()){
+            setSprite();
+            offset++;
+        }
         super.act();
-        int X = Math.abs(getX()-100);
-        int Y = Math.abs(getY()-60);
-        int rand = Greenfoot.getRandomNumber(600);
-        
-        //System.out.println(x*y);
-        //System.out.println(rand);
-        
-        if(!canMove()){
-            int x = getX();
-            int y = getY();
-           if(x<120 && x>80 && y >50 && y<70){direction = Greenfoot.getRandomNumber(4);}
-           if(x<75 && y < 45){if(X*Y/20 < rand){direction = 2;}else {direction = 0;}}
-           if(x>125 && y > 73){if(X*Y/20 < rand){direction = 3;}else {direction = 1;}}
-           if(x<75&& y > 73){if(X*Y/20 < rand){direction = 1;}else {direction = 2;}}
-           if(x>125 && y < 45){if(X*Y/20 < rand){direction = 0;}else {direction = 3;}}
-        }
-        if(changeSprite()){
-            setImage(sprites[color][direction][turn%2]);
-            turn++;
-        }
-        
     }    
 }

@@ -1,94 +1,169 @@
 import greenfoot.*;
 
 /**
- * Personagem class provide the basic motion and animation of the PacMan's characters
+ * A classe Personagem providencia os movimentos e animações básicos de personagens de 16x16 pixels.
  * 
- * @author Raylson, Carlos, Weydson 
- * @version 1.0
+ * @author Raylson, Carlos, Weydson
+ * @version 1.1
  */
 public class Personagem extends Actor
 {
-    private static final int EAST = 0;
-    private static final int WEST = 1;
-    private static final int NORTH = 2;
-    private static final int SOUTH = 3;
+    /**
+     * Direção norte.
+     */
+    public static final int NORTH = 0;
+    /**
+     * Direção sul.
+     */
+    public static final int SOUTH = 1;
+    /**
+     * Direção leste.
+     */
+    public static final int EAST = 2;
+    /**
+     * Direção oeste.
+     */
+    public static final int WEST = 3;
     
-    protected int direction;
-    /*Vai contar os turnos do jogo para a animação*/
+    public int speed = 3;
+    /**
+     * Armazena a direção que o personagem está encarando.
+     */
+    private int direction;
+    private int turnos;
+    
+    
+    
+    /**
+     * Conta os turnos do jogo para a mudança de sprites.
+     */
     private int tick = 0;
+    /**
+     * Quantidade de turnos até o próximo sprite.
+     */
+    private int howManyTurns;
     
-    public void changeDirection(int direction){
-        this.direction = direction;
-        tick = -1;
+    
+
+    /** Cria um personagem que muda de sprite em howManyTurns turnos e com a direção norte
+     * @param howManyTurns A quantidade de turnos até a próximo sprite
+     */
+    public Personagem(int howManyTurns){
+        turnos = 0;
+        this.direction = NORTH;
+        if(howManyTurns < 0){
+            this.howManyTurns = 0;
+        } else {
+            this.howManyTurns = howManyTurns;
+        }
     }
     
-    public boolean changeSprite(){        
-        if(tick <= 0){
+    public void setSpeed(int speed){
+        if(speed > 3 || speed < 0){
+            speed = 3;
+        } else {
+            this.speed = speed;
+        }
+    }
+    
+    public int getSpeed(){
+        return this.speed;
+    }
+
+    /**
+     * Muda a direção que o personagem está encarando
+     */
+    public void changeDirection(int direction){
+        this.direction = direction;
+        tick = 0;
+    }
+
+    /**
+     * Informa a direção que o personagem está encarando
+     * @return NORTH, SOUTH, EAST OU WEST.
+     */
+    public int getDirection(){
+        return direction;
+    }
+
+    /** 
+     * Verifica se está na hora de mudar o sprite
+     * @return true se está na hora de mudar de sprite, false caso contrário.
+     */
+    public boolean timeToChangeSprite(){
+        if(tick == 0){
             return true;
         } else {
             return false;
         }
     }
-    
-    public boolean canMove(){
+
+    public boolean canMoveNorth(){
         World myWorld = getWorld();
         int x = getX();
+        //Verificando duas células acima
+        int y = getY() - 2;        
+        if(myWorld.getObjectsAt(x-1,y,Wall.class).size() > 0){ return false;}
+        if(myWorld.getObjectsAt(x,y,Wall.class).size() > 0){return false;}
+        if(myWorld.getObjectsAt(x+1,y,Wall.class).size() > 0){return false;}
+        return true;
+    }
+
+    public boolean canMoveSouth(){
+        World myWorld = getWorld();
+        int x = getX();
+        //Verificando duas células abaixo.
+        int y = getY() + 2;        
+        if(myWorld.getObjectsAt(x+1,y,Wall.class).size() > 0){return false;}
+        if(myWorld.getObjectsAt(x,y,Wall.class).size() > 0){return false;}
+        if(myWorld.getObjectsAt(x-1,y,Wall.class).size() > 0){ return false;}
+        return true;
+    }
+
+    public boolean canMoveEast(){
+        World myWorld = getWorld();
+        //Verificando duas células à direito.
+        int x = getX() + 2;
         int y = getY();
-        /*To which cell?*/
-        switch(direction){
-            case EAST:
-            x = x+2;            
-            break;
-            case WEST:
-            x = x-3;           
-            break;
-            case NORTH:
-            y = y-3;            
-            break;
-            case SOUTH:
-            y = y+2;            
-            break;
-        }        
-        
-        boolean outsideOfWorld = x < 0 || y < 0 || x > myWorld.getWidth() || y > myWorld.getHeight();
-        if(outsideOfWorld){
-            
-            return false;}
-        
-        /*checks if there is a wall there*/
-        
-        switch(direction){
-            case EAST:
-            if(myWorld.getObjectsAt(x,y+1,null).size() > 0){ return false;}
-            if(myWorld.getObjectsAt(x,y,null).size() > 0){ return false;}
-            if(myWorld.getObjectsAt(x,y-1,null).size() > 0){return false;}
-            if(myWorld.getObjectsAt(x,y-2,null).size() > 0){return false;}
-            break;
-            case WEST:
-            if(myWorld.getObjectsAt(x,y+1,null).size() > 0){return false;}
-            if(myWorld.getObjectsAt(x,y,null).size() > 0){return false;}
-            if(myWorld.getObjectsAt(x,y-1,null).size() > 0){ return false;}
-            if(myWorld.getObjectsAt(x,y-2,null).size() > 0){return false;}
-            break;
-            case NORTH:            
-            if(myWorld.getObjectsAt(x-2,y,null).size() > 0){return false;}
-            if(myWorld.getObjectsAt(x-1,y,null).size() > 0){ return false;}
-            if(myWorld.getObjectsAt(x,y,null).size() > 0){return false;}
-            if(myWorld.getObjectsAt(x+1,y,null).size() > 0){return false;}
-            break;
-            case SOUTH:
-            if(myWorld.getObjectsAt(x+1,y,null).size() > 0){return false;}
-            if(myWorld.getObjectsAt(x,y,null).size() > 0){return false;}
-            if(myWorld.getObjectsAt(x-1,y,null).size() > 0){ return false;}
-            if(myWorld.getObjectsAt(x-2,y,null).size() > 0){return false;}
-            break;
-        }       
-        return true;        
+        if(myWorld.getObjectsAt(x,y+1,Wall.class).size() > 0){ return false;}
+        if(myWorld.getObjectsAt(x,y,Wall.class).size() > 0){ return false;}
+        if(myWorld.getObjectsAt(x,y-1,Wall.class).size() > 0){return false;}
+        return true;
+    }
+
+    public boolean canMoveWest(){
+        World myWorld = getWorld();        
+        //Verificando duas células à esquerda.
+        int x = getX() - 2;
+        int y = getY();
+        if(myWorld.getObjectsAt(x,y+1,Wall.class).size() > 0){return false;}
+        if(myWorld.getObjectsAt(x,y,Wall.class).size() > 0){return false;}
+        if(myWorld.getObjectsAt(x,y-1,Wall.class).size() > 0){ return false;}
+        return true;
     }
     
-    public void move(){
-        //System.out.println(canMove());
-        if(!canMove()){
+    /** Verifica se o personagem pode se mover na direção que está olhando.
+     * @return false caso haja obstáculos ou esteja fora do mundo, true caso contrário.
+     */
+    public boolean canMove(int direction){
+        switch(direction){
+            case EAST:
+            return canMoveEast();
+            case WEST:
+            return canMoveWest();
+            case NORTH:            
+            return canMoveNorth();
+            case SOUTH:
+            return canMoveSouth();
+        }
+        return true;
+    }
+
+    /**
+     * Se for possível move o personagem na direção que o personagem está olhando.
+     */
+    private void move(){
+        if(!canMove(this.direction)){
             return;
         } else {
             switch(direction){
@@ -107,14 +182,18 @@ public class Personagem extends Actor
             }
         }
     }
-    
-    public void act() 
-    {       
-       if(tick == 2){
-           tick = 0;
-       } else {
-           tick++;
-       }
-       move();
-    }    
+
+    /**
+     * Faz o personagem se mover na direção que encara. Tenha certeza de chamar esse método por último dentro do método act() da sua subclasse.
+     */
+    public void act() {
+        if(speed > turnos%3){
+            move();
+        }
+        turnos++;
+        tick++;
+        if(tick >= howManyTurns-1){
+            tick = -1;
+        }
+    }
 }
