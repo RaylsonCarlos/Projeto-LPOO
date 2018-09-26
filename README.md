@@ -18,7 +18,7 @@ Wall extends Actor: representa as paredes do labirinto, impedindo a passagem do 
 
 Recursos/Técnicas: Criação de classes e objetos; interação entre os objetos e o mundo, e entre si; manipulação de objetos através do teclado; utilização de recursos musicais.
 
-Ferramentas: Greenfoot.
+Ferramentas: Greenfoot versão 2.4.2
 
 Cronograma:
 01/09 ~ 17/09 : Animações e implementação de Classes
