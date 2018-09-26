@@ -25,6 +25,7 @@ Cronograma:
 17/09 ~ 24/09 : Som
 24/09 ~ 01/10 : Implementação da mecânica do Jogo
 01/10 ~ 08/10 : Entrega do protótipo para avaliação
-08/10 ~ 15/10 : Correção de bugs, melhorias e entrega final
+08/10 ~ 15/10 : Testes
+15/10 ~ 22/10 : Correção de bugs, melhorias e entrega final
 
 
