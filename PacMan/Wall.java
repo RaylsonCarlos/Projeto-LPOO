@@ -13,7 +13,8 @@ public class Wall extends Actor
     
     public final static GreenfootImage parede_debugger = new GreenfootImage("wall_debugger.png");
     
-    public Wall(){        
+    public Wall()
+    {  
         setImage(parede);
     }      
 }
