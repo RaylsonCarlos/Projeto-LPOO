@@ -1,15 +1,16 @@
 import greenfoot.*;
 
 /**
- * Pastilha Class represents a simple food to PacMan to eat.
+ * Representa uma pastilha no mundo do PacManWorld.
+ * 
+ * O PacMan pode comê-la para adicionar pontos a sua pontuação.
  * 
  * @author Raylson, Carlon, Weydson
  * @version 1.0
  */
-public class Pastilha extends Actor
-{    
-    public void act() 
-    {
-        // Add your action code here.
-    }    
+public class Pastilha extends Actor {
+    @Override
+    public void act() {
+
+    }
 }
