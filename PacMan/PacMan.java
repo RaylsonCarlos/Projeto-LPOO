@@ -3,18 +3,32 @@ import java.util.List;
 import java.util.Iterator;
 
 /**
- * The PacMan class represents the classical hunger head that opens her mouth
- * and eats whatever she finds in her way :)
+ * A classe PacMan representa o personagem do usuário no jogo, controlado pelo teclado
  * 
  * @author Raylson, Carlos, Weydson
  * @version 2.0
  */
 public class PacMan extends Personagem {
+    /**Variável para controlar o deslocamento no array de sprites.
+     */
     private int offset = 0;
-    private int contadorDirection = 0;
-    private int delayDirection = 6;
-    private int possibleDirection = Personagem.WEST;
+    /**Array para controlar a ordem de exibição dos sprites.
+     */
     private final static int[] animationOffset = { 0, 1, 2, 1 };
+    /**Armazena a quantidade de turnos que já se passaram desde que o jogador tentou mudar de direção.
+     */
+    private int contadorDirection = 0;
+    /**Controla em até quantos turnos o comando do jogador de mudar de direção será executado (se possível).
+     * Valores maiores suavizam a tomada de direção do personagem, valores menores diminuem a janela de tempo para o jogador apertar das teclas.
+     */
+    private static final int delayDirection = 6;
+    /**Armazena o última direção escolhida pelo jogador
+     */
+    private int possibleDirection = Personagem.WEST;
+    
+    /**Array dos sprites do pac-man.
+     */
+    
     private final static GreenfootImage[] spritesNORTH = new GreenfootImage[] 
     {   new GreenfootImage("north_0.png"),
         new GreenfootImage("north_1.png"), 
@@ -31,13 +45,19 @@ public class PacMan extends Personagem {
     {   new GreenfootImage("west_0.png"),
         new GreenfootImage("west_1.png"), 
         new GreenfootImage("west_2.png") };
+        
+    /**Inicializa o pac-man com velocidade 3, e direção WEST
+     */
 
     public PacMan() {
         super(3);
         changeDirection(Personagem.WEST);
         setImage(spritesWEST[1]);
     }
-
+    
+    /**Consome os objetos tipo {@link Pastilha} que estejam num raio de 1 célula
+     * return true se o pac-man encontrou alguma comida
+     */
     private boolean foundFood() {
         List<Actor> food = getObjectsInRange(1, Pastilha.class);
         if (food.size() > 0) {
@@ -49,6 +69,10 @@ public class PacMan extends Personagem {
         }
         return false;
     }
+    
+    /**
+     * Verifica o teclado em busca de direções para cima, baixo, esqueda ou direita.
+     */
 
     private void verificarTeclado() {
         String key = Greenfoot.getKey();
@@ -72,12 +96,15 @@ public class PacMan extends Personagem {
             }
         }
     }
+    
+    /**Faz o pac-man agir: consome objetos pastilha, aplica efeito sonoro, verifica mudança de direção, move e muda os sprites do personagem.
+     */
 
     @Override
     public void act() {
 
         if (foundFood()) {
-
+            
         }
 
         verificarTeclado();

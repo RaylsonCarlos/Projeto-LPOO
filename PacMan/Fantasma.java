@@ -3,47 +3,61 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Just a Fantasma class that will haunt the PackMan
+ * A Classe Fantasma representa os fantasmas do labirinto.
  * 
  * @author Raylson, Carlos, Weydson
  * @version 2.0
  */
 public class Fantasma extends Personagem
 {
+    /** Cor vermelha */    
     public final static int RED = 0;
+    /** Cor rosa */
     public final static int PINK = 1;
+    /** Cor azul */
     public final static int BLUE = 2;
+    /** Cor marrom */
     public final static int BROWN = 3;
-    
+    /** Variável para armazenar a cor do fantasma */
     private int color;
+    /** Armazena o deslocamento dentro do array de sprites do fantasma */
     private int offset = 0;
-    
+    /** Sprites do fantasma vermelho */
     private final static GreenfootImage [][] spritesRed = new GreenfootImage[][]{
                                                                                  {new GreenfootImage("ghost_red_east_0.png"),new GreenfootImage("ghost_red_east_1.png")},
                                                                                  {new GreenfootImage("ghost_red_west_0.png"),new GreenfootImage("ghost_red_west_1.png")},
                                                                                  {new GreenfootImage("ghost_red_north_0.png"),new GreenfootImage("ghost_red_north_1.png")},
                                                                                  {new GreenfootImage("ghost_red_south_0.png"),new GreenfootImage("ghost_red_south_1.png")}
                                                                                 };
+    /** Sprites do fantasma rosa */
     private final static GreenfootImage [][] spritesPink = new GreenfootImage[][]{
                                                                                  {new GreenfootImage("ghost_pink_east_0.png"),new GreenfootImage("ghost_pink_east_1.png")},
                                                                                  {new GreenfootImage("ghost_pink_west_0.png"),new GreenfootImage("ghost_pink_west_1.png")},
                                                                                  {new GreenfootImage("ghost_pink_north_0.png"),new GreenfootImage("ghost_pink_north_1.png")},
                                                                                  {new GreenfootImage("ghost_pink_south_0.png"),new GreenfootImage("ghost_pink_south_1.png")}
                                                                                 };
+    /** Sprites do fantasma azul */
     private final static GreenfootImage [][] spritesBlue = new GreenfootImage[][]{
                                                                                  {new GreenfootImage("ghost_blue_east_0.png"),new GreenfootImage("ghost_blue_east_1.png")},
                                                                                  {new GreenfootImage("ghost_blue_west_0.png"),new GreenfootImage("ghost_blue_west_1.png")},
                                                                                  {new GreenfootImage("ghost_blue_north_0.png"),new GreenfootImage("ghost_blue_north_1.png")},
                                                                                  {new GreenfootImage("ghost_blue_south_0.png"),new GreenfootImage("ghost_blue_south_1.png")}
                                                                                 };
+   /** Sprites do fantasma marrom */
     private final static GreenfootImage [][] spritesBrown = new GreenfootImage[][]{
                                                                                  {new GreenfootImage("ghost_brown_east_0.png"),new GreenfootImage("ghost_brown_east_1.png")},
                                                                                  {new GreenfootImage("ghost_brown_west_0.png"),new GreenfootImage("ghost_brown_west_1.png")},
                                                                                  {new GreenfootImage("ghost_brown_north_0.png"),new GreenfootImage("ghost_brown_north_1.png")},
                                                                                  {new GreenfootImage("ghost_brown_south_0.png"),new GreenfootImage("ghost_brown_south_1.png")}
-                                                                                };    
+                                                                                }; 
+   /** Sprites dos fantasmas */
     private final static GreenfootImage[][][] sprites = new GreenfootImage[][][]{spritesRed,spritesPink,spritesBlue,spritesBrown};
     
+    
+    /**
+     * Cria um fantasma com velocidade 3
+     * @param Cor do fantasma: RED, PINK, BLUE ou BROWN.
+     */
     public Fantasma(int color){
         super(3);
         if(color != RED && color != PINK && color != BLUE && color != BROWN ){
@@ -53,6 +67,10 @@ public class Fantasma extends Personagem
         }
         setSprite();
     }
+    
+    /**
+     * Muda o sprite do fantasma
+     */
     
     private void setSprite(){
         switch(getDirection()){
@@ -70,6 +88,10 @@ public class Fantasma extends Personagem
             break;
         }
     }
+    
+    /**Informa a direção oposta à direção que o personagem está encarando.
+     * return Um Inteiro que descreve a direção: NORTH, SOUTH, EAST ou WEST
+     */
     
     private int oppositeDirection(int direction){
         int oppositeDirection = Personagem.NORTH;
@@ -90,6 +112,10 @@ public class Fantasma extends Personagem
         return oppositeDirection;
     }
     
+    /** Informa se o fantasma está dentro da cela do labirinto.
+     * return true se o fantasma está dentro da cela do labirinto, false caso contrário.
+     */
+    
     private boolean preso(){
         int x = getX();
         int y = getY();        
@@ -100,6 +126,10 @@ public class Fantasma extends Personagem
         }
     }
     
+    /**
+     * Define como o fantasma deve se movimentar se estiver preso na cela do labirinto
+     */
+    
     private void rotaPreso(){
         if(!canMoveNorth()){
             changeDirection(Personagem.SOUTH);
@@ -109,6 +139,9 @@ public class Fantasma extends Personagem
         }
     }
     
+    /**
+     * Define como o fantasma deve se movimentar se estiver fora da cela.
+     */
     private void rotaNormal(){
         List<Integer> rotas = new ArrayList<Integer>();
         int direction = getDirection();
@@ -134,6 +167,10 @@ public class Fantasma extends Personagem
             changeDirection(rotas.get(rand));
         }
     }
+    
+    /**
+     * Faz o fantasma se mover e mudar os sprites do personagem.
+     */
     
     public void act()
     {

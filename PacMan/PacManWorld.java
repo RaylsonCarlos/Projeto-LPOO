@@ -3,8 +3,7 @@ import greenfoot.*;
 import java.util.List;
 
 /**
- * PacManWorld representa o mundo onde o cenário e os objetos (PacMan, fanstasmas e pastilhas)
- * irão interagir.
+ * PacManWorld representa o mundo onde o cenário e os objetos (PacMan, fantasmas e pastilhas) irão interagir.
  * 
  * PacManWorld é filha da classe World, logo herda seus métodos, atributos e construtores públicos.
  *
@@ -19,8 +18,7 @@ public class PacManWorld extends World {
 
     /** 
      * O construtor da classe PacManWorld cria o cenário do mundo, define a
-     * velocidade padrão, estabelece a imagem de fundo padrão e cria os objetos p
-     * ra as paredes, fanstasmas, pastilhas e o PacMan.
+     * velocidade padrão, estabelece a imagem de fundo padrão e cria os objetos para as paredes, fantasmas, pastilhas e o PacMan.
      */
     public PacManWorld() {
         // Cria o cenário do mundo com 57x63 células, cada célula tem
@@ -50,7 +48,7 @@ public class PacManWorld extends World {
     }
 
     /**
-    * Faz o mundo agir, interagindo com os objetos presentes nele.
+    * Faz o mundo agir: transporta através do portal, calcula os pontos do jogador e verifica se o jogo acabou.
     */
     @Override
     public void act() {
@@ -62,8 +60,7 @@ public class PacManWorld extends World {
     }
 
     /**
-     * Cria o portal e define quais classes que passarem por ele podem atravessar
-     * para o lado oposto no cenário do mundo.
+     * Implementa um portal que permite a passagem de personagens para o lado oposto do labirinto.
      */
     private void portal() {
         // Cria uma lista que contém objetos do tipo Personagem,
@@ -283,15 +280,13 @@ public class PacManWorld extends World {
             i++;
         }
     }
+    
+    /**   
+      Instancia os Fanstasmas e põe eles no labirinto.
+    */
 
-    /**
-     * Cria os objetos filhos de Personagem, os Fanstasmas.
-     * 
-     * Existem quatro tipos de fantasmas, o vermelho, o ros, o azul e o marrom.
-     * 
-     * TODO cada um tem suas próprias características.
-     */
     public void populateFantasma() {
+        //TODO: cada um tem suas próprias características.
         // Cria objetos dos Fantasmas vermelho e rosa.
         Fantasma blinky = new Fantasma(Fantasma.RED);
         Fantasma pinky = new Fantasma(Fantasma.PINK);
@@ -363,7 +358,7 @@ public class PacManWorld extends World {
     }
     
     /**
-     * Cria as paredes que representam as quinas.
+     * Cria as paredes que representam as quinas externas do labirinto.
      */
     private void quinasExternas()
     {
@@ -494,7 +489,7 @@ public class PacManWorld extends World {
     }
 
     /**
-     * Crias os quadrados, que serão usados para formar o labirinto.
+     * Cria os quadrados, que serão usados para formar o labirinto.
      * 
      * @param x0 eixo X incial
      * @param y0 eixo Y inicial
