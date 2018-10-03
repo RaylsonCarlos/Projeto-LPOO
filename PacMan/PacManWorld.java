@@ -11,29 +11,13 @@ import java.util.List;
  * @author Raylson, Carlos, Weydson
  * @version 2.0
  */
-<<<<<<< HEAD
-public class PacManWorld extends World
-{
-=======
 public class PacManWorld extends World {
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
     // Estabelece a imagem de fundo padrão do jogo e um inteiro para
     // a contagem de pontos.
     private static final GreenfootImage background = new GreenfootImage("background.png");
     private int points = 0;
 
-    /**
-<<<<<<< HEAD
-    * O construtor da classe PacManWorld cria o cenário do mundo, define
-    * a velocidade padrão, estabelece a imagem de fundo padrão e cria os
-    * objetos para as paredes, fanstasmas, pastilhas e o PacMan.
-    */
-    public PacManWorld()
-    {    
-        // Cria o cenário do mundo com 57x63 células, cada célula tem
-        // um tamanho de 4x4 pixels.
-        super(57,63,4);
-=======
+    /** 
      * O construtor da classe PacManWorld cria o cenário do mundo, define a
      * velocidade padrão, estabelece a imagem de fundo padrão e cria os objetos p
      * ra as paredes, fanstasmas, pastilhas e o PacMan.
@@ -42,7 +26,6 @@ public class PacManWorld extends World {
         // Cria o cenário do mundo com 57x63 células, cada célula tem
         // um tamanho de 4x4 pixels.
         super(57, 63, 4);
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
 
         // Define a imagem de fundo do cenário.
         setBackground(background);
@@ -50,27 +33,15 @@ public class PacManWorld extends World {
         // Cria as paredes dentro do mundo.
         populateWall();
 
-<<<<<<< HEAD
-        // Cria os fantasmas dentro do mundo.
-        populateFantasma();
-
         // Cria as pastilhas dentro do mundo.
         populatePastilha();
+
+        // Cria os fantasmas dentro do mundo.
+        populateFantasma();
 
         // Adiciona um objeto do tipo PacMan ao mundo, nas células
         // 28 e 47, utilizando um método da classe World.
         addObject(new PacMan(),28,47);
-=======
-        // Cria as pastilhas dentro do mundo.
-        populatePastilha();
-
-        // Cria os fantasmas dentro do mundo.
-        populateFantasma();
-
-        // Adiciona um objeto do tipo PacMan ao mundo, nas células
-        // 28 e 47, utilizando um método da classe World.
-        addObject(new PacMan(), 28, 47);
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
 
         // Define a velocidade de execucação das ações.
         // Esse método pertence à um classe do pacote do greenfoot,
@@ -79,54 +50,14 @@ public class PacManWorld extends World {
     }
 
     /**
-<<<<<<< HEAD
     * Faz o mundo agir, interagindo com os objetos presentes nele.
     */
     @Override
-    public void act()
-    {
-=======
-     * Faz o mundo agir, interagindo com os objetos presentes nele.
-     */
-    @Override
     public void act() {
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
         // Cria um portal, em que os Personagens podem passar para
         // atravessarem ao local oposto no cenário do mundo.
         portal();
-    }
-<<<<<<< HEAD
-    
-    /**
-     * Cria o portal e define quais classes que passarem por ele
-     * podem atravessar para o lado oposto no cenário do mundo.
-     */
-    private void portal()
-    {
-        // Cria uma lista que contém objetos do tipo Personagem,
-        // então retorna todos os objetos do tipo Personagem 
-        // presentes no mundo, utilizando o método getObjects(java.long.class<A>),
-        // presente na superclasse World.
-        List<Personagem> lista = getObjects(Personagem.class);
-        
-        // Para cada personagem na lista, o "for" irá rodar
-        // uma vez.
-        for(Personagem per : lista)
-        {
-=======
-
-    private void adicionarPontos() {
-        List<Pastilha> lista = getObjects(Pastilha.class);
-
-        for (Pastilha past : lista) {
-            List<Pastilha> lista2 = getObjects(Pastilha.class);
-
-            if (lista2.size() < lista.size()) {
-                points++;
-            }
-        }
-
-        System.out.print(points);
+        adicionarPontos();
     }
 
     /**
@@ -143,76 +74,72 @@ public class PacManWorld extends World {
         // Para cada personagem na lista, o "for" irá rodar
         // uma vez.
         for (Personagem per : lista) {
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
             // O Personagem per irá ser mandado como argumento
             // para o método isInsidePortal(Personagem), que
             // irá retornar um boolean.
             // Se retornar verdadeiro, ele irá rodar o "if".
-<<<<<<< HEAD
-            if(isInsidePortal(per))
-            {
-=======
             if (isInsidePortal(per)) {
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
                 // O personagem retorna a sua célula do eixo X
                 // do mundo.
                 // Se a célula em que o Personagem per estiver
                 // for igual a 56, ele retorna verdadeiro e
                 // entra no "if".
-<<<<<<< HEAD
-                if(per.getX()== 56)
-                {
-=======
                 if (per.getX() == 56) {
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
                     // O Personagem per retorna a sua célula
                     // do eixo Y, e então muda sua localização
                     // para a célula 0 do eixo X, mas continua
                     // na mesma célula do eixo Y.
-<<<<<<< HEAD
                     per.setLocation(0,per.getY());
-                }
-
-                // Caso o Personagem per retornar uma célula 
-                // do eixo X diferente de 56, então ele irá
-                // entrar no "else".
-                else 
-                {
-=======
-                    per.setLocation(0, per.getY());
                 }
 
                 // Caso o Personagem per retornar uma célula
                 // do eixo X diferente de 56, então ele irá
                 // entrar no "else".
                 else {
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
                     // O Personagem per retorna a sua célula
                     // do eixo Y, e então muda sua localização
                     // para a célula 56 do eixo X, mas continua
                     // na mesma célula do eixo Y.
-<<<<<<< HEAD
                     per.setLocation(56,per.getY());
-=======
-                    per.setLocation(56, per.getY());
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
                 }
             }
         }
     }
-<<<<<<< HEAD
-    
+
     /**
-     * Verifica se existe algum objeto do tipo Personagem dentro das
-     * células do eixo X e Y do portal (X: 0 ou X: 56 & Y: 29).
+     * Verifica quantas pastilhas existem e faz uma contagem de pontos para cada
+     * pastilha comida pelo PacMan.
      * 
-     * @param per um objeto do tipo Personagem.
-     * @return true se o Personagem per estiver em determinada célula
-     * do eixo X e Y, e false se não estiver.
+     * Cada pastilha vale 10 pontos, até um total de 2990 pontos.
      */
-    private boolean isInsidePortal(Personagem per)
+    private void adicionarPontos()
     {
-=======
+        List<Pastilha> list_pastilha = getObjects(Pastilha.class);
+        int tmn = list_pastilha.size();
+
+        if(tmn == 299)
+        {
+            points = 0;
+        }
+
+        else
+        {
+            int pastilhas_comidas = 299 - tmn;
+
+            points = pastilhas_comidas * 10;
+        }
+    }
+
+    private void ganharJogo()
+    {
+        List<Pastilha> l_pastilha = getObjects(Pastilha.class);
+        int tmn = l_pastilha.size();
+
+        if(tmn == 0)
+        {
+            System.out.println("Você ganhou o jogo.");
+        }
+    }
 
     /**
      * Verifica se existe algum objeto do tipo Personagem dentro das células do 
@@ -223,7 +150,6 @@ public class PacManWorld extends World {
      *         false se não estiver.
      */
     private boolean isInsidePortal(Personagem per) {
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
         // Cria uma variável que recebe o valor da célula do eixo X
         // e outra que recebe o valor da célula do eixo Y, utilizando
         // os métodos getX() e getY().
@@ -232,19 +158,8 @@ public class PacManWorld extends World {
 
         // Se o valor de y for igual a 29, e o de x for igual a 0
         // ou 56, ele retorna verdadeiro e entra no "if".
-<<<<<<< HEAD
         if(y == 29 && (x == 0 || x == 56))
         {
-            // Retorna true como retorno.
-            return true;
-        }
-        
-        // Caso y for diferente de 29 ou x for diferente de 0 ou 56,
-        // ele retorna false e entra no "else".
-        else 
-        {
-=======
-        if (y == 29 && (x == 0 || x == 56)) {
             // Retorna true como retorno.
             return true;
         }
@@ -252,37 +167,10 @@ public class PacManWorld extends World {
         // Caso y for diferente de 29 ou x for diferente de 0 ou 56,
         // ele retorna false e entra no "else".
         else {
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
             // Retorna false como retorno.
             return false;
         }
     }
-<<<<<<< HEAD
-    
-    /**
-     * Cria os objetos do tipo Pastilha e coloca-os dentro do mundo
-     * do PacManWorld.
-     */
-    private void populatePastilha()
-    {
-        
-    }
-
-    /**
-     * Cria os objetos filhos de Personagem, os Fanstasmas.
-     * 
-     * Existem quatro tipos de fantasmas, o vermelho, o
-     * ros, o azul e o marrom.
-     * 
-     * TODO cada um tem suas próprias características.
-     */
-    public void populateFantasma()
-    {
-        // Cria objetos dos Fantasmas vermelho e rosa.
-        Fantasma blinky = new Fantasma(Fantasma.RED);        
-        Fantasma pinky = new Fantasma(Fantasma.PINK);
-        
-=======
 
     /**
      * Cria os objetos do tipo Pastilha e coloca-os dentro do mundo do PacManWorld.
@@ -402,35 +290,25 @@ public class PacManWorld extends World {
         Fantasma blinky = new Fantasma(Fantasma.RED);
         Fantasma pinky = new Fantasma(Fantasma.PINK);
 
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
         // Define a velocidade no PacManWorld do Fantasma rosa
         // utilizando o método setSpeed(int) da classe World.
         pinky.setSpeed(2);
 
         // Cria um objeto do Fantasma azul.
         Fantasma inky = new Fantasma(Fantasma.BLUE);
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
         // Define a velocidade do Fantasma azul no PacManWorld.
         inky.setSpeed(2);
 
         // Cria um objeto do Fantasma marrom.
-        Fantasma clyde = new Fantasma(Fantasma.BROWN);
-<<<<<<< HEAD
-        
-=======
+        Fantasma clyde = new Fantasma(Fantasma.BROWN);        
 
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
         // Define a velocidade do Fantasma marrom no PacManWorld.
         clyde.setSpeed(2);
 
         // Adiciona os objetos dos Fanstasmas vermelho, rosa, azul
         // e marrom ao PacManWorld, nas suas respectivas células no
         // eixo X e Y.
-<<<<<<< HEAD
         addObject(pinky,32,30);
         addObject(inky,28,30);
         addObject(clyde,24,30);
@@ -502,89 +380,6 @@ public class PacManWorld extends World {
         addObject(new Wall(),1,39);
         addObject(new Wall(),55,39);
     }
-    
-    /**
-     * Cria linhas de paredes verticais.
-     * 
-     * @param x célula de eixo X
-     * @param y0 célula de eixo Y incial
-     * @param y1 célula de eixo Y final
-     */
-    private void duplaLinhaVertical(int x, int y0, int y1)
-    {
-        // Usa um for iniciando com o valor do eixo y0 e incrementa
-        // 1 até atingir o valor do eixo y1.
-        for(int i = y0+1; i < y1; i++)
-        {
-=======
-        addObject(pinky, 32, 30);
-        addObject(inky, 28, 30);
-        addObject(clyde, 24, 30);
-        addObject(blinky, 28, 23);
-    }
-
-    /**
-     * Cria a cela, onde os Fanstasmas irão ficar presos no início do jogo.
-     */
-    private void cela() {
-        // Cria um quadrado para a cela dos Fantasmas.
-        squareWall(21, 25, 14, 8);
-        squareWall(22, 26, 12, 6);
-    }
-
-    /**
-     * Cria as bordas externas, para delimitar o mundo onde o PacMan, os Fanstasmas
-     * e as Pastilhas podem agir.
-     */
-    private void bordasExternas() {
-        // Cria as paredes verticais e horizontais, informando os
-        // eixos X e Y.
-        duplaLinhaVertical(1, 1, 19);
-        duplaLinhaVertical(55, 1, 19);
-        duplaLinhaHorizontal(1, 1, 27);
-        duplaLinhaHorizontal(1, 29, 55);
-        duplaLinhaHorizontal(19, 1, 11);
-        duplaLinhaHorizontal(19, 45, 55);
-        duplaLinhaVertical(11, 19, 27);
-        duplaLinhaVertical(45, 19, 27);
-        duplaLinhaHorizontal(27, -1, 11);
-        duplaLinhaHorizontal(27, 45, 56);
-        duplaLinhaHorizontal(31, -1, 11);
-        duplaLinhaHorizontal(31, 45, 56);
-        duplaLinhaVertical(11, 31, 39);
-        duplaLinhaVertical(45, 31, 39);
-        duplaLinhaHorizontal(39, 1, 11);
-        duplaLinhaHorizontal(39, 45, 55);
-        duplaLinhaVertical(1, 39, 49);
-        duplaLinhaVertical(55, 39, 49);
-        duplaLinhaVertical(1, 51, 61);
-        duplaLinhaVertical(55, 51, 61);
-        duplaLinhaHorizontal(61, 1, 55);
-    }
-
-    /**
-     * Cria as paredes que representam as quinas.
-     */
-    private void quinasExternas() {
-        // Adiciona objetos do tipo Wall nos eixos x e y
-        // passados como parâmetros.
-        addObject(new Wall(), 1, 1);
-        addObject(new Wall(), 55, 61);
-        addObject(new Wall(), 1, 61);
-        addObject(new Wall(), 55, 1);
-        addObject(new Wall(), 1, 19);
-        addObject(new Wall(), 55, 19);
-        addObject(new Wall(), 11, 19);
-        addObject(new Wall(), 45, 19);
-        addObject(new Wall(), 11, 27);
-        addObject(new Wall(), 45, 27);
-        addObject(new Wall(), 11, 31);
-        addObject(new Wall(), 45, 31);
-        addObject(new Wall(), 11, 39);
-        addObject(new Wall(), 45, 39);
-        addObject(new Wall(), 1, 39);
-        addObject(new Wall(), 55, 39);
-    }
 
     /**
      * Cria linhas de paredes verticais.
@@ -597,12 +392,10 @@ public class PacManWorld extends World {
         // Usa um for iniciando com o valor do eixo y0 e incrementa
         // 1 até atingir o valor do eixo y1.
         for (int i = y0 + 1; i < y1; i++) {
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
             // Adiciona objetos do tipo Wall nos eixos x e i.
             addObject(new Wall(), x, i);
         }
     }
-<<<<<<< HEAD
     
     /**
      * Cria linhas de paredes horizontais.
@@ -621,40 +414,15 @@ public class PacManWorld extends World {
             addObject(new Wall(), i, y);
         }
     } 
-    
-    /**
-     * Chama todas as paredes para criar um labirinto no PacManWorld.
-     */
-    private void populateWall()
-    {
-=======
-
-    /**
-     * Cria linhas de paredes horizontais.
-     * 
-     * @param y  célula de eixo Y
-     * @param x0 célula de eixo X incial
-     * @param x1 célula de eixo X final
-     */
-    private void duplaLinhaHorizontal(int y, int x0, int x1) {
-        // Usa um for iniciando com o valor do eixo x0 e incrementa
-        // 1 até atingir o valor do eixo x1.
-        for (int i = x0 + 1; i < x1; i++) {
-            // Adiciona objetos do tipo Wall nos eixos i e y.
-            addObject(new Wall(), i, y);
-        }
-    }
 
     /**
      * Chama todas as paredes para criar um labirinto no PacManWorld.
      */
     private void populateWall() {
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
         // Cria as bordas, as quinas, a cela e os quadrados do labirinto.
         bordasExternas();
         quinasExternas();
         cela();
-<<<<<<< HEAD
         squareWall(5,5,6,4);
         squareWall(15,5,8,4);
         squareWall(27,0,2,9);
@@ -686,7 +454,6 @@ public class PacManWorld extends World {
         squareWall(51,49,5,2);
         squareWall(5,55,18,2);
         squareWall(33,55,18,2);
-=======
         squareWall(5, 5, 6, 4);
         squareWall(15, 5, 8, 4);
         squareWall(27, 0, 2, 9);
@@ -718,35 +485,23 @@ public class PacManWorld extends World {
         squareWall(51, 49, 5, 2);
         squareWall(5, 55, 18, 2);
         squareWall(33, 55, 18, 2);
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
     }
 
     /**
      * Crias os quadrados, que serão usados para formar o labirinto.
      * 
-<<<<<<< HEAD
      * @param x0 eixo X incial
      * @param y0 eixo Y inicial
      * @param width largura do quadrado
      * @param height altura do quadrado
      */
-    private void squareWall(int x0, int y0, int width, int height)
-    {
-=======
-     * @param x0     eixo X incial
-     * @param y0     eixo Y inicial
-     * @param width  largura do quadrado
-     * @param height altura do quadrado
-     */
     private void squareWall(int x0, int y0, int width, int height) {
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
         // Cria duas variáveis que recebem os valores dos eixos X final e
         // Y final.
         int xMax = x0 + width;
         int yMax = y0 + height;
 
         // Adiciona objetos do tipo Wall para criar as bordas dos quadrados.
-<<<<<<< HEAD
         addObject(new Wall(),x0,y0);
         addObject(new Wall(),xMax,y0);
         addObject(new Wall(),x0,yMax);
@@ -766,25 +521,24 @@ public class PacManWorld extends World {
             // Adiciona objetos do tipo Wall nos lados paralelos do quadrado.
             addObject(new Wall(),x0,j);
             addObject(new Wall(),xMax,j);
-=======
-        addObject(new Wall(), x0, y0);
-        addObject(new Wall(), xMax, y0);
-        addObject(new Wall(), x0, yMax);
-        addObject(new Wall(), xMax, yMax);
+            addObject(new Wall(), x0, y0);
+            addObject(new Wall(), xMax, y0);
+            addObject(new Wall(), x0, yMax);
+            addObject(new Wall(), xMax, yMax);
 
-        // Usa um laço para percorrer desde o X inicial até o X final.
-        for (int i = x0 + 1; i < xMax; i++) {
-            // Adiciona objetos do tipo Wall nos lados paralelos do quadrado.
-            addObject(new Wall(), i, y0);
-            addObject(new Wall(), i, yMax);
-        }
+            // Usa um laço para percorrer desde o X inicial até o X final.
+            for (int i = x0 + 1; i < xMax; i++) {
+                // Adiciona objetos do tipo Wall nos lados paralelos do quadrado.
+                addObject(new Wall(), i, y0);
+                addObject(new Wall(), i, yMax);
+            }
 
-        // Usa um laço para percorrer desde o Y inicial até o Y final
-        for (int j = y0 + 1; j < yMax; j++) {
-            // Adiciona objetos do tipo Wall nos lados paralelos do quadrado.
-            addObject(new Wall(), x0, j);
-            addObject(new Wall(), xMax, j);
->>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
+            // Usa um laço para percorrer desde o Y inicial até o Y final
+            for (j = y0+1; j < yMax; j++) {
+                // Adiciona objetos do tipo Wall nos lados paralelos do quadrado.
+                addObject(new Wall(), x0, j);
+                addObject(new Wall(), xMax, j);
+            }
         }
     }
 }

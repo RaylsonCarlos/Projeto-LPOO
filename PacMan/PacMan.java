@@ -15,14 +15,22 @@ public class PacMan extends Personagem {
     private int delayDirection = 6;
     private int possibleDirection = Personagem.WEST;
     private final static int[] animationOffset = { 0, 1, 2, 1 };
-    private final static GreenfootImage[] spritesNORTH = new GreenfootImage[] { new GreenfootImage("north_0.png"),
-            new GreenfootImage("north_1.png"), new GreenfootImage("north_2.png") };
-    private final static GreenfootImage[] spritesSOUTH = new GreenfootImage[] { new GreenfootImage("south_0.png"),
-            new GreenfootImage("south_1.png"), new GreenfootImage("south_2.png") };
-    private final static GreenfootImage[] spritesEAST = new GreenfootImage[] { new GreenfootImage("east_0.png"),
-            new GreenfootImage("east_1.png"), new GreenfootImage("east_2.png") };
-    private final static GreenfootImage[] spritesWEST = new GreenfootImage[] { new GreenfootImage("west_0.png"),
-            new GreenfootImage("west_1.png"), new GreenfootImage("west_2.png") };
+    private final static GreenfootImage[] spritesNORTH = new GreenfootImage[] 
+    {   new GreenfootImage("north_0.png"),
+        new GreenfootImage("north_1.png"), 
+        new GreenfootImage("north_2.png") };
+    private final static GreenfootImage[] spritesSOUTH = new GreenfootImage[] 
+    {   new GreenfootImage("south_0.png"),
+        new GreenfootImage("south_1.png"), 
+        new GreenfootImage("south_2.png") };
+    private final static GreenfootImage[] spritesEAST = new GreenfootImage[] 
+    {   new GreenfootImage("east_0.png"),
+        new GreenfootImage("east_1.png"), 
+        new GreenfootImage("east_2.png") };
+    private final static GreenfootImage[] spritesWEST = new GreenfootImage[] 
+    {   new GreenfootImage("west_0.png"),
+        new GreenfootImage("west_1.png"), 
+        new GreenfootImage("west_2.png") };
 
     public PacMan() {
         super(3);

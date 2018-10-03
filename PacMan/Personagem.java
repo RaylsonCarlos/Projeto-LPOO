@@ -28,18 +28,13 @@ public class Personagem extends Actor
     // Direção que o personagem está encarando.
     private int direction;
     private int turnos;
-    
-    /**
-     * Conta os turnos do jogo para a mudança de sprites.
-     */
+
+    // Conta os turnos do jogo para a mudança de sprites.
     private int tick = 0;
-    /**
-     * Quantidade de turnos até o próximo sprite.
-     */
+    
+    // Quantidade de turnos até o próximo sprite.
     private int howManyTurns;
     
-    
-
     /** Cria um personagem que muda de sprite em howManyTurns turnos e com a direção norte
      * @param howManyTurns A quantidade de turnos até a próximo sprite
      */
