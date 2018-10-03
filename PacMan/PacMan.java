@@ -104,7 +104,7 @@ public class PacMan extends Personagem {
     public void act() {
 
         if (foundFood()) {
-            
+            Greenfoot.playSound("pill_eaten.wav");
         }
 
         verificarTeclado();

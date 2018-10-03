@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=
+comment0.target=SoundPlayer()
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ SoundPlayer\r\n
+comment1.params=
+comment1.target=void\ stop()
+comment1.text=\r\n\ Para\ a\ execu\u00E7\u00E3o\ do\ som\ de\ fundo.\r\n
+comment2.params=
+comment2.target=void\ playBackgroundNormal()
+comment2.text=\r\n\ Executa\ o\ som\ de\ fundo\ normal\ do\ labirinto.\r\n
+numComments=3

@@ -1,5 +1,4 @@
 import greenfoot.*;
-
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ public class PacManWorld extends World {
     // Estabelece a imagem de fundo padrão do jogo e um inteiro para
     // a contagem de pontos.
     private static final GreenfootImage background = new GreenfootImage("background.png");
-    private int points = 0;
+    private int points = 0;    
 
     /** 
      * O construtor da classe PacManWorld cria o cenário do mundo, define a
@@ -45,6 +44,8 @@ public class PacManWorld extends World {
         // Esse método pertence à um classe do pacote do greenfoot,
         // antecipamente importada.
         Greenfoot.setSpeed(39);
+        SoundPlayer sp = new SoundPlayer();
+        sp.playBackgroundNormal();
     }
 
     /**
@@ -54,6 +55,7 @@ public class PacManWorld extends World {
     public void act() {
         // Cria um portal, em que os Personagens podem passar para
         // atravessarem ao local oposto no cenário do mundo.
+        
         portal();
         adicionarPontos();
         ganharJogo();
