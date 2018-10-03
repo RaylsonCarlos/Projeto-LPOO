@@ -1,38 +1,33 @@
 import greenfoot.*;
 
 /**
- * A classe Personagem providencia os movimentos e animações básicos de personagens de 16x16 pixels.
+ * A classe Personagem providencia os movimentos e animações básicas dos personagens.
+ * 
+ * Os personagens são formados por 16x16 pixels.
  * 
  * @author Raylson, Carlos, Weydson
  * @version 1.1
  */
 public class Personagem extends Actor
 {
-    /**
-     * Direção norte.
-     */
+    // Direção norte.
     public static final int NORTH = 0;
-    /**
-     * Direção sul.
-     */
+    
+    // Direção sul.
     public static final int SOUTH = 1;
-    /**
-     * Direção leste.
-     */
+    
+    // Direção leste.
     public static final int EAST = 2;
-    /**
-     * Direção oeste.
-     */
+    
+    // Direção oeste.
     public static final int WEST = 3;
     
+    // Velocidade.
     public int speed = 3;
-    /**
-     * Armazena a direção que o personagem está encarando.
-     */
+
+    // Direção que o personagem está encarando.
     private int direction;
     private int turnos;
-    
-    
     
     /**
      * Conta os turnos do jogo para a mudança de sprites.

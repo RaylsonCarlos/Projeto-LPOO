@@ -24,6 +24,12 @@ dependency5.type=UsesDependency
 dependency6.from=PacManWorld
 dependency6.to=Wall
 dependency6.type=UsesDependency
+<<<<<<< HEAD
+=======
+dependency7.from=PacManWorld
+dependency7.to=Pastilha
+dependency7.type=UsesDependency
+>>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
 editor.fx.0.height=0
 editor.fx.0.width=0
 editor.fx.0.x=0
@@ -33,7 +39,11 @@ mainWindow.height=876
 mainWindow.width=1616
 mainWindow.x=-8
 mainWindow.y=-8
+<<<<<<< HEAD
 package.numDependencies=6
+=======
+package.numDependencies=7
+>>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
 package.numTargets=6
 project.charset=UTF-8
 publish.hasSource=false
@@ -49,6 +59,13 @@ readme.width=47
 readme.x=10
 readme.y=10
 simulation.speed=39
+<<<<<<< HEAD
+=======
+target1.editor.height=700
+target1.editor.width=900
+target1.editor.x=0
+target1.editor.y=0
+>>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
 target1.height=50
 target1.name=PacMan
 target1.naviview.expanded=true
@@ -58,6 +75,13 @@ target1.typeParameters=
 target1.width=80
 target1.x=70
 target1.y=70
+<<<<<<< HEAD
+=======
+target2.editor.height=700
+target2.editor.width=900
+target2.editor.x=0
+target2.editor.y=0
+>>>>>>> 6e25532bbfe1a2ed35106cc0fea56daa48beb345
 target2.height=50
 target2.name=Fantasma
 target2.naviview.expanded=true
