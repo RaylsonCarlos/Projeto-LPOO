@@ -58,6 +58,7 @@ public class PacManWorld extends World {
         // atravessarem ao local oposto no cenário do mundo.
         portal();
         adicionarPontos();
+        ganharJogo();
     }
 
     /**
@@ -130,6 +131,9 @@ public class PacManWorld extends World {
         }
     }
 
+    /**
+     * Quando o PacMan come todas as pastilhas do mundo, ele ganha o jogo.
+     */
     private void ganharJogo()
     {
         List<Pastilha> l_pastilha = getObjects(Pastilha.class);
@@ -137,6 +141,8 @@ public class PacManWorld extends World {
 
         if(tmn == 0)
         {
+            Greenfoot.stop();
+
             System.out.println("Você ganhou o jogo.");
         }
     }
