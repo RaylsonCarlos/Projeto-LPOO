@@ -46,9 +46,9 @@ public class PacMan extends Personagem {
         new GreenfootImage("west_1.png"), 
         new GreenfootImage("west_2.png") };
         
-    /**Inicializa o pac-man com velocidade 3, e direção WEST
+    /**
+     * Inicializa o pac-man com velocidade 3, e direção WEST
      */
-
     public PacMan() {
         super(3);
         changeDirection(Personagem.WEST);
@@ -73,7 +73,6 @@ public class PacMan extends Personagem {
     /**
      * Verifica o teclado em busca de direções para cima, baixo, esqueda ou direita.
      */
-
     private void verificarTeclado() {
         String key = Greenfoot.getKey();
         if (key != null) {
@@ -97,14 +96,15 @@ public class PacMan extends Personagem {
         }
     }
     
-    /**Faz o pac-man agir: consome objetos pastilha, aplica efeito sonoro, verifica mudança de direção, move e muda os sprites do personagem.
+    /**
+     * Faz o pac-man agir: consome objetos pastilha, aplica efeito sonoro, verifica mudança de direção, move e muda os sprites do personagem.
      */
-
     @Override
     public void act() {
 
         if (foundFood()) {
-            Greenfoot.playSound("pill_eaten.wav");
+            SoundPlayer.playEffectPillEaten();
+            //Greenfoot.playSound("pill_eaten.wav");
         }
 
         verificarTeclado();
