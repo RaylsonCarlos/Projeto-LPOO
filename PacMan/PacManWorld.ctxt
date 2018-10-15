@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=
-comment0.target=PacManWorld()
+comment0.params=size
+comment0.target=PacManWorld(int)
 comment0.text=\ \r\n\ O\ construtor\ da\ classe\ PacManWorld\ cria\ o\ cen\u00E1rio\ do\ mundo,\ define\ a\r\n\ velocidade\ padr\u00E3o,\ estabelece\ a\ imagem\ de\ fundo\ padr\u00E3o\ e\ cria\ os\ objetos\ para\ as\ paredes,\ fantasmas,\ pastilhas\ e\ o\ PacMan.\r\n
 comment1.params=
 comment1.target=void\ act()

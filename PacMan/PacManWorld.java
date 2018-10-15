@@ -19,15 +19,13 @@ public class PacManWorld extends World {
      * O construtor da classe PacManWorld cria o cenário do mundo, define a
      * velocidade padrão, estabelece a imagem de fundo padrão e cria os objetos para as paredes, fantasmas, pastilhas e o PacMan.
      */
-    public PacManWorld() {
+    public PacManWorld(int size) {
         
         
         // Cria o cenário do mundo com 57x63 células, cada célula tem
         // um tamanho de 4x4 pixels.
-        super(57, 63, 4);
+        super(57, 63, size/4); 
         
-        GameController gc = new GameController(this);
-
         // Define a imagem de fundo do cenário.
         setBackground(background);
 
@@ -48,8 +46,7 @@ public class PacManWorld extends World {
         // Esse método pertence à um classe do pacote do greenfoot,
         // antecipamente importada.
         Greenfoot.setSpeed(39);
-        SoundPlayer sp = new SoundPlayer();
-        //sp.playBackgroundNormal();
+        SoundPlayer.playBackgroundNormal();
     }
 
     /**

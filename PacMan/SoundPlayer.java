@@ -4,10 +4,10 @@ import javax.sound.sampled.AudioSystem;
 import java.io.File;
 
 /**
- * Write a description of class SoundPlayer here.
+ * Classe que prepara e executa os efeitos sonoros do jogo.
  * 
- * @author (your name)
- * @version (a version number or a date)
+ * @author Carlos, Raylson, Weydson
+ * @version 1.1
  */
 public class SoundPlayer  {
     private static Clip backgroundNormal;
@@ -17,7 +17,9 @@ public class SoundPlayer  {
     private static Clip effectGhostEaten;
     private static Clip effectPacmanDeath;
     private static Clip effectPacmanBeginning;
-    private static Clip effectPacmanIntermission;    
+    private static Clip effectPacmanIntermission;
+    private static Clip effectYouCegoMan;
+    private static Clip effectJaAvisei;
     private static final File normal = new File("sounds/background_normal.wav");
     private static final File eyes = new File("sounds/background_eyes.wav");
     private static final File frightened = new File("sounds/background_ghosts_frightened.wav");
@@ -26,108 +28,189 @@ public class SoundPlayer  {
     private static final File pillEaten = new File("sounds/pill_eaten.wav");
     private static final File pacmanBeginning = new File("sounds/pacman_beginning.wav");
     private static final File pacmanIntermission = new File("sounds/pacman_intermission.wav");
-
-    /**
-     * Cria um objeto que executa os efeitos sonoros do jogo.
-     */
-    public SoundPlayer(){
-        try {
-            backgroundNormal = AudioSystem.getClip();
-            backgroundNormal.open(AudioSystem.getAudioInputStream(normal));
-            backgroundEyes = AudioSystem.getClip();
-            backgroundEyes.open(AudioSystem.getAudioInputStream(eyes));
-            backgroundFrightened = AudioSystem.getClip();
-            backgroundFrightened.open(AudioSystem.getAudioInputStream(frightened));
-            effectPillEaten = AudioSystem.getClip();
-            effectPillEaten.open(AudioSystem.getAudioInputStream(pillEaten));
-            effectGhostEaten = AudioSystem.getClip();
-            effectGhostEaten.open(AudioSystem.getAudioInputStream(ghostEaten));
-            effectPacmanDeath = AudioSystem.getClip();
-            effectPacmanDeath.open(AudioSystem.getAudioInputStream(pacmanDeath));
-            effectPacmanBeginning = AudioSystem.getClip();
-            effectPacmanBeginning.open(AudioSystem.getAudioInputStream(pacmanBeginning));
-            effectPacmanIntermission = AudioSystem.getClip();
-            effectPacmanIntermission.open(AudioSystem.getAudioInputStream(pacmanIntermission));
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
+    private static final File youCegoMan = new File("sounds/you_cego_man.wav");
+    private static final File jaAvisei = new File("sounds/ja_avisei.wav");
 
     /**
      * Para a execução do som de fundo.
      */
     public static void stop(){
-        backgroundNormal.stop();
-        backgroundNormal.setFramePosition(0);
-        backgroundEyes.stop();
-        backgroundEyes.setFramePosition(0);
-        backgroundFrightened.stop();
-        backgroundFrightened.setFramePosition(0);
+        if(backgroundNormal != null){
+            backgroundNormal.stop();
+            backgroundNormal.setFramePosition(0);
+        }
+        if(backgroundEyes != null){
+            backgroundEyes.stop();
+            backgroundEyes.setFramePosition(0);
+        }
+        if(backgroundFrightened != null){
+            backgroundFrightened.stop();
+            backgroundFrightened.setFramePosition(0);
+        }
     }
 
     /**
      * Executa o som de fundo normal do labirinto.
      */
-    public static void playBackgroundNormal(){
+    public static void playBackgroundNormal(){        
+        if(backgroundNormal==null){
+            try{
+                backgroundNormal = AudioSystem.getClip();
+                backgroundNormal.open(AudioSystem.getAudioInputStream(normal));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
         backgroundNormal.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     /**
-     * Executa o som de fundo quando algum fantasma é comido.
+     * Executa o som de fundo em que um fantasma foi capturado.
      */    
-    public static void playBackgroundEyes(){
+    public static void playBackgroundEyes(){        
+        if(backgroundEyes==null){
+            try{
+                backgroundEyes = AudioSystem.getClip();
+                backgroundEyes.open(AudioSystem.getAudioInputStream(eyes));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
         backgroundEyes.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     /**
-     * Executa o som de fundo quando os fantasmas estão com medo.
+     * Executa o som de fundo em que os fantasmas estão amedrontados.
      */
     public static void playBackgroundFrightened(){
+        if(backgroundFrightened==null){
+            try{
+                backgroundFrightened = AudioSystem.getClip();
+                backgroundFrightened.open(AudioSystem.getAudioInputStream(frightened));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
         backgroundFrightened.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     /**
-     * Executa o efeito sonoro quando o pacman morre.
+     * Executa o efeito sonoro da morte do pacman.
      */
-    public static void playEffectPacmanDeath(){
+    public static void playEffectPacmanDeath(){      
+        if(effectPacmanDeath==null){
+            try{
+                effectPacmanDeath = AudioSystem.getClip();
+                effectPacmanDeath.open(AudioSystem.getAudioInputStream(pacmanDeath));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
         if(!effectPacmanDeath.isRunning()){
             effectPacmanDeath.loop(1);
         }
     }
 
     /**
-     * Executa o efeito sonoro quando o pacman come um fantasma.
+     * Executa o efeito sonoro quando do pacman comendo um fantasma.
      */
     public static void playEffectGhostEaten(){
+        if(effectGhostEaten==null){
+            try{
+                effectGhostEaten = AudioSystem.getClip();
+                effectGhostEaten.open(AudioSystem.getAudioInputStream(ghostEaten));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
         if(!effectGhostEaten.isRunning()){            
             effectGhostEaten.loop(1);
         }
     }
 
     /**
-     * Executa o efeito sonoro quando uma pastilha é comida.
+     * Executa o efeito sonoro de uma pastilha sendo comida.
      */
-    public static void playEffectPillEaten(){
+    public static void playEffectPillEaten(){       
+        if(effectPillEaten==null){
+            try{
+                effectPillEaten = AudioSystem.getClip();
+                effectPillEaten.open(AudioSystem.getAudioInputStream(pillEaten));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
         if(!effectPillEaten.isRunning()){            
             effectPillEaten.loop(1);
         }
     }
 
     /**
-     * Executa o efeito sonoro quando o jogo vai iniciar.
+     * Executa o efeito sonoro do início do jogo.
      */
-    public static void playEffectPacmanBeginning(){
-        if(!effectPacmanBeginning.isRunning()){           
+    public static void playEffectPacmanBeginning(){     
+        if(effectPacmanBeginning==null){
+            try{
+                effectPacmanBeginning = AudioSystem.getClip();
+                effectPacmanBeginning.open(AudioSystem.getAudioInputStream(pacmanBeginning));
+
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if(!effectPacmanBeginning.isRunning()){
+
             effectPacmanBeginning.loop(1);
         }
     }
 
     /**
-     * Executa o efeito sonoro quando o jogo termina.
+     * Executa o efeito sonoro do final do jogo.
      */
     public static void playEffectPacmanIntermission(){
+        if(effectPacmanIntermission==null){
+            try{
+                effectPacmanIntermission = AudioSystem.getClip();
+                effectPacmanIntermission.open(AudioSystem.getAudioInputStream(pacmanIntermission));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
         if(!effectPacmanIntermission.isRunning()){
             effectPacmanIntermission.loop(1);
+        }
+    }
+
+    /**
+     * Executa o efeito sonoro YOU CEGO MAN!
+     */
+    public static void playEffectYouCegoMan(){
+        if(effectYouCegoMan==null){
+            try{
+                effectYouCegoMan = AudioSystem.getClip();
+                effectYouCegoMan.open(AudioSystem.getAudioInputStream(youCegoMan));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if(!effectYouCegoMan.isRunning()){
+            effectYouCegoMan.loop(1);
+        }
+    }
+    /**
+     * Executa o efeito sonoro JÁ AVISEI!
+     */
+    public static void playEffectJaAvisei(){
+        if(effectJaAvisei == null){
+            try {
+                effectJaAvisei = AudioSystem.getClip();
+                effectJaAvisei.open(AudioSystem.getAudioInputStream(jaAvisei));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if(!effectJaAvisei.isRunning()){
+            effectJaAvisei.loop(1);
         }
     }
 }

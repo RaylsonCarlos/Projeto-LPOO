@@ -24,7 +24,7 @@ public class GameController {
      * Providencia a animação inicial do jogo.
      */
     private void inicio(){
-        
+        jogo();
     }
     /**
      * Providencia o ambiente do jogo.
