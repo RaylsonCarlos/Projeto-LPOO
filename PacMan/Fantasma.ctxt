@@ -1,16 +1,16 @@
 #BlueJ class context
 comment0.params=color
 comment0.target=Fantasma(int)
-comment0.text=\r\n\ Cria\ um\ fantasma\ com\ velocidade\ 3\r\n\ @param\ Cor\ do\ fantasma\:\ RED,\ PINK,\ BLUE\ ou\ BROWN.\r\n
+comment0.text=\r\n\ Construtor\ do\ fantasma.\r\n\ \r\n\ Cria\ um\ fantasma\ com\ uma\ velocidade\ padr\u00E3o\ de\ 3.\r\n\ \r\n\ @param\ color\ cor\ do\ fantasma\:\ RED,\ PINK,\ BLUE\ ou\ BROWN.\r\n
 comment1.params=
 comment1.target=void\ setSprite()
-comment1.text=\r\n\ Muda\ o\ sprite\ do\ fantasma\r\n
+comment1.text=\r\n\ Muda\ o\ sprite\ do\ fantasma.\r\n
 comment2.params=direction
 comment2.target=int\ oppositeDirection(int)
-comment2.text=Informa\ a\ dire\u00E7\u00E3o\ oposta\ \u00E0\ dire\u00E7\u00E3o\ que\ o\ personagem\ est\u00E1\ encarando.\r\n\ return\ Um\ Inteiro\ que\ descreve\ a\ dire\u00E7\u00E3o\:\ NORTH,\ SOUTH,\ EAST\ ou\ WEST\r\n
+comment2.text=\r\n\ Informa\ a\ dire\u00E7\u00E3o\ oposta\ \u00E0\ dire\u00E7\u00E3o\ que\ o\ personagem\ est\u00E1\ encarando.\r\n\ \r\n\ Dire\u00E7\u00F5es\:\ NORTH\ (0),\ SOUTH\ (1),\ EAST\ (2)\ ou\ WEST\ (3).\r\n\ \r\n\ @param\ direction\ um\ inteiro\ que\ define\ a\ dire\u00E7\u00E3o\ que\ o\ fantasma\ est\u00E1\ olhando.\r\n\ @return\ um\ inteiro\ que\ descreve\ a\ dire\u00E7\u00E3o.\r\n
 comment3.params=
 comment3.target=boolean\ preso()
-comment3.text=\ Informa\ se\ o\ fantasma\ est\u00E1\ dentro\ da\ cela\ do\ labirinto.\r\n\ return\ true\ se\ o\ fantasma\ est\u00E1\ dentro\ da\ cela\ do\ labirinto,\ false\ caso\ contr\u00E1rio.\r\n
+comment3.text=\r\n\ Informa\ se\ o\ fantasma\ est\u00E1\ dentro\ da\ cela\ do\ labirinto.\r\n\ \r\n\ @return\ true\ se\ o\ fantasma\ estiver\ dentro\ da\ cela,\ false\ caso\ n\u00E3o\ esteja.\r\n
 comment4.params=
 comment4.target=void\ rotaPreso()
 comment4.text=\r\n\ Define\ como\ o\ fantasma\ deve\ se\ movimentar\ se\ estiver\ preso\ na\ cela\ do\ labirinto\r\n

@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.params=world
 comment0.target=GameController(greenfoot.World)
-comment0.text=\r\n\ Cria\ o\ objeto\ que\ vai\ gerenciar\ o\ jogo.\r\n
+comment0.text=\r\n\ Cria\ o\ objeto\ que\ vai\ gerenciar\ o\ jogo.\r\n\ \r\n\ @param\ world\ o\ mundo\ que\ o\ GameController\ vai\ gerenciar.\r\n
 comment1.params=
 comment1.target=void\ inicio()
 comment1.text=\r\n\ Providencia\ a\ anima\u00E7\u00E3o\ inicial\ do\ jogo.\r\n
