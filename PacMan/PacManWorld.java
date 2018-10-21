@@ -12,7 +12,7 @@ import java.util.List;
 public class PacManWorld extends World {
     // Estabelece a imagem de fundo padrão do jogo e um inteiro para
     // a contagem de pontos.
-    private static final GreenfootImage background = new GreenfootImage("background.png");
+    static GreenfootImage background;
     private int points = 0;    
 
     /** 
@@ -20,13 +20,12 @@ public class PacManWorld extends World {
      * velocidade padrão, estabelece a imagem de fundo padrão e cria os objetos para as paredes, fantasmas, pastilhas e o PacMan.
      */
     public PacManWorld(int size) {
-        
-        
         // Cria o cenário do mundo com 57x63 células, cada célula tem
         // um tamanho de 4x4 pixels.
         super(57, 63, size/4); 
         
         // Define a imagem de fundo do cenário.
+        background = new GreenfootImage("background.png");
         setBackground(background);
 
         // Cria as paredes dentro do mundo.
@@ -46,6 +45,7 @@ public class PacManWorld extends World {
         // Esse método pertence à um classe do pacote do greenfoot,
         // antecipamente importada.
         Greenfoot.setSpeed(39);
+        System.out.println("aqui");
         SoundPlayer.playBackgroundNormal();
     }
 

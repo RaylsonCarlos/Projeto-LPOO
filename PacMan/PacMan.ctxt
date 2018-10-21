@@ -1,10 +1,10 @@
 #BlueJ class context
 comment0.params=
 comment0.target=PacMan()
-comment0.text=\r\n\ Inicializa\ o\ pacman\ com\ velocidade\ 3\ e\ dire\u00E7\u00E3o\ WEST.\r\n
+comment0.text=\r\n\ Inicializa\ o\ pac-man\ com\ velocidade\ 3,\ e\ dire\u00E7\u00E3o\ WEST\r\n
 comment1.params=
 comment1.target=boolean\ foundFood()
-comment1.text=\r\n\ Consome\ os\ objetos\ tipo\ Pastilha\ que\ estejam\ num\ raio\ de\ 1\ c\u00E9lula\ da\r\n\ localiza\u00E7\u00E3o\ do\ pacman.\r\n\ \r\n\ @return\ true\ se\ o\ pacman\ encontrar\ alguma\ comida,\ false\ caso\ n\u00E3o.\r\n
+comment1.text=Consome\ os\ objetos\ tipo\ {@link\ Pastilha}\ que\ estejam\ num\ raio\ de\ 1\ c\u00E9lula\r\n\ return\ true\ se\ o\ pac-man\ encontrou\ alguma\ comida\r\n
 comment2.params=
 comment2.target=void\ verificarTeclado()
 comment2.text=\r\n\ Verifica\ o\ teclado\ em\ busca\ de\ dire\u00E7\u00F5es\ para\ cima,\ baixo,\ esqueda\ ou\ direita.\r\n
