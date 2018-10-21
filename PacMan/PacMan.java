@@ -25,36 +25,40 @@ public class PacMan extends Personagem {
     /**Armazena o última direção escolhida pelo jogador
      */
     private int possibleDirection = Personagem.WEST;
-    
+
     /**Array dos sprites do pac-man.
      */
-    
-    private final static GreenfootImage[] spritesNORTH = new GreenfootImage[] 
-    {   new GreenfootImage("north_0.png"),
-        new GreenfootImage("north_1.png"), 
-        new GreenfootImage("north_2.png") };
-    private final static GreenfootImage[] spritesSOUTH = new GreenfootImage[] 
-    {   new GreenfootImage("south_0.png"),
-        new GreenfootImage("south_1.png"), 
-        new GreenfootImage("south_2.png") };
-    private final static GreenfootImage[] spritesEAST = new GreenfootImage[] 
-    {   new GreenfootImage("east_0.png"),
-        new GreenfootImage("east_1.png"), 
-        new GreenfootImage("east_2.png") };
-    private final static GreenfootImage[] spritesWEST = new GreenfootImage[] 
-    {   new GreenfootImage("west_0.png"),
-        new GreenfootImage("west_1.png"), 
-        new GreenfootImage("west_2.png") };
-        
+
+    private static GreenfootImage[] spritesNORTH;
+    private static GreenfootImage[] spritesSOUTH;
+    private static GreenfootImage[] spritesEAST;
+    private static GreenfootImage[] spritesWEST;
+
     /**
      * Inicializa o pac-man com velocidade 3, e direção WEST
      */
     public PacMan() {
         super(3);
+        spritesNORTH = new GreenfootImage[] 
+        {   new GreenfootImage("north_0.png"),
+            new GreenfootImage("north_1.png"), 
+            new GreenfootImage("north_2.png") };
+        spritesSOUTH = new GreenfootImage[] 
+        {   new GreenfootImage("south_0.png"),
+            new GreenfootImage("south_1.png"), 
+            new GreenfootImage("south_2.png") };
+        spritesEAST = new GreenfootImage[] 
+        {   new GreenfootImage("east_0.png"),
+            new GreenfootImage("east_1.png"), 
+            new GreenfootImage("east_2.png") };
         changeDirection(Personagem.WEST);
+        spritesWEST = new GreenfootImage[] 
+        {   new GreenfootImage("west_0.png"),
+            new GreenfootImage("west_1.png"), 
+            new GreenfootImage("west_2.png") };
         setImage(spritesWEST[1]);
     }
-    
+
     /**Consome os objetos tipo {@link Pastilha} que estejam num raio de 1 célula
      * return true se o pac-man encontrou alguma comida
      */
@@ -69,7 +73,7 @@ public class PacMan extends Personagem {
         }
         return false;
     }
-    
+
     /**
      * Verifica o teclado em busca de direções para cima, baixo, esqueda ou direita.
      */
@@ -95,7 +99,7 @@ public class PacMan extends Personagem {
             }
         }
     }
-    
+
     /**
      * Faz o pac-man agir: consome objetos pastilha, aplica efeito sonoro, verifica mudança de direção, move e muda os sprites do personagem.
      */
@@ -119,16 +123,16 @@ public class PacMan extends Personagem {
 
         if (timeToChangeSprite()) {
             switch (getDirection()) {
-            case Personagem.NORTH:
+                case Personagem.NORTH:
                 setImage(spritesNORTH[animationOffset[offset % 4]]);
                 break;
-            case Personagem.SOUTH:
+                case Personagem.SOUTH:
                 setImage(spritesSOUTH[animationOffset[offset % 4]]);
                 break;
-            case Personagem.EAST:
+                case Personagem.EAST:
                 setImage(spritesEAST[animationOffset[offset % 4]]);
                 break;
-            case Personagem.WEST:
+                case Personagem.WEST:
                 setImage(spritesWEST[animationOffset[offset % 4]]);
                 break;
             }

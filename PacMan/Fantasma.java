@@ -23,43 +23,48 @@ public class Fantasma extends Personagem
     /** Armazena o deslocamento dentro do array de sprites do fantasma */
     private int offset = 0;
     /** Sprites do fantasma vermelho */
-    private final static GreenfootImage [][] spritesRed = new GreenfootImage[][]{
-                                                                                 {new GreenfootImage("ghost_red_east_0.png"),new GreenfootImage("ghost_red_east_1.png")},
-                                                                                 {new GreenfootImage("ghost_red_west_0.png"),new GreenfootImage("ghost_red_west_1.png")},
-                                                                                 {new GreenfootImage("ghost_red_north_0.png"),new GreenfootImage("ghost_red_north_1.png")},
-                                                                                 {new GreenfootImage("ghost_red_south_0.png"),new GreenfootImage("ghost_red_south_1.png")}
-                                                                                };
+    private static GreenfootImage [][] spritesRed;
     /** Sprites do fantasma rosa */
-    private final static GreenfootImage [][] spritesPink = new GreenfootImage[][]{
-                                                                                 {new GreenfootImage("ghost_pink_east_0.png"),new GreenfootImage("ghost_pink_east_1.png")},
-                                                                                 {new GreenfootImage("ghost_pink_west_0.png"),new GreenfootImage("ghost_pink_west_1.png")},
-                                                                                 {new GreenfootImage("ghost_pink_north_0.png"),new GreenfootImage("ghost_pink_north_1.png")},
-                                                                                 {new GreenfootImage("ghost_pink_south_0.png"),new GreenfootImage("ghost_pink_south_1.png")}
-                                                                                };
+    private static GreenfootImage [][] spritesPink;
     /** Sprites do fantasma azul */
-    private final static GreenfootImage [][] spritesBlue = new GreenfootImage[][]{
-                                                                                 {new GreenfootImage("ghost_blue_east_0.png"),new GreenfootImage("ghost_blue_east_1.png")},
-                                                                                 {new GreenfootImage("ghost_blue_west_0.png"),new GreenfootImage("ghost_blue_west_1.png")},
-                                                                                 {new GreenfootImage("ghost_blue_north_0.png"),new GreenfootImage("ghost_blue_north_1.png")},
-                                                                                 {new GreenfootImage("ghost_blue_south_0.png"),new GreenfootImage("ghost_blue_south_1.png")}
-                                                                                };
-   /** Sprites do fantasma marrom */
-    private final static GreenfootImage [][] spritesBrown = new GreenfootImage[][]{
-                                                                                 {new GreenfootImage("ghost_brown_east_0.png"),new GreenfootImage("ghost_brown_east_1.png")},
-                                                                                 {new GreenfootImage("ghost_brown_west_0.png"),new GreenfootImage("ghost_brown_west_1.png")},
-                                                                                 {new GreenfootImage("ghost_brown_north_0.png"),new GreenfootImage("ghost_brown_north_1.png")},
-                                                                                 {new GreenfootImage("ghost_brown_south_0.png"),new GreenfootImage("ghost_brown_south_1.png")}
-                                                                                }; 
-   /** Sprites dos fantasmas */
-    private final static GreenfootImage[][][] sprites = new GreenfootImage[][][]{spritesRed,spritesPink,spritesBlue,spritesBrown};
-    
-    
+    private static GreenfootImage [][] spritesBlue;
+    /** Sprites do fantasma marrom */
+    private static GreenfootImage [][] spritesBrown ; 
+    /** Sprites dos fantasmas */
+    private static GreenfootImage[][][] sprites;
+
     /**
      * Cria um fantasma com velocidade 3
      * @param Cor do fantasma: RED, PINK, BLUE ou BROWN.
      */
-    public Fantasma(int color){
+    public Fantasma(int color){        
         super(3);
+        spritesRed = new GreenfootImage[][]{
+            {new GreenfootImage("ghost_red_east_0.png"),new GreenfootImage("ghost_red_east_1.png")},
+            {new GreenfootImage("ghost_red_west_0.png"),new GreenfootImage("ghost_red_west_1.png")},
+            {new GreenfootImage("ghost_red_north_0.png"),new GreenfootImage("ghost_red_north_1.png")},
+            {new GreenfootImage("ghost_red_south_0.png"),new GreenfootImage("ghost_red_south_1.png")}
+        };
+        spritesPink = new GreenfootImage[][]{
+            {new GreenfootImage("ghost_pink_east_0.png"),new GreenfootImage("ghost_pink_east_1.png")},
+            {new GreenfootImage("ghost_pink_west_0.png"),new GreenfootImage("ghost_pink_west_1.png")},
+            {new GreenfootImage("ghost_pink_north_0.png"),new GreenfootImage("ghost_pink_north_1.png")},
+            {new GreenfootImage("ghost_pink_south_0.png"),new GreenfootImage("ghost_pink_south_1.png")}
+        };
+        spritesBlue = new GreenfootImage[][]{
+            {new GreenfootImage("ghost_blue_east_0.png"),new GreenfootImage("ghost_blue_east_1.png")},
+            {new GreenfootImage("ghost_blue_west_0.png"),new GreenfootImage("ghost_blue_west_1.png")},
+            {new GreenfootImage("ghost_blue_north_0.png"),new GreenfootImage("ghost_blue_north_1.png")},
+            {new GreenfootImage("ghost_blue_south_0.png"),new GreenfootImage("ghost_blue_south_1.png")}
+        };
+        spritesBrown = new GreenfootImage[][]{
+            {new GreenfootImage("ghost_brown_east_0.png"),new GreenfootImage("ghost_brown_east_1.png")},
+            {new GreenfootImage("ghost_brown_west_0.png"),new GreenfootImage("ghost_brown_west_1.png")},
+            {new GreenfootImage("ghost_brown_north_0.png"),new GreenfootImage("ghost_brown_north_1.png")},
+            {new GreenfootImage("ghost_brown_south_0.png"),new GreenfootImage("ghost_brown_south_1.png")}
+        }; 
+        sprites = new GreenfootImage[][][]{spritesRed,spritesPink,spritesBlue,spritesBrown};
+
         if(color != RED && color != PINK && color != BLUE && color != BROWN ){
             this.color = RED;
         } else {
@@ -67,32 +72,32 @@ public class Fantasma extends Personagem
         }
         setSprite();
     }
-    
+
     /**
      * Muda o sprite do fantasma
      */
-    
+
     private void setSprite(){
         switch(getDirection()){
             case Personagem.NORTH:
-                setImage(sprites[color][2][offset%2]);
+            setImage(sprites[color][2][offset%2]);
             break;
             case Personagem.SOUTH:
-                setImage(sprites[color][3][offset%2]);
+            setImage(sprites[color][3][offset%2]);
             break;
             case Personagem.EAST:
-                setImage(sprites[color][0][offset%2]);
+            setImage(sprites[color][0][offset%2]);
             break;
             case Personagem.WEST:
-                setImage(sprites[color][1][offset%2]);
+            setImage(sprites[color][1][offset%2]);
             break;
         }
     }
-    
+
     /**Informa a direção oposta à direção que o personagem está encarando.
      * return Um Inteiro que descreve a direção: NORTH, SOUTH, EAST ou WEST
      */
-    
+
     private int oppositeDirection(int direction){
         int oppositeDirection = Personagem.NORTH;
         switch(direction){
@@ -111,11 +116,11 @@ public class Fantasma extends Personagem
         }
         return oppositeDirection;
     }
-    
+
     /** Informa se o fantasma está dentro da cela do labirinto.
      * return true se o fantasma está dentro da cela do labirinto, false caso contrário.
      */
-    
+
     private boolean preso(){
         int x = getX();
         int y = getY();        
@@ -125,11 +130,11 @@ public class Fantasma extends Personagem
             return false;
         }
     }
-    
+
     /**
      * Define como o fantasma deve se movimentar se estiver preso na cela do labirinto
      */
-    
+
     private void rotaPreso(){
         if(!canMoveNorth()){
             changeDirection(Personagem.SOUTH);
@@ -138,7 +143,7 @@ public class Fantasma extends Personagem
             changeDirection(Personagem.NORTH);
         }
     }
-    
+
     /**
      * Define como o fantasma deve se movimentar se estiver fora da cela.
      */
@@ -146,7 +151,7 @@ public class Fantasma extends Personagem
         List<Integer> rotas = new ArrayList<Integer>();
         int direction = getDirection();
         int oppositeDirection = oppositeDirection(direction);
-        
+
         if(canMoveNorth()){
             rotas.add(Personagem.NORTH);
         }
@@ -167,11 +172,11 @@ public class Fantasma extends Personagem
             changeDirection(rotas.get(rand));
         }
     }
-    
+
     /**
      * Faz o fantasma se mover e mudar os sprites do personagem.
      */
-    
+
     public void act()
     {
         if(preso()){

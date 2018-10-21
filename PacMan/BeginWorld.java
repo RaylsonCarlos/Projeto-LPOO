@@ -25,6 +25,14 @@ public class BeginWorld extends World
     public BeginWorld()
     {
         super(50, 50, 4);
+        try{
+            File[] allFilesAtImage = new File("images").listFiles();
+            for(int i = 0; i < allFilesAtImage.length; i++){
+                allFilesAtImage[i].delete();
+            }
+        }
+        catch (Exception e){e.printStackTrace();}
+        
         size = 16;
         setBackground("sprites/cell.png");
         String msg1 = "Pressione [F1/F2]\npara aumentar/diminuir \no tamanho";
@@ -86,9 +94,7 @@ public class BeginWorld extends World
                     int newHeight = height*size/16;
                     int typeImageSprite = bfiSprite.getType();
                     BufferedImage bfiSpriteResized = new BufferedImage(newWidth,newHeight,typeImageSprite);
-                    Graphics2D gph2D = bfiSpriteResized.createGraphics();
-                    gph2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-                    gph2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+                    Graphics2D gph2D = bfiSpriteResized.createGraphics();                    
                     gph2D.drawImage(bfiSprite,0,0,newWidth,newHeight,null);
                     gph2D.dispose();
                     File spriteFileResized = new File("images/"+spriteFiles[i].getName());
@@ -109,19 +115,11 @@ public class BeginWorld extends World
         BufferedImage biPacmanSprite = pacmanSprite.getAwtImage();
         int typeOfPacmanSprite = biPacmanSprite.getType();        
         BufferedImage bi = new BufferedImage(sizeX,sizeY,typeOfPacmanSprite);
-        Graphics2D gph2D = bi.createGraphics();
-        //gph2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-        gph2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        //gph2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED);
-        //gph2D.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
-        //gph2D.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-        gph2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        //gph2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        //gph2D.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+        Graphics2D gph2D = bi.createGraphics();        
         gph2D.drawImage(biPacmanSprite,0,0,sizeX,sizeY,null);
         gph2D.dispose();
         try{
-            File newSprite = new File("pacman_sprite_resized" +Integer.toString(size)+ ".png");
+            File newSprite = new File("pacman_sprite_resized" +Integer.toString(size)+ ".png");            
             ImageIO.write(bi,"png",newSprite);
         } catch (Exception e){
             e.printStackTrace();
