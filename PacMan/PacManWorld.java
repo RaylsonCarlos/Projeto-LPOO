@@ -22,7 +22,11 @@ public class PacManWorld extends World {
     public PacManWorld(int size) {
         // Cria o cenário do mundo com 57x63 células, cada célula tem
         // um tamanho de 4x4 pixels.
+<<<<<<< HEAD
         super(57, 68, size/4);
+=======
+        super(57, 63, size/4); 
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
         
         // Define a imagem de fundo do cenário.
         background = new GreenfootImage("background.png");
@@ -40,12 +44,16 @@ public class PacManWorld extends World {
         // Adiciona um objeto do tipo PacMan ao mundo, nas células
         // 28 e 47, utilizando um método da classe World.
         addObject(new PacMan(),28,47);
+<<<<<<< HEAD
         
         //Adiciona um objeto do tipo Life ao mundo, nas células
         //3 e 65, 8 e 65, 13 e 65; 
         addObject(new Life(), 3, 65); 
         addObject(new Life(), 8, 65); 
         addObject(new Life(), 13, 65);
+=======
+
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
         // Define a velocidade de execucação das ações.
         // Esse método pertence à um classe do pacote do greenfoot,
         // antecipamente importada.

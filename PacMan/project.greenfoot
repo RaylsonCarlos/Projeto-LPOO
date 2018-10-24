@@ -1,12 +1,21 @@
 #Greenfoot properties
+<<<<<<< HEAD
 #Wed Oct 24 10:33:03 BRST 2018
+=======
+#Tue Oct 23 21:29:04 GMT-03:00 2018
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 editor.fx.0.height=728
 target2.width=80
 target8.name=Personagem
 target5.naviview.expanded=true
 dependency12.type=UsesDependency
+<<<<<<< HEAD
 target1.type=ClassTarget
 target7.showInterface=false
+=======
+target7.showInterface=false
+target1.type=ClassTarget
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 mainWindow.height=687
 target2.editor.y=35
 target6.typeParameters=
@@ -17,8 +26,13 @@ target8.y=130
 target8.x=100
 target2.editor.width=1382
 dependency2.type=UsesDependency
+<<<<<<< HEAD
 target5.type=ClassTarget
 xPosition=450
+=======
+xPosition=450
+target5.type=ClassTarget
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 target6.y=10
 target6.x=70
 target1.showInterface=false
@@ -26,9 +40,15 @@ target4.y=10
 dependency10.from=PacMan
 target4.x=180
 dependency6.type=UsesDependency
+<<<<<<< HEAD
 target4.showInterface=false
 target9.type=ClassTarget
 target9.editor.width=1190
+=======
+target9.type=ClassTarget
+target9.editor.width=1190
+target4.showInterface=false
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 class.Personagem.superclass=greenfoot.Actor
 publish.title=
 target2.y=70
@@ -67,12 +87,21 @@ dependency1.to=Pastilha
 target4.editor.x=549
 publish.tags=
 dependency3.type=UsesDependency
+<<<<<<< HEAD
 target2.height=50
 target2.typeParameters=
 target6.type=ClassTarget
 dependency11.to=SoundPlayer
 dependency11.from=BeginWorld
 target9.typeParameters=
+=======
+target6.type=ClassTarget
+target2.height=50
+target2.typeParameters=
+dependency11.to=SoundPlayer
+target9.typeParameters=
+dependency11.from=BeginWorld
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 dependency7.type=UsesDependency
 target1.naviview.expanded=true
 version=2.7.1
@@ -88,15 +117,25 @@ yPosition=131
 mainWindow.y=9
 mainWindow.x=427
 target5.showInterface=false
+<<<<<<< HEAD
 dependency5.from=PacManWorld
 target8.showInterface=false
+=======
+target8.showInterface=false
+dependency5.from=PacManWorld
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 target7.typeParameters=
 target2.name=PacMan
 dependency9.from=PacManWorld
 readme.name=@README
 readme.editor.height=700
+<<<<<<< HEAD
 target6.name=PacManWorld
 target6.naviview.expanded=true
+=======
+target6.naviview.expanded=true
+target6.name=PacManWorld
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 target9.height=50
 target6.editor.y=57
 target6.editor.x=-87
@@ -109,24 +148,39 @@ dependency2.to=PacMan
 publish.url=
 target9.y=190
 target9.x=10
+<<<<<<< HEAD
 target3.type=ClassTarget
 target6.height=50
+=======
+target6.height=50
+target3.type=ClassTarget
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 publish.hasSource=false
 target3.editor.width=1386
 dependency12.to=GameController
 target7.y=190
 target7.x=120
 target2.editor.height=744
+<<<<<<< HEAD
 class.GameController.superclass=
 target5.y=70
 target5.x=160
 target7.editor.y=46
+=======
+target5.y=70
+class.GameController.superclass=
+target7.editor.y=46
+target5.x=160
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 dependency4.type=UsesDependency
 target7.type=ClassTarget
 target7.editor.x=468
 target3.y=130
 target3.x=10
+<<<<<<< HEAD
 class.Life.image=east_1.png
+=======
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 class.PacManWorld.superclass=greenfoot.World
 dependency7.to=Wall
 dependency12.from=BeginWorld
@@ -151,11 +205,19 @@ target3.name=Fantasma
 target6.showInterface=false
 target3.typeParameters=
 class.Wall.superclass=greenfoot.Actor
+<<<<<<< HEAD
 dependency3.to=Personagem
 target9.showInterface=false
 target7.name=GameController
 target2.naviview.expanded=true
 target9.naviview.expanded=true
+=======
+target9.showInterface=false
+dependency3.to=Personagem
+target7.name=GameController
+target9.naviview.expanded=true
+target2.naviview.expanded=true
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 dependency11.type=UsesDependency
 package.numDependencies=13
 target9.editor.y=17
@@ -173,23 +235,37 @@ target9.width=100
 target7.height=50
 dependency5.type=UsesDependency
 target8.type=ClassTarget
+<<<<<<< HEAD
 class.Life.superclass=greenfoot.Actor
 dependency13.from=BeginWorld
 dependency9.type=UsesDependency
 target3.editor.height=788
 target6.width=100
 target7.naviview.expanded=true
+=======
+dependency13.from=BeginWorld
+dependency9.type=UsesDependency
+target3.editor.height=788
+target7.naviview.expanded=true
+target6.width=100
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 readme.editor.y=0
 readme.editor.x=0
 target7.width=110
 target6.editor.height=744
 height=468
+<<<<<<< HEAD
 dependency3.from=PacManWorld
 target9.editor.height=689
+=======
+target9.editor.height=689
+dependency3.from=PacManWorld
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 target1.typeParameters=
 target3.width=80
 target4.width=80
 target8.typeParameters=
+<<<<<<< HEAD
 target1.editor.y=60
 dependency7.from=Personagem
 target1.editor.x=60
@@ -199,6 +275,17 @@ class.Pastilha.superclass=greenfoot.Actor
 target4.editor.width=900
 target4.name=Wall
 class.SoundPlayer.superclass=
+=======
+dependency7.from=Personagem
+target1.editor.y=60
+target1.editor.x=60
+target5.width=80
+dependency4.to=Fantasma
+target4.editor.width=900
+class.Pastilha.superclass=greenfoot.Actor
+class.SoundPlayer.superclass=
+target4.name=Wall
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 readme.y=10
 readme.x=10
 target4.height=50

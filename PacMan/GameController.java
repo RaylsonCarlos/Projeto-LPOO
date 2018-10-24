@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import greenfoot.*;
 import java.awt.Color;
+=======
+import greenfoot.World;
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
 
 /**
  * Classe para controlar o fluxo do jogo.
@@ -20,7 +24,10 @@ public class GameController {
         this.world = world;
         pontos = 0;
         inicio();
+<<<<<<< HEAD
         score();
+=======
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
     }
     /**
      * Providencia a animação inicial do jogo.
@@ -41,6 +48,7 @@ public class GameController {
         
     }
     
+<<<<<<< HEAD
     public void score(){
         String msg1 = "SCORE:";
         GreenfootImage score = new GreenfootImage(msg1,6*world.getCellSize(),Color.WHITE,null);
@@ -49,3 +57,9 @@ public class GameController {
         this.world.addObject(actor1,40,65);
     }
 }
+=======
+   
+    
+    
+}
+>>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
