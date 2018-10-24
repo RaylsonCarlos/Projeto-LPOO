@@ -1,50 +1,40 @@
 import greenfoot.*;
 
 /**
- * A classe Personagem providencia os movimentos e animações básicos de personagens de 16x16 pixels.
+ * A classe Personagem providencia os movimentos e animações básicas dos personagens.
+ * 
+ * Os personagens são formados por 16x16 pixels.
  * 
  * @author Raylson, Carlos, Weydson
  * @version 1.1
  */
 public class Personagem extends Actor
 {
-    /**
-     * Direção norte.
-     */
+    /** Direção norte. */
     public static final int NORTH = 0;
-    /**
-     * Direção sul.
-     */
+    
+    /** Direção sul. */
     public static final int SOUTH = 1;
-    /**
-     * Direção leste.
-     */
+    
+    /** Direção leste. */
     public static final int EAST = 2;
-    /**
-     * Direção oeste.
-     */
+    
+    /** Direção oeste. */
     public static final int WEST = 3;
     
-    public int speed = 3;
-    /**
-     * Armazena a direção que o personagem está encarando.
-     */
+    // Velocidade.
+    private int speed = 3;
+
+    // Direção que o personagem está encarando.
     private int direction;
     private int turnos;
-    
-    
-    
-    /**
-     * Conta os turnos do jogo para a mudança de sprites.
-     */
+
+    // Conta os turnos do jogo para a mudança de sprites.
     private int tick = 0;
-    /**
-     * Quantidade de turnos até o próximo sprite.
-     */
+    
+    // Quantidade de turnos até o próximo sprite.
     private int howManyTurns;
     
-    
-
     /** Cria um personagem que muda de sprite em howManyTurns turnos e com a direção norte
      * @param howManyTurns A quantidade de turnos até a próximo sprite
      */
@@ -58,6 +48,11 @@ public class Personagem extends Actor
         }
     }
     
+    /**
+     * Modifica a velocidade com que o personagem se move pelo labirinto.
+     * @param speed assume valores inteiros entre [0..3].
+     */
+    
     public void setSpeed(int speed){
         if(speed > 3 || speed < 0){
             speed = 3;
@@ -66,12 +61,18 @@ public class Personagem extends Actor
         }
     }
     
+    
+    /**
+     * Retorna a velocidade do personagem.
+     * @return Um inteiro entre [0..3].
+     */
     public int getSpeed(){
         return this.speed;
     }
 
     /**
-     * Muda a direção que o personagem está encarando
+     * Muda a direção que o personagem está encarando.
+     * @param direction NORTH, SOUTH, EAST ou WEST
      */
     public void changeDirection(int direction){
         this.direction = direction;
@@ -79,7 +80,7 @@ public class Personagem extends Actor
     }
 
     /**
-     * Informa a direção que o personagem está encarando
+     * Informa a direção que o personagem está encarando.
      * @return NORTH, SOUTH, EAST OU WEST.
      */
     public int getDirection(){
@@ -97,6 +98,11 @@ public class Personagem extends Actor
             return false;
         }
     }
+    
+    /**
+     * Verifica se o personagem pode se mover na direção NORTH.
+     * @return True se é possível se mover, false caso contrário.
+     */
 
     public boolean canMoveNorth(){
         World myWorld = getWorld();
@@ -108,6 +114,11 @@ public class Personagem extends Actor
         if(myWorld.getObjectsAt(x+1,y,Wall.class).size() > 0){return false;}
         return true;
     }
+    
+    /**
+     * Verifica se o personagem pode se mover na direção SOUTH.
+     * @return True se é possível se mover, false caso contrário.
+     */
 
     public boolean canMoveSouth(){
         World myWorld = getWorld();
@@ -119,10 +130,15 @@ public class Personagem extends Actor
         if(myWorld.getObjectsAt(x-1,y,Wall.class).size() > 0){ return false;}
         return true;
     }
+    
+    /**
+     * Verifica se o personagem pode se mover na direção EAST.
+     * @return True se é possível se mover, false caso contrário.
+     */
 
     public boolean canMoveEast(){
         World myWorld = getWorld();
-        //Verificando duas células à direito.
+        //Verificando duas células à direita.
         int x = getX() + 2;
         int y = getY();
         if(myWorld.getObjectsAt(x,y+1,Wall.class).size() > 0){ return false;}
@@ -130,6 +146,11 @@ public class Personagem extends Actor
         if(myWorld.getObjectsAt(x,y-1,Wall.class).size() > 0){return false;}
         return true;
     }
+    
+    /**
+     * Verifica se o personagem pode se mover na direção WEST.
+     * @return True se é possível se mover, false caso contrário.
+     */
 
     public boolean canMoveWest(){
         World myWorld = getWorld();        
