@@ -44,8 +44,7 @@ public class PacManWorld extends World {
         // Define a velocidade de execucação das ações.
         // Esse método pertence à um classe do pacote do greenfoot,
         // antecipamente importada.
-        Greenfoot.setSpeed(39);
-        System.out.println("aqui");
+        Greenfoot.setSpeed(39);        
         SoundPlayer.playBackgroundNormal();
     }
 
@@ -285,7 +284,7 @@ public class PacManWorld extends World {
     }
     
     /**   
-      Instancia os Fanstasmas e põe eles no labirinto.
+    * Instancia os Fanstasmas e põe eles no labirinto.
     */
 
     public void populateFantasma() {
@@ -294,29 +293,25 @@ public class PacManWorld extends World {
         Fantasma blinky = new Fantasma(Fantasma.RED);
         Fantasma pinky = new Fantasma(Fantasma.PINK);
 
-        // Define a velocidade no PacManWorld do Fantasma rosa
-        // utilizando o método setSpeed(int) da classe World.
-        pinky.setSpeed(2);
-
         // Cria um objeto do Fantasma azul.
-        Fantasma inky = new Fantasma(Fantasma.BLUE);
-        
-        // Define a velocidade do Fantasma azul no PacManWorld.
-        inky.setSpeed(2);
+        Fantasma inky = new Fantasma(Fantasma.BLUE);        
 
         // Cria um objeto do Fantasma marrom.
-        Fantasma clyde = new Fantasma(Fantasma.BROWN);        
-
-        // Define a velocidade do Fantasma marrom no PacManWorld.
-        clyde.setSpeed(2);
-
+        Fantasma clyde = new Fantasma(Fantasma.BROWN); 
+        
         // Adiciona os objetos dos Fanstasmas vermelho, rosa, azul
         // e marrom ao PacManWorld, nas suas respectivas células no
         // eixo X e Y.
-        addObject(pinky,32,30);
-        addObject(inky,28,30);
-        addObject(clyde,24,30);
+        addObject(pinky,32,23);
+        addObject(inky,28,23);
+        addObject(clyde,24,23);
         addObject(blinky,28,23);
+        
+        blinky.setEstado(Fantasma.DEAD);
+        inky.setEstado(Fantasma.FEAR);
+        inky.setSpeed(2);
+        clyde.setEstado(Fantasma.RECOVERING);
+        clyde.setSpeed(2);
     }
     
     /**
@@ -332,7 +327,7 @@ public class PacManWorld extends World {
     
     /**
      * Cria as bordas externas, para delimitar o mundo onde o
-     * PacMan, os Fanstasmas e as Pastilhas podem agir.
+     * PacMan, os Fantasmas e as Pastilhas podem agir.
      */
     private void bordasExternas(){
         // Cria as paredes verticais e horizontais, informando os

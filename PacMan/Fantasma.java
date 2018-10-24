@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * A Classe Fantasma representa os fantasmas do labirinto.
  * 
  * @author Raylson, Carlos, Weydson
- * @version 2.0
+ * @version 2.1
  */
 public class Fantasma extends Personagem
 {
@@ -20,6 +20,16 @@ public class Fantasma extends Personagem
     public final static int BROWN = 3;
     /** Variável para armazenar a cor do fantasma */
     private int color;
+    /** Estado do fantasma vivo*/
+    public final static int ALIVE = 0;
+    /** Estado do fantasma morto*/
+    public final static int DEAD = 1;
+    /** Estado do fantasma com medo*/
+    public final static int FEAR = 2;
+    /** Estado do fantasma se recuperando*/
+    public final static int RECOVERING = 3;
+    /** Estado do fantasma: DEAD, ALIVE,FEAR ou RECOVERING*/
+    private int estado;
     /** Armazena o deslocamento dentro do array de sprites do fantasma */
     private int offset = 0;
     /** Sprites do fantasma vermelho */
@@ -29,7 +39,11 @@ public class Fantasma extends Personagem
     /** Sprites do fantasma azul */
     private static GreenfootImage [][] spritesBlue;
     /** Sprites do fantasma marrom */
-    private static GreenfootImage [][] spritesBrown ; 
+    private static GreenfootImage [][] spritesBrown;
+    /** Sprites do fantasma amendrontado */
+    private static GreenfootImage [][] spritesAmedrontado;
+    /** Sprites do fantasmam morto */
+    private static GreenfootImage [][] spritesMorto;
     /** Sprites dos fantasmas */
     private static GreenfootImage[][][] sprites;
 
@@ -37,7 +51,7 @@ public class Fantasma extends Personagem
      * Cria um fantasma com velocidade 3
      * @param Cor do fantasma: RED, PINK, BLUE ou BROWN.
      */
-    public Fantasma(int color){        
+    public Fantasma(int color){
         super(3);
         spritesRed = new GreenfootImage[][]{
             {new GreenfootImage("ghost_red_east_0.png"),new GreenfootImage("ghost_red_east_1.png")},
@@ -62,40 +76,92 @@ public class Fantasma extends Personagem
             {new GreenfootImage("ghost_brown_west_0.png"),new GreenfootImage("ghost_brown_west_1.png")},
             {new GreenfootImage("ghost_brown_north_0.png"),new GreenfootImage("ghost_brown_north_1.png")},
             {new GreenfootImage("ghost_brown_south_0.png"),new GreenfootImage("ghost_brown_south_1.png")}
-        }; 
-        sprites = new GreenfootImage[][][]{spritesRed,spritesPink,spritesBlue,spritesBrown};
+        };
+        spritesAmedrontado = new GreenfootImage [][] {
+            {new GreenfootImage("frightened_0.png"), new GreenfootImage("frightened_1.png"),new GreenfootImage("recovering_1.png"), new GreenfootImage("recovering_0.png")}
+        };
+        spritesMorto = new GreenfootImage [][] {
+            {new GreenfootImage("ghost_eye_east.png"), new GreenfootImage("ghost_eye_west.png"),new GreenfootImage("ghost_eye_north.png"), new GreenfootImage("ghost_eye_south.png")}
+        };
+        sprites = new GreenfootImage[][][]{spritesRed,spritesPink,spritesBlue,spritesBrown,spritesAmedrontado,spritesMorto};
 
         if(color != RED && color != PINK && color != BLUE && color != BROWN ){
             this.color = RED;
         } else {
             this.color = color;
         }
+        estado = ALIVE;
         setSprite();
     }
-
+    
     /**
-     * Muda o sprite do fantasma
+     * Informa o estado do fantasma.
+     * 
+     * @return um inteiro que representa um dos estados: ALIVE, DEAD, FEAR ou RECOVERING.
      */
-
-    private void setSprite(){
-        switch(getDirection()){
-            case Personagem.NORTH:
-            setImage(sprites[color][2][offset%2]);
-            break;
-            case Personagem.SOUTH:
-            setImage(sprites[color][3][offset%2]);
-            break;
-            case Personagem.EAST:
-            setImage(sprites[color][0][offset%2]);
-            break;
-            case Personagem.WEST:
-            setImage(sprites[color][1][offset%2]);
-            break;
+    public int getEstado(){
+        return estado;
+    }
+    
+    /**
+     * Modifica o estado do personagem.
+     * 
+     * @param algum dos estados possíveis: ALIVE, DEAD, FEAR ou RECOVERING. Parâmetro inválido gera o estado ALIVE.
+     */
+    public void setEstado(int estado){
+        if(estado < 0 || estado > 3) {
+            this.estado = ALIVE;
+        } else {
+            this.estado = estado;
         }
     }
 
+    /**
+     * Muda o sprite do fantasma.
+     */
+    private void setSprite(){
+        if(estado == ALIVE){
+            switch(getDirection()){
+                case Personagem.NORTH:
+                setImage(sprites[color][2][offset%2]);
+                break;
+                case Personagem.SOUTH:
+                setImage(sprites[color][3][offset%2]);
+                break;
+                case Personagem.EAST:
+                setImage(sprites[color][0][offset%2]);
+                break;
+                case Personagem.WEST:
+                setImage(sprites[color][1][offset%2]);
+                break;
+            }
+        } else if (estado == FEAR){
+            setImage(sprites[4][0][offset%2]);
+        } else if (estado == RECOVERING) {
+            setImage(sprites[4][0][offset%4]);
+        } else if (estado == DEAD) {
+            switch(getDirection()){
+                case Personagem.NORTH:
+                setImage(sprites[5][0][2]);
+                break;
+                case Personagem.SOUTH:
+                setImage(sprites[5][0][3]);
+                break;
+                case Personagem.EAST:
+                setImage(sprites[5][0][0]);
+                break;
+                case Personagem.WEST:
+                setImage(sprites[5][0][1]);
+                break;
+            }
+        } else {
+            //do nothing...
+        }
+
+    }
+
     /**Informa a direção oposta à direção que o personagem está encarando.
-     * return Um Inteiro que descreve a direção: NORTH, SOUTH, EAST ou WEST
+     * @return Um Inteiro que descreve a direção: NORTH, SOUTH, EAST ou WEST
      */
 
     private int oppositeDirection(int direction){
@@ -118,12 +184,12 @@ public class Fantasma extends Personagem
     }
 
     /** Informa se o fantasma está dentro da cela do labirinto.
-     * return true se o fantasma está dentro da cela do labirinto, false caso contrário.
+     * @return true se o fantasma está dentro da cela do labirinto, false caso contrário.
      */
 
     private boolean preso(){
         int x = getX();
-        int y = getY();        
+        int y = getY();
         if(x > 22  && x < 34 && y > 26 && y < 32){
             return true;
         } else {
@@ -134,7 +200,6 @@ public class Fantasma extends Personagem
     /**
      * Define como o fantasma deve se movimentar se estiver preso na cela do labirinto
      */
-
     private void rotaPreso(){
         if(!canMoveNorth()){
             changeDirection(Personagem.SOUTH);
@@ -176,7 +241,6 @@ public class Fantasma extends Personagem
     /**
      * Faz o fantasma se mover e mudar os sprites do personagem.
      */
-
     public void act()
     {
         if(preso()){
