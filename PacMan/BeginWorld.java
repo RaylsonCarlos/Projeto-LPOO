@@ -25,10 +25,7 @@ public class BeginWorld extends World
     public BeginWorld()
     {
         super(50, 50, 4);
-<<<<<<< HEAD
-        
-=======
->>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
+
         try{
             File[] allFilesAtImage = new File("images").listFiles();
             for(int i = 0; i < allFilesAtImage.length; i++){
@@ -36,10 +33,7 @@ public class BeginWorld extends World
             }
         }
         catch (Exception e){e.printStackTrace();}
-<<<<<<< HEAD
-=======
-        
->>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
+
         size = 16;
         setBackground("sprites/cell.png");
         String msg1 = "Pressione [F1/F2]\npara aumentar/diminuir \no tamanho";
@@ -55,12 +49,7 @@ public class BeginWorld extends World
         pacman.setImage(pacmanSprite);
         addObject(actor1,25,7);
         addObject(actor2,25,45);
-<<<<<<< HEAD
-        addObject(pacman,25,27); 
-        
-=======
-        addObject(pacman,25,27);        
->>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
+        addObject(pacman,25,27);
     }
 
     public void act(){

@@ -11,12 +11,8 @@ comment2.text=\r\n\ Providencia\ o\ ambiente\ do\ jogo.\r\n
 comment3.params=
 comment3.target=void\ fim()
 comment3.text=\r\n\ Finaliza\ o\ jogo.\r\n
-<<<<<<< HEAD
 comment4.params=
 comment4.target=void\ score()
 comment5.params=
 comment5.target=void\ act()
 numComments=6
-=======
-numComments=4
->>>>>>> 1a6a4ce22ec1c3c5ad02f95ba0ad62cc5aac3b99
