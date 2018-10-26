@@ -13,15 +13,16 @@ public class PacManWorld extends World {
     // Estabelece a imagem de fundo padrão do jogo e um inteiro para
     // a contagem de pontos.
     static GreenfootImage background;
-    private int points = 0;    
+    private long timer;
+    private int points = 0;
 
     /** 
      * O construtor da classe PacManWorld cria o cenário do mundo, define a
      * velocidade padrão, estabelece a imagem de fundo padrão e cria os objetos para as paredes, fantasmas, pastilhas e o PacMan.
      */
     public PacManWorld(int size) {
-        // Cria o cenário do mundo com 57x63 células, cada célula tem
-        // um tamanho de 4x4 pixels.
+        // Cria o cenário do mundo com 57x68 células, cada célula tem
+        // um tamanho de size/4 pixels.
 
         super(57, 68, size/4);
 
@@ -117,7 +118,7 @@ public class PacManWorld extends World {
             }
         }
     }
-
+    
     /**
      * Verifica quantas pastilhas existem e faz uma contagem de pontos para cada
      * pastilha comida pelo PacMan.
@@ -213,27 +214,28 @@ public class PacManWorld extends World {
         pastilhasHorizontal(17, 45, 53);
         pastilhasVertical(37, 13, 19);
         pastilhasHorizontal(17, 31, 37);
-        pastilhasVertical(31, 19, 23);
-        pastilhasVertical(25, 19, 23);
-        pastilhasHorizontal(23, 19, 39);
-        pastilhasVertical(19, 25, 43);
-        pastilhasVertical(37, 25, 43);
-        addObject(new Pastilha(), 15, 29);
-        addObject(new Pastilha(), 17, 29);
-        addObject(new Pastilha(), 39, 29);
-        addObject(new Pastilha(), 41, 29);
-        pastilhasHorizontal(35, 21, 37);
-        addObject(new Pastilha(), 15, 41);
-        addObject(new Pastilha(), 17, 41);
-        addObject(new Pastilha(), 39, 41);
-        addObject(new Pastilha(), 41, 41);
-        pastilhasHorizontal(47, 15, 43);
-        pastilhasHorizontal(41, 21, 27);
-        pastilhasHorizontal(41, 31, 37);
+        //pastilhasVertical(31, 19, 23);
+        //pastilhasVertical(25, 19, 23);
+        //pastilhasHorizontal(23, 19, 39);
+        //pastilhasVertical(19, 25, 43);
+        //pastilhasVertical(37, 25, 43);
+        //addObject(new Pastilha(), 15, 29);
+        //addObject(new Pastilha(), 17, 29);
+        //addObject(new Pastilha(), 39, 29);
+        //addObject(new Pastilha(), 41, 29);
+        //pastilhasHorizontal(35, 21, 35);
+        //addObject(new Pastilha(), 15, 41);
+        //addObject(new Pastilha(), 17, 41);
+        //addObject(new Pastilha(), 39, 41);
+        //addObject(new Pastilha(), 41, 41);
+        pastilhasHorizontal(47, 15, 27);
+        pastilhasHorizontal(47, 29, 43);
+        //pastilhasHorizontal(41, 21, 27);
+        pastilhasHorizontal(41, 31, 55);
         pastilhasVertical(25, 43, 47);
         pastilhasVertical(31, 43, 47);
-        pastilhasHorizontal(41, 3, 13);
-        pastilhasHorizontal(41, 45, 55);
+        pastilhasHorizontal(41, 3, 27);
+        //pastilhasHorizontal(41, 45, 55);
         pastilhasVertical(3, 43, 49);
         pastilhasVertical(53, 43, 49);
         addObject(new Pastilha(), 5, 47);
@@ -261,8 +263,23 @@ public class PacManWorld extends World {
         addObject(new Pastilha(), 31, 55);
         addObject(new Pastilha(), 31, 57);
         pastilhasHorizontal(59, 5, 53);
-        pastilhasHorizontal(29, 3, 13);
-        pastilhasHorizontal(29, 45, 55);
+        //pastilhasHorizontal(29, 3, 13);
+        //pastilhasHorizontal(29, 45, 55);
+        populatePastilhaEspecial();
+    }
+    
+    /**
+     * Cria as pastilhas especiais.
+     */
+    private void populatePastilhaEspecial(){
+        removeObjects(getObjectsAt(3,7,Pastilha.class));
+        removeObjects(getObjectsAt(53,7,Pastilha.class));
+        removeObjects(getObjectsAt(3,47,Pastilha.class));
+        removeObjects(getObjectsAt(53,47,Pastilha.class));
+        addObject(new PastilhaEspecial(),3,7);
+        addObject(new PastilhaEspecial(),53,7);
+        addObject(new PastilhaEspecial(),3,47);
+        addObject(new PastilhaEspecial(),53,47);
     }
 
     /**
@@ -321,17 +338,14 @@ public class PacManWorld extends World {
         
         blinky.setEstado(Fantasma.DEAD);
         inky.setEstado(Fantasma.FEAR);
-        inky.setSpeed(2);
         clyde.setEstado(Fantasma.RECOVERING);
-        clyde.setSpeed(2);
     }
     
     /**
      * Cria a cela, onde os Fanstasmas irão ficar presos no início
      * do jogo.
      */
-    private void cela()
-    {
+    private void cela(){
         // Cria um quadrado para a cela dos Fantasmas.
         squareWall(21,25,14,8);
         squareWall(22,26,12,6);
@@ -344,27 +358,27 @@ public class PacManWorld extends World {
     private void bordasExternas(){
         // Cria as paredes verticais e horizontais, informando os
         // eixos X e Y.
-        duplaLinhaVertical(1,1,19);
-        duplaLinhaVertical(55,1,19);
-        duplaLinhaHorizontal(1,1,27);
-        duplaLinhaHorizontal(1,29,55);
-        duplaLinhaHorizontal(19,1,11);
-        duplaLinhaHorizontal(19,45,55);
-        duplaLinhaVertical(11,19,27);
-        duplaLinhaVertical(45,19,27);
-        duplaLinhaHorizontal(27,-1,11);
-        duplaLinhaHorizontal(27,45,56);
-        duplaLinhaHorizontal(31,-1,11);
-        duplaLinhaHorizontal(31,45,56);
-        duplaLinhaVertical(11,31,39);
-        duplaLinhaVertical(45,31,39);
-        duplaLinhaHorizontal(39,1,11);
-        duplaLinhaHorizontal(39,45,55);
-        duplaLinhaVertical(1,39,49);
-        duplaLinhaVertical(55,39,49);
-        duplaLinhaVertical(1,51,61);
-        duplaLinhaVertical(55,51,61);
-        duplaLinhaHorizontal(61,1,55);
+        linhaVertical(1,1,19);
+        linhaVertical(55,1,19);
+        linhaHorizontal(1,1,27);
+        linhaHorizontal(1,29,55);
+        linhaHorizontal(19,1,11);
+        linhaHorizontal(19,45,55);
+        linhaVertical(11,19,27);
+        linhaVertical(45,19,27);
+        linhaHorizontal(27,-1,11);
+        linhaHorizontal(27,45,56);
+        linhaHorizontal(31,-1,11);
+        linhaHorizontal(31,45,56);
+        linhaVertical(11,31,39);
+        linhaVertical(45,31,39);
+        linhaHorizontal(39,1,11);
+        linhaHorizontal(39,45,55);
+        linhaVertical(1,39,49);
+        linhaVertical(55,39,49);
+        linhaVertical(1,51,61);
+        linhaVertical(55,51,61);
+        linhaHorizontal(61,1,55);
     }
     
     /**
@@ -399,7 +413,7 @@ public class PacManWorld extends World {
      * @param y0 célula de eixo Y incial
      * @param y1 célula de eixo Y final
      */
-    private void duplaLinhaVertical(int x, int y0, int y1) {
+    private void linhaVertical(int x, int y0, int y1) {
         // Usa um for iniciando com o valor do eixo y0 e incrementa
         // 1 até atingir o valor do eixo y1.
         for (int i = y0 + 1; i < y1; i++) {
@@ -415,7 +429,7 @@ public class PacManWorld extends World {
      * @param x0 célula de eixo X incial
      * @param x1 célula de eixo X final
      */
-    private void duplaLinhaHorizontal(int y, int x0, int x1)
+    private void linhaHorizontal(int y, int x0, int x1)
     {
         // Usa um for iniciando com o valor do eixo x0 e incrementa
         // 1 até atingir o valor do eixo x1.

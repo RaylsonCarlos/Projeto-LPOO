@@ -11,21 +11,21 @@ import greenfoot.World;
  */
 public class GameController {
     //Armazena a instância do mundo controlada por essa classe.
-    private World world;
+    private static World world;
     //Armazena a quantidade de pontos do jogador.
-    private int pontos;
+    private static int points;
+    private static Actor placar;
 
     /**
      * Cria o objeto que vai gerenciar o jogo.
      */
     public GameController(World world){
         this.world = world;
-        pontos = 0;
-        inicio();
-
-        score();
-
-
+        points = 0;               
+        placar = new Actor(){public void act(){}};
+        world.addObject(placar,40,65);
+        score(0);
+        inicio(); 
     }
     /**
      * Providencia a animação inicial do jogo.
@@ -47,12 +47,12 @@ public class GameController {
     }
     
 
-    public void score(){
-        String msg1 = "SCORE:";
+    public static void score(int pointsToAdd){
+        points += pointsToAdd;
+        String msg1 = "SCORE: " + points;
         GreenfootImage score = new GreenfootImage(msg1,6*world.getCellSize(),Color.WHITE,null);
-        Actor actor1 = new Actor(){public void act(){}};
-        actor1.setImage(score);
-        this.world.addObject(actor1,40,65);
+        placar.setImage(score);
+        world.repaint();
     }
 }
 

@@ -20,16 +20,20 @@ public class Fantasma extends Personagem
     public final static int BROWN = 3;
     /** Variável para armazenar a cor do fantasma */
     private int color;
-    /** Estado do fantasma vivo*/
+    /** Estado do fantasma vivo */
     public final static int ALIVE = 0;
-    /** Estado do fantasma morto*/
+    /** Estado do fantasma morto */
     public final static int DEAD = 1;
-    /** Estado do fantasma com medo*/
+    /** Estado do fantasma com medo */
     public final static int FEAR = 2;
-    /** Estado do fantasma se recuperando*/
+    /** Estado do fantasma se recuperando */
     public final static int RECOVERING = 3;
-    /** Estado do fantasma: DEAD, ALIVE,FEAR ou RECOVERING*/
+    /** Estado do fantasma: DEAD, ALIVE,FEAR ou RECOVERING */
     private int estado;
+    /** Timer interno de estado do fantasma */
+    private long timer;
+    /** Tempo de efeito das pastilhas */
+    private long tempoEfeito = 3000;
     /** Armazena o deslocamento dentro do array de sprites do fantasma */
     private int offset = 0;
     /** Sprites do fantasma vermelho */
@@ -237,12 +241,69 @@ public class Fantasma extends Personagem
             changeDirection(rotas.get(rand));
         }
     }
+    
+    /**
+     * Controla o efeito das pastilhas.
+     */
+    private void controlEfeitoPastilha(){
+        if(estado == Fantasma.RECOVERING){
+            if((System.currentTimeMillis() - timer) > tempoEfeito){
+                setAlive();
+            }
+        }
+        if(estado == Fantasma.FEAR){
+            if((System.currentTimeMillis() - timer) > tempoEfeito ){
+                setRecovering();
+            }
+        }
+    }
+    
+    /**
+     * Inicia o efeito das pastilhas.
+     */
+    public void efeitoPastilha(){
+        setFear();
+    }
+    
+    /**
+     * Altera o estado para FEAR.
+     */
+    private void setFear(){
+        if(estado != Fantasma.DEAD){
+            estado = Fantasma.FEAR;
+        } else {
+            return;
+        }
+        timer = System.currentTimeMillis();
+        setSpeed(2);
+    }
+    
+    /**
+     * Altera o estado para RECOVERING.
+     */
+    private void setRecovering(){
+        if(estado == Fantasma.FEAR){
+            estado = Fantasma.RECOVERING;
+        }
+        timer = System.currentTimeMillis();
+    }
+    
+    /**
+     * Altera o estado para ALIVE.
+     */
+    private void setAlive(){
+        if(estado == Fantasma.RECOVERING){
+            estado = Fantasma.ALIVE;
+        }
+        setSpeed(3);
+    }
 
     /**
      * Faz o fantasma se mover e mudar os sprites do personagem.
      */
     public void act()
     {
+        controlEfeitoPastilha();
         if(preso()){
             rotaPreso();
         } else {

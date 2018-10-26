@@ -11,8 +11,8 @@ import greenfoot.GreenfootSound;
  * @version 1.1
  */
 public class SoundPlayer  {
-    private static GreenfootSound backgroundNormal;
-    private static GreenfootSound backgroundEyes;
+    private static GreenfootSound backgroundNormal = new GreenfootSound("sounds/background_normal.wav");
+    private static GreenfootSound backgroundEyes = new GreenfootSound("sounds/background_eyes.wav");
     private static GreenfootSound backgroundFrightened;
     private static Clip effectPillEaten;
     private static Clip effectGhostEaten;
@@ -47,16 +47,14 @@ public class SoundPlayer  {
     /**
      * Executa o som de fundo normal do labirinto.
      */
-    public static void playBackgroundNormal(){
-        backgroundNormal = new GreenfootSound("sounds/background_normal.wav");
+    public static void playBackgroundNormal(){       
         backgroundNormal.playLoop();
     }
 
     /**
      * Executa o som de fundo em que um fantasma foi capturado.
      */    
-    public static void playBackgroundEyes(){
-        backgroundEyes = new GreenfootSound("sounds/background_eyes.wav");
+    public static void playBackgroundEyes(){        
         backgroundEyes.playLoop();
     }
 

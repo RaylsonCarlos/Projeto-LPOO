@@ -62,20 +62,39 @@ public class PacMan extends Personagem {
     /**Consome os objetos tipo {@link Pastilha} que estejam num raio de 1 célula
      * return true se o pac-man encontrou alguma comida
      */
-    private boolean foundFood() {
-        List<Actor> food = getObjectsInRange(1, Pastilha.class);
+    private int foundFood() {
+        int points = 0;
+        List<Pastilha> food = getObjectsInRange(1, Pastilha.class);
         if (food.size() > 0) {
             Iterator it = food.iterator();
-            while (it.hasNext()) {
-                getWorld().removeObject((Actor) it.next());
+            while (it.hasNext()) {                
+                if(it.next() instanceof PastilhaEspecial){
+                    points += 50;
+                    foundPastilhaEspecial();
+                } else {
+                    points += 10;
+                }                
             }
-            return true;
+            getWorld().removeObjects(food);           
         }
-        return false;
+       return points;
     }
+    
+    /**
+     * Método chamado quando o pacman encontra uma pastilha especial
+     */
+    private void foundPastilhaEspecial(){
+        List<Fantasma> fantasmas = getWorld().getObjects(Fantasma.class);
+        for(Fantasma fan : fantasmas){
+            fan.efeitoPastilha();
+        }
+        SoundPlayer.stop();
+        SoundPlayer.playBackgroundFrightened();
+    }
+    
 
     /**
-     * Verifica o teclado em busca de direções para cima, baixo, esqueda ou direita.
+     * Verifica o teclado em busca de direções para cima, baixo, esquerda ou direita.
      */
     private void verificarTeclado() {
         String key = Greenfoot.getKey();
@@ -105,10 +124,10 @@ public class PacMan extends Personagem {
      */
     @Override
     public void act() {
-
-        if (foundFood()) {
+        int points = foundFood();
+        GameController.score(points);
+        if (points > 0) {
             SoundPlayer.playEffectPillEaten();
-            //Greenfoot.playSound("pill_eaten.wav");
         }
 
         verificarTeclado();
