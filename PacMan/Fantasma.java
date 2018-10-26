@@ -118,6 +118,7 @@ public class Fantasma extends Personagem
         } else {
             this.estado = estado;
         }
+        setSpeed(3);
     }
 
     /**

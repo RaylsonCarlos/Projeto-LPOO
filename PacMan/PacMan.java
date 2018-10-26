@@ -33,6 +33,7 @@ public class PacMan extends Personagem {
     private static GreenfootImage[] spritesSOUTH;
     private static GreenfootImage[] spritesEAST;
     private static GreenfootImage[] spritesWEST;
+    private static GreenfootImage[] spritesDead;
 
     /**
      * Inicializa o pac-man com velocidade 3, e direção WEST
@@ -56,6 +57,18 @@ public class PacMan extends Personagem {
         {   new GreenfootImage("west_0.png"),
             new GreenfootImage("west_1.png"), 
             new GreenfootImage("west_2.png") };
+        spritesDead = new GreenfootImage[]
+        {   new GreenfootImage("dead_0.png"),
+            new GreenfootImage("dead_1.png"),
+            new GreenfootImage("dead_2.png"),
+            new GreenfootImage("dead_3.png"),
+            new GreenfootImage("dead_4.png"),
+            new GreenfootImage("dead_5.png"),
+            new GreenfootImage("dead_6.png"),
+            new GreenfootImage("dead_7.png"),
+            new GreenfootImage("dead_8.png"),
+            new GreenfootImage("dead_9.png"),
+            new GreenfootImage("dead_10.png") };
         setImage(spritesWEST[1]);
     }
 
@@ -77,9 +90,9 @@ public class PacMan extends Personagem {
             }
             getWorld().removeObjects(food);           
         }
-       return points;
+        return points;
     }
-    
+
     /**
      * Método chamado quando o pacman encontra uma pastilha especial
      */
@@ -91,7 +104,6 @@ public class PacMan extends Personagem {
         SoundPlayer.stop();
         SoundPlayer.playBackgroundFrightened();
     }
-    
 
     /**
      * Verifica o teclado em busca de direções para cima, baixo, esquerda ou direita.
@@ -116,6 +128,46 @@ public class PacMan extends Personagem {
                 possibleDirection = Personagem.WEST;
                 contadorDirection = 0;
             }
+        }
+    }
+
+    public boolean tocaFantasma() {
+        World world = getWorld();
+
+        int x = getX();
+        int y = getY();
+
+        if(world.getObjectsAt(x, y, Fantasma.class).size() > 0) { return true; }
+        if(world.getObjectsAt(x+1, y, Fantasma.class).size() > 0) { return true; }
+        if(world.getObjectsAt(x-1, y, Fantasma.class).size() > 0) { return true; }
+        if(world.getObjectsAt(x, y+1, Fantasma.class).size() > 0) { return true; }
+        if(world.getObjectsAt(x, y-1, Fantasma.class).size() > 0) { return true; }
+
+        return false;
+    }
+
+    public int estadoFantasma() {
+        List<Fantasma> fantasmas = getIntersectingObjects(Fantasma.class);
+        NullPointerException erro = new NullPointerException();
+        int estado;
+
+        for(int i = 0; i < fantasmas.size(); i++) {
+            if(fantasmas.get(i) != null) {
+                estado = fantasmas.get(i).getEstado();
+
+                return estado;
+            }
+        }
+
+        throw erro;
+    }
+
+    public void dead() throws InterruptedException {
+        SoundPlayer.playEffectPacmanDeath();
+        for(int i = 0; i < 11; i++){
+            setImage(spritesDead[i]);
+            getWorld().repaint();
+            Thread.sleep(150);
         }
     }
 
@@ -157,7 +209,32 @@ public class PacMan extends Personagem {
             }
             offset++;
         }
-
+        
+        World world = getWorld();
+        
         super.act();
+
+        if(tocaFantasma()) {
+            switch(estadoFantasma()) {
+                case Fantasma.ALIVE:
+                    try {
+                        Greenfoot.stop();
+                        dead();
+                        SoundPlayer.stop();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case Fantasma.FEAR:                    
+                    ((Fantasma)getOneIntersectingObject(Fantasma.class)).setEstado(Fantasma.DEAD);
+                    SoundPlayer.playEffectGhostEaten();
+                    break;
+                case Fantasma.RECOVERING:                    
+                    ((Fantasma)getOneIntersectingObject(Fantasma.class)).setEstado(Fantasma.DEAD);
+                    SoundPlayer.playEffectGhostEaten();
+                    break; 
+            }
+        }
+        
     }
 }
