@@ -75,6 +75,9 @@ public class Personagem extends Actor
      * @param direction NORTH, SOUTH, EAST ou WEST
      */
     public void changeDirection(int direction){
+        if(this.direction == direction){
+            return;
+        }
         this.direction = direction;
         tick = 0;
     }
@@ -151,7 +154,6 @@ public class Personagem extends Actor
      * Verifica se o personagem pode se mover na direção WEST.
      * @return True se é possível se mover, false caso contrário.
      */
-
     public boolean canMoveWest(){
         World myWorld = getWorld();        
         //Verificando duas células à esquerda.
@@ -169,13 +171,13 @@ public class Personagem extends Actor
     public boolean canMove(int direction){
         switch(direction){
             case EAST:
-            return canMoveEast();
+                return canMoveEast();
             case WEST:
-            return canMoveWest();
+                return canMoveWest();
             case NORTH:            
-            return canMoveNorth();
+                return canMoveNorth();
             case SOUTH:
-            return canMoveSouth();
+                return canMoveSouth();
         }
         return true;
     }

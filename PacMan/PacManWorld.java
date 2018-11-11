@@ -12,8 +12,11 @@ import java.util.List;
 public class PacManWorld extends World {
     // Estabelece a imagem de fundo padrão do jogo e um inteiro para
     // a contagem de pontos.
-    static GreenfootImage background;
-    private long timer;
+    private static GreenfootImage background;
+    /** Timer para contar o tempo para libertar fantasmas*/
+    private long timerCela = 0l;
+    /** Tempo em milisegundos para libertar um fantasma*/
+    private int tempoCela = 6000;
     private int points = 0;
 
     /** 
@@ -57,8 +60,9 @@ public class PacManWorld extends World {
         // Define a velocidade de execucação das ações.
         // Esse método pertence à um classe do pacote do greenfoot,
         // antecipamente importada.
-        Greenfoot.setSpeed(39);        
+        Greenfoot.setSpeed(39);
         SoundPlayer.playBackgroundNormal();
+        timerCela = System.currentTimeMillis();
     }
 
     /**
@@ -70,8 +74,25 @@ public class PacManWorld extends World {
         // atravessarem ao local oposto no cenário do mundo.
         
         portal();
+        liberarFantasma();
         adicionarPontos();
         ganharJogo();
+    }
+    
+    /**
+     * Método que liberta fantasmas se estiver no tempo.
+     */
+    private void liberarFantasma(){
+        if(System.currentTimeMillis() - timerCela > tempoCela){
+            List<Fantasma> fantasmas = getObjects(Fantasma.class);
+            for(Fantasma fan : fantasmas){
+                if(!fan.liberdade()){
+                    fan.setLiberdade(true);
+                    break;
+                }
+            }
+            timerCela = System.currentTimeMillis();
+        }
     }
 
     /**
@@ -160,11 +181,11 @@ public class PacManWorld extends World {
     }
 
     /**
-     * Verifica se existe algum objeto do tipo Personagem dentro das células do 
+     * Verifica se existe algum objeto do tipo Personagem dentro das células do
      * portal (X: 0 ou X: 56 & Y: 29).
      * 
      * @param per um objeto do tipo Personagem.
-     * @return true se o Personagem per estiver em determinada célula do eixo X e 
+     * @return true se o Personagem per estiver em determinada célula do eixo X e
      *         false se não estiver.
      */
     private boolean isInsidePortal(Personagem per) {
@@ -262,7 +283,7 @@ public class PacManWorld extends World {
         addObject(new Pastilha(), 25, 57);
         addObject(new Pastilha(), 31, 55);
         addObject(new Pastilha(), 31, 57);
-        pastilhasHorizontal(59, 5, 53);
+        pastilhasHorizontal(59, 5, 53);        
         //pastilhasHorizontal(29, 3, 13);
         //pastilhasHorizontal(29, 45, 55);
         populatePastilhaEspecial();
@@ -271,11 +292,7 @@ public class PacManWorld extends World {
     /**
      * Cria as pastilhas especiais.
      */
-    private void populatePastilhaEspecial(){
-        removeObjects(getObjectsAt(3,7,Pastilha.class));
-        removeObjects(getObjectsAt(53,7,Pastilha.class));
-        removeObjects(getObjectsAt(3,47,Pastilha.class));
-        removeObjects(getObjectsAt(53,47,Pastilha.class));
+    private void populatePastilhaEspecial(){        
         addObject(new PastilhaEspecial(),3,7);
         addObject(new PastilhaEspecial(),53,7);
         addObject(new PastilhaEspecial(),3,47);
@@ -315,7 +332,6 @@ public class PacManWorld extends World {
     /**   
     * Instancia os Fanstasmas e põe eles no labirinto.
     */
-
     public void populateFantasma() {
         //TODO: cada um tem suas próprias características.
         // Cria objetos dos Fantasmas vermelho e rosa.
@@ -323,27 +339,25 @@ public class PacManWorld extends World {
         Fantasma pinky = new Fantasma(Fantasma.PINK);
 
         // Cria um objeto do Fantasma azul.
-        Fantasma inky = new Fantasma(Fantasma.BLUE);        
+        Fantasma inky = new Fantasma(Fantasma.BLUE);
 
         // Cria um objeto do Fantasma marrom.
-        Fantasma clyde = new Fantasma(Fantasma.BROWN); 
+        Fantasma clyde = new Fantasma(Fantasma.BROWN);
         
         // Adiciona os objetos dos Fanstasmas vermelho, rosa, azul
         // e marrom ao PacManWorld, nas suas respectivas células no
         // eixo X e Y.
-        addObject(pinky,32,23);
-        addObject(inky,28,23);
-        addObject(clyde,24,23);
+        addObject(pinky,28,30);
+        addObject(inky,32,30);
+        addObject(clyde,24,30);
         addObject(blinky,28,23);
         
-        blinky.setEstado(Fantasma.DEAD);
-        inky.setEstado(Fantasma.FEAR);
-        clyde.setEstado(Fantasma.RECOVERING);
+        blinky.setLiberdade(true);
+        pinky.setLiberdade(true);
     }
     
     /**
-     * Cria a cela, onde os Fanstasmas irão ficar presos no início
-     * do jogo.
+     * Cria a cela, onde os Fanstasmas irão ficar presos no início do jogo.
      */
     private void cela(){
         // Cria um quadrado para a cela dos Fantasmas.
@@ -384,8 +398,7 @@ public class PacManWorld extends World {
     /**
      * Cria as paredes que representam as quinas externas do labirinto.
      */
-    private void quinasExternas()
-    {
+    private void quinasExternas(){
         // Adiciona objetos do tipo Wall nos eixos x e y
         // passados como parâmetros.
         addObject(new Wall(),1,1);

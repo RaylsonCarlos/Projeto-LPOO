@@ -17,7 +17,7 @@ public class BeginWorld extends World
 {
     private Actor pacman;
     private int size;
-    private GreenfootImage pacmanSprite;    
+    private GreenfootImage pacmanSprite;
 
     /**
      * Constructor for objects of class BeginWorld.

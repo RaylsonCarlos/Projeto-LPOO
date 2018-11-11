@@ -9,31 +9,36 @@ import java.util.Iterator;
  * @version 2.0
  */
 public class PacMan extends Personagem {
-    /**Variável para controlar o deslocamento no array de sprites.
-     */
+    /**Variável para controlar o deslocamento no array de sprites. */
     private int offset = 0;
-    /**Array para controlar a ordem de exibição dos sprites.
-     */
-    private final static int[] animationOffset = { 0, 1, 2, 1 };
-    /**Armazena a quantidade de turnos que já se passaram desde que o jogador tentou mudar de direção.
-     */
+    /**Array para controlar a ordem de exibição dos sprites. */
+    private final static int[] animationOffset = {0, 1, 2, 1};
+    /**Armazena a quantidade de turnos que já se passaram desde que o jogador tentou mudar de direção. */
     private int contadorDirection = 0;
     /**Controla em até quantos turnos o comando do jogador de mudar de direção será executado (se possível).
      * Valores maiores suavizam a tomada de direção do personagem, valores menores diminuem a janela de tempo para o jogador apertar das teclas.
      */
     private static final int delayDirection = 6;
-    /**Armazena o última direção escolhida pelo jogador
-     */
+    /**Armazena o última direção escolhida pelo jogador */
     private int possibleDirection = Personagem.WEST;
 
-    /**Array dos sprites do pac-man.
-     */
+    /** Variável para controle do tempo do efeito de pastilha especial*/
+    private long timer;
+    /** Tempo de duração do efeito da pastilha especial*/
+    private int tempoEfeitoPastilha = 6000;
 
+    /** Variavel que controla o número de fantasmas comidos no efeito de uma pastilha especial*/
+    private int contadorFantasmaComido;
+
+    /**Array dos sprites do pac-man.*/
     private static GreenfootImage[] spritesNORTH;
     private static GreenfootImage[] spritesSOUTH;
     private static GreenfootImage[] spritesEAST;
     private static GreenfootImage[] spritesWEST;
     private static GreenfootImage[] spritesDead;
+
+    /** Array de sprites da pontuação dos fantasmas*/
+    private static GreenfootImage[] spritesPontos;
 
     /**
      * Inicializa o pac-man com velocidade 3, e direção WEST
@@ -69,6 +74,11 @@ public class PacMan extends Personagem {
             new GreenfootImage("dead_8.png"),
             new GreenfootImage("dead_9.png"),
             new GreenfootImage("dead_10.png") };
+        spritesPontos = new GreenfootImage[]{
+            new GreenfootImage("points_200.png"),
+            new GreenfootImage("points_400.png"),
+            new GreenfootImage("points_800.png"),
+            new GreenfootImage("points_1600.png")};
         setImage(spritesWEST[1]);
     }
 
@@ -80,13 +90,17 @@ public class PacMan extends Personagem {
         List<Pastilha> food = getObjectsInRange(1, Pastilha.class);
         if (food.size() > 0) {
             Iterator it = food.iterator();
-            while (it.hasNext()) {                
+            while (it.hasNext()) {
                 if(it.next() instanceof PastilhaEspecial){
+                    if((System.currentTimeMillis() - timer) > tempoEfeitoPastilha){
+                        contadorFantasmaComido = 0;
+                    }
                     points += 50;
+                    timer = System.currentTimeMillis();
                     foundPastilhaEspecial();
-                } else {
+                } else {                    
                     points += 10;
-                }                
+                }
             }
             getWorld().removeObjects(food);           
         }
@@ -144,6 +158,67 @@ public class PacMan extends Personagem {
         if(world.getObjectsAt(x, y-1, Fantasma.class).size() > 0) { return true; }
 
         return false;
+    }
+
+    private List<Fantasma> fantasmasInterseccao(){
+        List<Fantasma> fantasmas = getIntersectingObjects(Fantasma.class);        
+        return fantasmas;
+    }
+
+    private void verificaFantasmas() throws InterruptedException {
+
+        World world = getWorld();
+        List<Fantasma> fantasmas = fantasmasInterseccao();
+
+        //Lista vazia de fantasmas 
+        if(fantasmas.size() <= 0){
+            return;
+        }
+
+        int points = 0;
+
+        for(Fantasma fan : fantasmas){
+            switch(fan.getEstado()){
+                case Fantasma.ALIVE:
+                world.removeObjects(fantasmas);
+                SoundPlayer.stop();
+                Greenfoot.stop();
+                dead();
+                return;
+                case Fantasma.RECOVERING:
+                this.setImage("blank_image.png");
+                points = pontuacaoFantasma(fan);
+                GameController.score(points);
+                getWorld().repaint();
+                SoundPlayer.playEffectGhostEaten();
+                timer+=500;
+                Thread.sleep(500);
+                fan.setDead();                    
+                break;
+                case Fantasma.FEAR:
+                this.setImage("blank_image.png");
+                points = pontuacaoFantasma(fan);
+                GameController.score(points);
+                getWorld().repaint();
+                SoundPlayer.playEffectGhostEaten();
+                timer+=500;
+                Thread.sleep(500);
+                fan.setDead();
+                break;
+            }
+        }
+    }
+
+    private int pontuacaoFantasma(Fantasma fan){
+
+        fan.setImage(spritesPontos[contadorFantasmaComido]);
+
+        if(contadorFantasmaComido < 3){
+            contadorFantasmaComido++;
+            return ((int) Math.pow(2,contadorFantasmaComido)) * 100;
+        } else {
+            return ((int) Math.pow(2,contadorFantasmaComido+1)) * 100;
+        }
     }
 
     public int estadoFantasma() {
@@ -209,32 +284,40 @@ public class PacMan extends Personagem {
             }
             offset++;
         }
-        
+
         World world = getWorld();
-        
+
         super.act();
 
-        if(tocaFantasma()) {
-            switch(estadoFantasma()) {
-                case Fantasma.ALIVE:
-                    try {
-                        Greenfoot.stop();
-                        dead();
-                        SoundPlayer.stop();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case Fantasma.FEAR:                    
-                    ((Fantasma)getOneIntersectingObject(Fantasma.class)).setEstado(Fantasma.DEAD);
-                    SoundPlayer.playEffectGhostEaten();
-                    break;
-                case Fantasma.RECOVERING:                    
-                    ((Fantasma)getOneIntersectingObject(Fantasma.class)).setEstado(Fantasma.DEAD);
-                    SoundPlayer.playEffectGhostEaten();
-                    break; 
-            }
+        try {
+            verificaFantasmas();
+        } catch (Exception e){
+            e.printStackTrace();
         }
-        
+        /**
+
+        if(tocaFantasma()) {
+        switch(estadoFantasma()) {
+        case Fantasma.ALIVE:
+        try {
+        Greenfoot.stop();
+        dead();
+        SoundPlayer.stop();
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+        break;
+        case Fantasma.FEAR:                    
+        ((Fantasma)getOneIntersectingObject(Fantasma.class)).setDead();
+        SoundPlayer.playEffectGhostEaten();
+        break;
+        case Fantasma.RECOVERING:                    
+        ((Fantasma)getOneIntersectingObject(Fantasma.class)).setDead();
+        SoundPlayer.playEffectGhostEaten();
+        break;
+        }
+        }
+         */
+
     }
 }

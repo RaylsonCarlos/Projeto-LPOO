@@ -25,7 +25,7 @@ public class GameController {
         placar = new Actor(){public void act(){}};
         world.addObject(placar,40,65);
         score(0);
-        inicio(); 
+        inicio();
     }
     /**
      * Providencia a animação inicial do jogo.

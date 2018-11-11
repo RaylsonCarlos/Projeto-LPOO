@@ -33,7 +33,9 @@ public class Fantasma extends Personagem
     /** Timer interno de estado do fantasma */
     private long timer;
     /** Tempo de efeito das pastilhas */
-    private long tempoEfeito = 3000;
+    private int tempoEfeito = 3000;
+    /** Armazena se o fantasma deve sair da cela*/
+    boolean liberdade = false;
     /** Armazena o deslocamento dentro do array de sprites do fantasma */
     private int offset = 0;
     /** Sprites do fantasma vermelho */
@@ -97,7 +99,23 @@ public class Fantasma extends Personagem
         estado = ALIVE;
         setSprite();
     }
-    
+
+    /**
+     * Informa se o fantasma deve ser liberado da cela.
+     * @return true caso deva ser liberado da cela, false caso contrário
+     */
+    public boolean liberdade(){
+        return liberdade;
+    }
+
+    /**
+     * Altera se o fantasma deve ser liberado da cela ou não.
+     * @param liberar valor a ser alterado
+     */
+    public void setLiberdade(boolean liberdade){
+        this.liberdade = liberdade;
+    }
+
     /**
      * Informa o estado do fantasma.
      * 
@@ -106,19 +124,18 @@ public class Fantasma extends Personagem
     public int getEstado(){
         return estado;
     }
-    
+
     /**
      * Modifica o estado do personagem.
      * 
      * @param algum dos estados possíveis: ALIVE, DEAD, FEAR ou RECOVERING. Parâmetro inválido gera o estado ALIVE.
      */
-    public void setEstado(int estado){
+    private void setEstado(int estado){
         if(estado < 0 || estado > 3) {
             this.estado = ALIVE;
         } else {
             this.estado = estado;
         }
-        setSpeed(3);
     }
 
     /**
@@ -162,13 +179,12 @@ public class Fantasma extends Personagem
         } else {
             //do nothing...
         }
-
     }
 
-    /**Informa a direção oposta à direção que o personagem está encarando.
+    /**
+     * Informa a direção oposta à direção que o personagem está encarando.
      * @return Um Inteiro que descreve a direção: NORTH, SOUTH, EAST ou WEST
      */
-
     private int oppositeDirection(int direction){
         int oppositeDirection = Personagem.NORTH;
         switch(direction){
@@ -188,10 +204,10 @@ public class Fantasma extends Personagem
         return oppositeDirection;
     }
 
-    /** Informa se o fantasma está dentro da cela do labirinto.
+    /** 
+     * Informa se o fantasma está dentro da cela do labirinto.
      * @return true se o fantasma está dentro da cela do labirinto, false caso contrário.
      */
-
     private boolean preso(){
         int x = getX();
         int y = getY();
@@ -206,11 +222,27 @@ public class Fantasma extends Personagem
      * Define como o fantasma deve se movimentar se estiver preso na cela do labirinto
      */
     private void rotaPreso(){
-        if(!canMoveNorth()){
-            changeDirection(Personagem.SOUTH);
-        }
-        if(!canMoveSouth()){
-            changeDirection(Personagem.NORTH);
+        if(liberdade){
+            int x = getX();
+            if(x != 28){
+                if(x < 28 && getDirection() != Personagem.EAST){
+                    changeDirection(Personagem.EAST);
+                } else if(x > 28 && getDirection() != Personagem.WEST){
+                    changeDirection(Personagem.WEST);
+                }
+            } else {
+                if(getDirection() != Personagem.NORTH){
+                    changeDirection(Personagem.NORTH);
+                }
+                setLocation(x,getY() - 1);
+            }
+        } else {
+            if(!canMoveNorth()){
+                changeDirection(Personagem.SOUTH);
+            }
+            if(!canMoveSouth()){
+                changeDirection(Personagem.NORTH);
+            }
         }
     }
 
@@ -242,7 +274,7 @@ public class Fantasma extends Personagem
             changeDirection(rotas.get(rand));
         }
     }
-    
+
     /**
      * Controla o efeito das pastilhas.
      */
@@ -258,58 +290,232 @@ public class Fantasma extends Personagem
             }
         }
     }
-    
+
     /**
      * Inicia o efeito das pastilhas.
      */
     public void efeitoPastilha(){
         setFear();
     }
-    
+
     /**
      * Altera o estado para FEAR.
      */
-    private void setFear(){
-        if(estado != Fantasma.DEAD){
-            estado = Fantasma.FEAR;
-        } else {
+    public void setFear(){
+        if(estado == DEAD){
             return;
         }
+        estado = Fantasma.FEAR;
         timer = System.currentTimeMillis();
         setSpeed(2);
     }
-    
+
     /**
      * Altera o estado para RECOVERING.
      */
-    private void setRecovering(){
-        if(estado == Fantasma.FEAR){
-            estado = Fantasma.RECOVERING;
-        }
+    public void setRecovering(){
+        estado = Fantasma.RECOVERING;
         timer = System.currentTimeMillis();
+        setSpeed(2);
     }
-    
+
     /**
      * Altera o estado para ALIVE.
      */
-    private void setAlive(){
-        if(estado == Fantasma.RECOVERING){
-            estado = Fantasma.ALIVE;
-        }
+    public void setAlive(){        
+        estado = Fantasma.ALIVE;        
         setSpeed(3);
     }
 
     /**
-     * Faz o fantasma se mover e mudar os sprites do personagem.
+     * Altera o estado para DEAD.
      */
-    public void act()
-    {
-        controlEfeitoPastilha();
+    public void setDead(){
+        estado = Fantasma.DEAD;
+        setSpeed(3);
+    }
+
+    /**
+     * Rota se o fantasma estiver em estado ALIVE.
+     */
+    private void rotaAlive(){
         if(preso()){
             rotaPreso();
         } else {
             rotaNormal();
         }
+    }
+
+    private int dist(int x0, int y0, int x1, int y1){
+        int deltaX = x1-x0;
+        int deltaY = y1-y0;        
+        return (deltaX*deltaX) + (deltaY*deltaY);
+    }
+
+    /**
+     * Rota se o fantasma estiver em estado DEAD. 
+     * O fantasma se desloca até o sistema prisional e sai recuperado (glória a deuxxx!).
+     */
+    private void rotaDead(){
+        //(23,28) é a coodenada da entrada da cela.
+        int x = getX();
+        int y = getY();
+        
+        //põe o fantasma pra dentro da cela caso ele esteja na entrada da cela.
+        if(x == 28 && y <= 30 && y >= 23){
+            switch(y){
+                case 23:
+                    setSpeed(0);
+                    setLocation(x, y + 1);
+                    break;
+                case 30:
+                    setAlive();
+                    break;
+                default:
+                    setLocation(x, y + 1);
+            }
+            return;
+        }
+
+        //Calcula a direção que deve seguir para a entrada da cela.
+
+        List<Integer> rotas = new ArrayList<Integer>();
+        List<Integer> distancias = new ArrayList<Integer>();
+        if(canMoveNorth() && getDirection() != Personagem.SOUTH){
+            rotas.add(Personagem.NORTH);
+            distancias.add(dist(x,y-1,23,28));
+        }
+        if(canMoveSouth() && getDirection() != Personagem.NORTH){
+            rotas.add(Personagem.SOUTH);
+            distancias.add(dist(x,y+1,23,28));
+        }
+        if(canMoveEast() && getDirection() != Personagem.WEST){
+            rotas.add(Personagem.EAST);
+            distancias.add(dist(x+1,y,23,28));
+        }
+        if(canMoveWest() && getDirection() != Personagem.EAST){
+            rotas.add(Personagem.WEST);
+            distancias.add(dist(x-1,y,23,28));
+        }
+
+        //caso não haja uma direção que lhe seja mais favorável continua seguindo a mesma direção.
+        //caso esteja bloqueado procura outra direção possível.
+        if(distancias.size() <= 0){
+            if(!canMove(getDirection())){
+                if(canMoveNorth()){
+                    changeDirection(Personagem.NORTH);
+                } else if(canMoveSouth()){
+                    changeDirection(Personagem.SOUTH);
+                } else if (canMoveEast()){
+                    changeDirection(Personagem.EAST);
+                } else if(canMoveWest()){
+                    changeDirection(Personagem.WEST);
+                }
+            }
+            return;
+        }
+
+        int indexMin = 0;
+        for(int i = 0; i < distancias.size(); i++){
+            if(distancias.get(indexMin) > distancias.get(i)){
+                indexMin = i;
+            }
+        }
+
+        changeDirection(rotas.get(indexMin));
+
+    }
+
+    /**
+     * Rota se o fantasma estiver em estado FEAR.
+     */
+    private void rotaFear(){
+        World world = getWorld();
+        PacMan pacman = (PacMan)world.getObjects(PacMan.class).get(0);
+        
+        //componentes do vetor desse fantasma até o pacman
+        int x = getX();
+        int y = getY();
+        int pacmanX = pacman.getX();
+        int pacmanY = pacman.getY();
+        
+        //lista das possíveis rotas a seguir e de suas respectivas distancias até o pacman.
+        List<Integer> rotas = new ArrayList<Integer>();
+        List<Integer> distancias = new ArrayList<Integer>();
+        
+        if(canMoveNorth()  && getDirection()!= Personagem.SOUTH){//
+            rotas.add(Personagem.NORTH);
+            distancias.add(dist(x,y-1,pacmanX,pacmanY));
+        }
+        if(canMoveSouth() && getDirection() != Personagem.NORTH){// 
+            rotas.add(Personagem.SOUTH);
+            distancias.add(dist(x,y+1,pacmanX,pacmanY));
+        }
+        if(canMoveEast() && getDirection()!= Personagem.WEST){// 
+            rotas.add(Personagem.EAST);
+            distancias.add(dist(x+1,y,pacmanX,pacmanY));
+        }
+        if(canMoveWest() && getDirection() != Personagem.EAST){// 
+            rotas.add(Personagem.WEST);
+            distancias.add(dist(x-1,y,pacmanX,pacmanY));
+        }
+        
+        //caso não haja uma direção que lhe seja mais favorável continua seguindo a mesma direção.
+        //caso esteja bloqueado procura outra direção possível.
+        if(distancias.size() <= 0){
+            if(!canMove(getDirection())){
+                if(canMoveNorth()){
+                    changeDirection(Personagem.NORTH);
+                } else if(canMoveSouth()){
+                    changeDirection(Personagem.SOUTH);
+                } else if (canMoveEast()){
+                    changeDirection(Personagem.EAST);
+                } else if(canMoveWest()){
+                    changeDirection(Personagem.WEST);
+                }
+            }
+            return;
+        }
+        
+        //determina a direção que mais se afasta do pacman.
+        int indexMax = 0;
+        for(int i = 0; i < distancias.size(); i++){
+            if(distancias.get(indexMax) < distancias.get(i)){
+                indexMax = i;
+            }
+        }
+        
+        //escolhe essa direção.
+        changeDirection(rotas.get(indexMax));
+    }
+
+    /**
+     * Rota se o fantasma estiver em estado RECOVERING.
+     */
+    private void rotaRecovering(){
+        rotaFear();
+    }
+
+    /**
+     * Faz o fantasma se mover e mudar os sprites do personagem.
+     */
+    public void act(){
+        controlEfeitoPastilha();
+        switch(estado){
+            case ALIVE:
+                rotaAlive();
+                break;
+            case FEAR:
+                rotaFear();
+                break;
+            case RECOVERING:
+                rotaRecovering();
+                break;
+            case DEAD:
+                rotaDead();
+                break;
+        }
+
         if(timeToChangeSprite()){
             setSprite();
             offset++;
