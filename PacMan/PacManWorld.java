@@ -75,7 +75,6 @@ public class PacManWorld extends World {
         
         portal();
         liberarFantasma();
-        adicionarPontos();
         ganharJogo();
     }
     
@@ -139,30 +138,6 @@ public class PacManWorld extends World {
             }
         }
     }
-    
-    /**
-     * Verifica quantas pastilhas existem e faz uma contagem de pontos para cada
-     * pastilha comida pelo PacMan.
-     * 
-     * Cada pastilha vale 10 pontos, até um total de 2990 pontos.
-     */
-    private void adicionarPontos()
-    {
-        List<Pastilha> list_pastilha = getObjects(Pastilha.class);
-        int tmn = list_pastilha.size();
-
-        if(tmn == 299)
-        {
-            points = 0;
-        }
-
-        else
-        {
-            int pastilhas_comidas = 299 - tmn;
-
-            points = pastilhas_comidas * 10;
-        }
-    }
 
     /**
      * Quando o PacMan come todas as pastilhas do mundo, ele ganha o jogo.
@@ -172,10 +147,8 @@ public class PacManWorld extends World {
         List<Pastilha> l_pastilha = getObjects(Pastilha.class);
         int tmn = l_pastilha.size();
 
-        if(tmn == 0)
-        {
+        if(tmn == 0) {
             Greenfoot.stop();
-
             System.out.println("Você ganhou o jogo.");
         }
     }
@@ -234,29 +207,13 @@ public class PacManWorld extends World {
         pastilhasVertical(43, 13, 55);
         pastilhasHorizontal(17, 45, 53);
         pastilhasVertical(37, 13, 19);
-        pastilhasHorizontal(17, 31, 37);
-        //pastilhasVertical(31, 19, 23);
-        //pastilhasVertical(25, 19, 23);
-        //pastilhasHorizontal(23, 19, 39);
-        //pastilhasVertical(19, 25, 43);
-        //pastilhasVertical(37, 25, 43);
-        //addObject(new Pastilha(), 15, 29);
-        //addObject(new Pastilha(), 17, 29);
-        //addObject(new Pastilha(), 39, 29);
-        //addObject(new Pastilha(), 41, 29);
-        //pastilhasHorizontal(35, 21, 35);
-        //addObject(new Pastilha(), 15, 41);
-        //addObject(new Pastilha(), 17, 41);
-        //addObject(new Pastilha(), 39, 41);
-        //addObject(new Pastilha(), 41, 41);
+        pastilhasHorizontal(17, 31, 37);        
         pastilhasHorizontal(47, 15, 27);
-        pastilhasHorizontal(47, 29, 43);
-        //pastilhasHorizontal(41, 21, 27);
+        pastilhasHorizontal(47, 29, 43);        
         pastilhasHorizontal(41, 31, 55);
         pastilhasVertical(25, 43, 47);
         pastilhasVertical(31, 43, 47);
-        pastilhasHorizontal(41, 3, 27);
-        //pastilhasHorizontal(41, 45, 55);
+        pastilhasHorizontal(41, 3, 27);        
         pastilhasVertical(3, 43, 49);
         pastilhasVertical(53, 43, 49);
         addObject(new Pastilha(), 5, 47);
@@ -284,15 +241,20 @@ public class PacManWorld extends World {
         addObject(new Pastilha(), 31, 55);
         addObject(new Pastilha(), 31, 57);
         pastilhasHorizontal(59, 5, 53);        
-        //pastilhasHorizontal(29, 3, 13);
-        //pastilhasHorizontal(29, 45, 55);
         populatePastilhaEspecial();
     }
     
     /**
      * Cria as pastilhas especiais.
      */
-    private void populatePastilhaEspecial(){        
+    private void populatePastilhaEspecial(){
+        removeObjects(getObjectsAt(3,7,Pastilha.class));
+        removeObjects(getObjectsAt(53,7,Pastilha.class));
+        removeObjects(getObjectsAt(3,47,Pastilha.class));
+        removeObjects(getObjectsAt(53,47,Pastilha.class));
+        addObject(new Pastilha(),3,9);
+        addObject(new Pastilha(),53,9);
+        addObject(new Pastilha(),5,47);
         addObject(new PastilhaEspecial(),3,7);
         addObject(new PastilhaEspecial(),53,7);
         addObject(new PastilhaEspecial(),3,47);
@@ -308,9 +270,8 @@ public class PacManWorld extends World {
      */
     private void pastilhasVertical(int x, int y0, int y1) {
         // Ele começa no eixo y0 e vai até o eixo y1, pulando de 1 em 1.
-        for (int i = y0; i < y1; i++) {
-            addObject(new Pastilha(), x, i);
-            i++;
+        for (int i = y0; i < y1; i+=2) {
+            addObject(new Pastilha(), x, i);            
         }
     }
 
@@ -323,9 +284,8 @@ public class PacManWorld extends World {
      */
     private void pastilhasHorizontal(int y, int x0, int x1) {
         // Ele começa no eixo x0 e vai até o eixo x1, pulando de 1 em 1.
-        for (int i = x0; i < x1; i++) {
-            addObject(new Pastilha(), i, y);
-            i++;
+        for (int i = x0; i < x1; i+=2) {
+            addObject(new Pastilha(), i, y);            
         }
     }
     
