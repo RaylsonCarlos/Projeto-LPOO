@@ -39,30 +39,23 @@ public class PacManWorld extends World {
         populateWall();
 
         // Cria as pastilhas dentro do mundo.
-        populatePastilha();
+        //populatePastilha();
 
         // Cria os fantasmas dentro do mundo.
-        populateFantasma();
+        //populateFantasma();
 
         // Adiciona um objeto do tipo PacMan ao mundo, nas células
         // 28 e 47, utilizando um método da classe World.
-        addObject(new PacMan(),28,47);
+        //addObject(new PacMan(),28,47);
 
         
         //Adiciona um objeto do tipo Life ao mundo, nas células
         //3 e 65, 8 e 65, 13 e 65; 
-        addObject(new Life(), 3, 65); 
-        addObject(new Life(), 8, 65); 
+        addObject(new Life(), 3, 65);
+        addObject(new Life(), 8, 65);
         addObject(new Life(), 13, 65);
-
-
-
-        // Define a velocidade de execucação das ações.
-        // Esse método pertence à um classe do pacote do greenfoot,
-        // antecipamente importada.
-        Greenfoot.setSpeed(39);
-        SoundPlayer.playBackgroundNormal();
-        timerCela = System.currentTimeMillis();
+        
+        resetar(true);        
     }
 
     /**
@@ -76,6 +69,62 @@ public class PacManWorld extends World {
         portal();
         liberarFantasma();
         ganharJogo();
+    }
+    
+    public void resetar(boolean resetarPastilhas){
+        List<Life> lifes = getObjects(Life.class);
+        
+        //acabaram as vidas
+        if(lifes.size() <= 0){
+            GameController.fim();
+            return;
+        }
+        
+        //Pega a vida mais à direita
+        Life life = lifes.get(0);
+        for(Life lf : lifes){
+            if(life.getX() > lf.getX()){
+                life = lf;
+            }
+        }
+        
+        //remove a vida do jogo
+        removeObject(life);        
+        
+        removeObjects(getObjects(Fantasma.class));
+        populateFantasma();
+        
+        List<PacMan> pacmanLista = getObjects(PacMan.class);
+        
+        if(pacmanLista.size() <= 0){
+            addObject(new PacMan(),28,47);
+        } else {
+            PacMan pacman = pacmanLista.get(0);
+            pacman.setLocation(28,47);
+            pacman.setImage("images/west_0.png");
+            pacman.changeDirection(Personagem.WEST);
+        }
+        
+        repaint();
+        
+        try{
+            Thread.sleep(1000);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        //No caso de ter comido todas as pastilhas
+        if(resetarPastilhas){
+            populatePastilha();
+        }
+        
+        // Define a velocidade de execucação das ações.
+        // Esse método pertence à um classe do pacote do greenfoot,
+        // antecipamente importada.
+        Greenfoot.setSpeed(39);
+        SoundPlayer.stop();
+        SoundPlayer.playBackgroundNormal();
+        timerCela = System.currentTimeMillis();
     }
     
     /**
@@ -144,12 +193,10 @@ public class PacManWorld extends World {
      */
     private void ganharJogo()
     {
-        List<Pastilha> l_pastilha = getObjects(Pastilha.class);
-        int tmn = l_pastilha.size();
-
-        if(tmn == 0) {
-            Greenfoot.stop();
-            System.out.println("Você ganhou o jogo.");
+        List<Pastilha> pastilhas = getObjects(Pastilha.class);
+        
+        if(pastilhas.size() <= 0){
+            resetar(true);
         }
     }
 

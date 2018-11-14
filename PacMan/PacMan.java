@@ -174,8 +174,7 @@ public class PacMan extends Personagem {
             switch(fan.getEstado()){
                 case Fantasma.ALIVE:
                 fan.setImage("blank_image.png");
-                SoundPlayer.stop();
-                Greenfoot.stop();
+                SoundPlayer.stop();                
                 Thread.sleep(500);
                 getWorld().repaint();
                 dead();
@@ -222,6 +221,7 @@ public class PacMan extends Personagem {
             getWorld().repaint();
             Thread.sleep(150);
         }
+        ((PacManWorld)getWorld()).resetar(false);
     }
 
     /**

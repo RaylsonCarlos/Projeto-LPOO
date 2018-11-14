@@ -2,7 +2,6 @@ import greenfoot.*;
 import java.awt.Color;
 import greenfoot.World;
 
-
 /**
  * Classe para controlar o fluxo do jogo.
  * 
@@ -27,25 +26,32 @@ public class GameController {
         score(0);
         inicio();
     }
+
     /**
      * Providencia a animação inicial do jogo.
      */
     private void inicio(){
         jogo();
     }
+
     /**
      * Providencia o ambiente do jogo.
      */
     private void jogo(){
-        
+
     }
+
     /**
      * Finaliza o jogo.
      */
-    private void fim(){
-        
+    public static void fim(){
+        String msg = "O jogo acabou!\n tá okey?!\n você fez \n";
+        msg += Integer.toString(points);
+        msg += "\n pontos.";
+        world.showText(msg,28,33);
+        world.repaint();
+        Greenfoot.stop();
     }
-    
 
     public static void score(int pointsToAdd){
         points += pointsToAdd;
