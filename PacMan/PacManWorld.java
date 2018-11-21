@@ -29,7 +29,6 @@ public class PacManWorld extends World {
 
         super(57, 68, size/4);
 
-
         
         // Define a imagem de fundo do cenário.
         background = new GreenfootImage("background.png");
@@ -48,54 +47,62 @@ public class PacManWorld extends World {
         // 28 e 47, utilizando um método da classe World.
         //addObject(new PacMan(),28,47);
 
-        
         //Adiciona um objeto do tipo Life ao mundo, nas células
         //3 e 65, 8 e 65, 13 e 65; 
         addObject(new Life(), 3, 65);
         addObject(new Life(), 8, 65);
         addObject(new Life(), 13, 65);
         
+        setPaintOrder(Fantasma.class,Pastilha.class,PacMan.class);
+
         resetar(true);        
     }
 
     /**
-    * Faz o mundo agir: transporta através do portal, calcula os pontos do jogador e verifica se o jogo acabou.
-    */
+     * Faz o mundo agir: transporta através do portal, calcula os pontos do jogador e verifica se o jogo acabou.
+     */
     @Override
     public void act() {
         // Cria um portal, em que os Personagens podem passar para
         // atravessarem ao local oposto no cenário do mundo.
-        
+
         portal();
         liberarFantasma();
         ganharJogo();
     }
     
+    /**
+     * Reseta as condições do labirinto.
+     * @param resetarPastilhas caso seja necessário resetar as pastilhas do labirinto.
+     */
+
     public void resetar(boolean resetarPastilhas){
         List<Life> lifes = getObjects(Life.class);
-        
+
         //acabaram as vidas
         if(lifes.size() <= 0){
             GameController.fim();
             return;
         }
-        
+
         //Pega a vida mais à direita
         Life life = lifes.get(0);
         for(Life lf : lifes){
-            if(life.getX() > lf.getX()){
+            if(life.getX() < lf.getX()){
                 life = lf;
             }
         }
-        
-        //remove a vida do jogo
-        removeObject(life);        
+
+        //remove a vida do jogo caso seja necessário resetar as pastilhas
+        if(!resetarPastilhas){
+            removeObject(life);
+        }
         
         removeObjects(getObjects(Fantasma.class));
         populateFantasma();
-        
+
         List<PacMan> pacmanLista = getObjects(PacMan.class);
-        
+
         if(pacmanLista.size() <= 0){
             addObject(new PacMan(),28,47);
         } else {
@@ -104,20 +111,20 @@ public class PacManWorld extends World {
             pacman.setImage("images/west_0.png");
             pacman.changeDirection(Personagem.WEST);
         }
-        
+
         repaint();
-        
+
         try{
             Thread.sleep(1000);
         } catch(Exception e){
             e.printStackTrace();
         }
-        
+
         //No caso de ter comido todas as pastilhas
         if(resetarPastilhas){
             populatePastilha();
         }
-        
+
         // Define a velocidade de execucação das ações.
         // Esse método pertence à um classe do pacote do greenfoot,
         // antecipamente importada.
@@ -126,7 +133,7 @@ public class PacManWorld extends World {
         SoundPlayer.playBackgroundNormal();
         timerCela = System.currentTimeMillis();
     }
-    
+
     /**
      * Método que liberta fantasmas se estiver no tempo.
      */
@@ -194,7 +201,7 @@ public class PacManWorld extends World {
     private void ganharJogo()
     {
         List<Pastilha> pastilhas = getObjects(Pastilha.class);
-        
+
         if(pastilhas.size() <= 0){
             resetar(true);
         }
@@ -290,7 +297,7 @@ public class PacManWorld extends World {
         pastilhasHorizontal(59, 5, 53);        
         populatePastilhaEspecial();
     }
-    
+
     /**
      * Cria as pastilhas especiais.
      */
@@ -335,10 +342,10 @@ public class PacManWorld extends World {
             addObject(new Pastilha(), i, y);            
         }
     }
-    
+
     /**   
-    * Instancia os Fanstasmas e põe eles no labirinto.
-    */
+     * Instancia os Fanstasmas e põe eles no labirinto.
+     */
     public void populateFantasma() {
         //TODO: cada um tem suas próprias características.
         // Cria objetos dos Fantasmas vermelho e rosa.
@@ -350,7 +357,7 @@ public class PacManWorld extends World {
 
         // Cria um objeto do Fantasma marrom.
         Fantasma clyde = new Fantasma(Fantasma.BROWN);
-        
+
         // Adiciona os objetos dos Fanstasmas vermelho, rosa, azul
         // e marrom ao PacManWorld, nas suas respectivas células no
         // eixo X e Y.
@@ -358,11 +365,11 @@ public class PacManWorld extends World {
         addObject(inky,32,30);
         addObject(clyde,24,30);
         addObject(blinky,28,23);
-        
+
         blinky.setLiberdade(true);
         pinky.setLiberdade(true);
     }
-    
+
     /**
      * Cria a cela, onde os Fanstasmas irão ficar presos no início do jogo.
      */
@@ -371,7 +378,7 @@ public class PacManWorld extends World {
         squareWall(21,25,14,8);
         squareWall(22,26,12,6);
     }
-    
+
     /**
      * Cria as bordas externas, para delimitar o mundo onde o
      * PacMan, os Fantasmas e as Pastilhas podem agir.
@@ -401,7 +408,7 @@ public class PacManWorld extends World {
         linhaVertical(55,51,61);
         linhaHorizontal(61,1,55);
     }
-    
+
     /**
      * Cria as paredes que representam as quinas externas do labirinto.
      */
@@ -441,7 +448,7 @@ public class PacManWorld extends World {
             addObject(new Wall(), x, i);
         }
     }
-    
+
     /**
      * Cria linhas de paredes horizontais.
      * 
@@ -551,7 +558,7 @@ public class PacManWorld extends World {
         addObject(new Wall(),xMax,y0);
         addObject(new Wall(),x0,yMax);
         addObject(new Wall(),xMax,yMax);
-        
+
         // Usa um laço para percorrer desde o X inicial até o X final.
         for(int i = x0+1; i < xMax; i++)
         {

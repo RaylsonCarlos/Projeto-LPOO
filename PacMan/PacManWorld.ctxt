@@ -34,6 +34,7 @@ comment18.target=void\ squareWall(int,\ int,\ int,\ int)
 comment18.text=\r\n\ Cria\ os\ quadrados,\ que\ ser\u00E3o\ usados\ para\ formar\ o\ labirinto.\r\n\ \r\n\ @param\ x0\ eixo\ X\ incial\r\n\ @param\ y0\ eixo\ Y\ inicial\r\n\ @param\ width\ largura\ do\ quadrado\r\n\ @param\ height\ altura\ do\ quadrado\r\n
 comment2.params=resetarPastilhas
 comment2.target=void\ resetar(boolean)
+comment2.text=\r\n\ Reseta\ as\ condi\u00E7\u00F5es\ do\ labirinto.\r\n\ @param\ resetarPastilhas\ caso\ seja\ necess\u00E1rio\ resetar\ as\ pastilhas\ do\ labirinto.\r\n
 comment3.params=
 comment3.target=void\ liberarFantasma()
 comment3.text=\r\n\ M\u00E9todo\ que\ liberta\ fantasmas\ se\ estiver\ no\ tempo.\r\n

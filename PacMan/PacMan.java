@@ -221,6 +221,7 @@ public class PacMan extends Personagem {
             getWorld().repaint();
             Thread.sleep(150);
         }
+        Thread.sleep(1000);
         ((PacManWorld)getWorld()).resetar(false);
     }
 
