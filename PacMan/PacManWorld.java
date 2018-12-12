@@ -68,7 +68,7 @@ public class PacManWorld extends World {
 
         portal();
         liberarFantasma();
-        ganharJogo();
+        passarFase();
     }
     
     /**
@@ -78,24 +78,29 @@ public class PacManWorld extends World {
 
     public void resetar(boolean resetarPastilhas){
         List<Life> lifes = getObjects(Life.class);
-
-        //acabaram as vidas
-        if(lifes.size() <= 0){
-            GameController.fim();
-            return;
-        }
-
-        //Pega a vida mais à direita
-        Life life = lifes.get(0);
-        for(Life lf : lifes){
-            if(life.getX() < lf.getX()){
-                life = lf;
+        
+        if(lifes.size() <= 0){            
+            if(!resetarPastilhas){
+                //as vidas acabaram e o pacman morreu :(
+                GameController.fim();
+                return;
+            } else {
+                //nada...
             }
-        }
-
-        //remove a vida do jogo caso seja necessário resetar as pastilhas
-        if(!resetarPastilhas){
-            removeObject(life);
+        } else {        
+            if(resetarPastilhas){
+                //nada...
+            } else {
+                //as vidas não acabaram e o pacman morreu.
+                //Pega a vida mais à direita
+                Life life = lifes.get(0);
+                for(Life lf : lifes){
+                    if(life.getX() < lf.getX()){
+                        life = lf;
+                    }
+                }
+                removeObject(life);
+            }
         }
         
         removeObjects(getObjects(Fantasma.class));
@@ -198,7 +203,7 @@ public class PacManWorld extends World {
     /**
      * Quando o PacMan come todas as pastilhas do mundo, ele ganha o jogo.
      */
-    private void ganharJogo()
+    private void passarFase()
     {
         List<Pastilha> pastilhas = getObjects(Pastilha.class);
 
