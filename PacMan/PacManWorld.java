@@ -18,6 +18,12 @@ public class PacManWorld extends World {
     /** Tempo em milisegundos para libertar um fantasma*/
     private int tempoCela = 6000;
     private int points = 0;
+    
+    @Override
+    public void stopped(){
+        SoundPlayer.stop();
+        super.stopped();
+    }
 
     /** 
      * O construtor da classe PacManWorld cria o cenário do mundo, define a
