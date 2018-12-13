@@ -28,7 +28,6 @@ public class PacManWorld extends World {
         // um tamanho de size/4 pixels.
 
         super(57, 68, size/4);
-
         
         // Define a imagem de fundo do cenário.
         background = new GreenfootImage("background.png");
@@ -48,14 +47,16 @@ public class PacManWorld extends World {
         //addObject(new PacMan(),28,47);
 
         //Adiciona um objeto do tipo Life ao mundo, nas células
-        //3 e 65, 8 e 65, 13 e 65; 
+        //3 e 65, 8 e 65, 13 e 65
         addObject(new Life(), 3, 65);
         addObject(new Life(), 8, 65);
         addObject(new Life(), 13, 65);
         
-        setPaintOrder(Fantasma.class,Pastilha.class,PacMan.class);
-
-        resetar(true);        
+        setPaintOrder(Fantasma.class,PacMan.class,Pastilha.class);
+        
+        resetar(true);
+        
+        SoundPlayer.playEffectPacmanBeginning();
     }
 
     /**
@@ -78,7 +79,7 @@ public class PacManWorld extends World {
     public void resetar(boolean resetarPastilhas){
         List<Life> lifes = getObjects(Life.class);
         
-        if(lifes.size() <= 0){            
+        if(lifes.size() <= 0){
             if(!resetarPastilhas){
                 //as vidas acabaram e o pacman morreu :(
                 GameController.fim();
@@ -86,7 +87,7 @@ public class PacManWorld extends World {
             } else {
                 //nada...
             }
-        } else {        
+        } else {
             if(resetarPastilhas){
                 //nada...
             } else {
@@ -117,25 +118,21 @@ public class PacManWorld extends World {
             pacman.changeDirection(Personagem.WEST);
         }
         
-        //dá uma pausa...
-        repaint();
-        try{
-            Thread.sleep(1000);
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
         //caso o pacman tenha comido todas as pastilhas, põe-se pastilhas novas
         if(resetarPastilhas){
             populatePastilha();
         }
-
+        
+        //dá uma pausa...
+        repaint();
+        try{
+            Thread.sleep(1500);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        
         //ajusta a velocidade
         Greenfoot.setSpeed(39);
-        
-        //ajusta o som
-        //SoundPlayer.stop();
-        //SoundPlayer.playBackgroundNormal();
         
         //reseta o timer da cela
         timerCela = System.currentTimeMillis();
@@ -188,7 +185,7 @@ public class PacManWorld extends World {
             return;
         }
         
-        //caso algum fantasma ter sido capturado
+        //caso algum fantasma tenha sido capturado
         if(algumFantasmaDead){
             if(SoundPlayer.backgroundEyesIsPlaying()){
                 //do nothing...
@@ -263,11 +260,16 @@ public class PacManWorld extends World {
     /**
      * Quando o PacMan come todas as pastilhas do mundo, ele ganha o jogo.
      */
-    private void passarFase()
-    {
+    private void passarFase(){
         List<Pastilha> pastilhas = getObjects(Pastilha.class);
 
         if(pastilhas.size() <= 0){
+            SoundPlayer.stop();
+            try {
+                Thread.sleep(2000);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
             resetar(true);
         }
     }

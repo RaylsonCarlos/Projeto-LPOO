@@ -231,6 +231,7 @@ public class Fantasma extends Personagem
         if(liberdade){
             int x = getX();
             if(x != 28){
+                setSpeed(3);
                 if(x < 28 && getDirection() != Personagem.EAST){
                     changeDirection(Personagem.EAST);
                 } else if(x > 28 && getDirection() != Personagem.WEST){
@@ -243,6 +244,7 @@ public class Fantasma extends Personagem
                 setLocation(x,getY() - 1);
             }
         } else {
+            setSpeed(2);
             if(!canMoveNorth()){
                 changeDirection(Personagem.SOUTH);
             }

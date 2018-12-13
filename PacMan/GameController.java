@@ -50,6 +50,7 @@ public class GameController {
         msg += "\n pontos.";
         world.showText(msg,28,33);
         world.repaint();
+        SoundPlayer.playEffectPacmanIntermission();
         Greenfoot.stop();
     }
 
