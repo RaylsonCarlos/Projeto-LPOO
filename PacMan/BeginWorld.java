@@ -25,7 +25,9 @@ public class BeginWorld extends World
     public BeginWorld()
     {
         super(50, 50, 4);
-
+        
+        SoundPlayer.playSoundOfWind();
+        
         try{
             File[] allFilesAtImage = new File("images").listFiles();
             for(int i = 0; i < allFilesAtImage.length; i++){

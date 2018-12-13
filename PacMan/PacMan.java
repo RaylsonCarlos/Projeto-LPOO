@@ -157,8 +157,11 @@ public class PacMan extends Personagem {
             }
         }
     }
-
-    private void verificaFantasmas() throws InterruptedException {
+    
+    /**
+     * Verifica a colisão com fantasmas.
+     */
+    private void colisaoComFantasmas() throws InterruptedException {
 
         World world = getWorld();
         List<Fantasma> fantasmas = getObjectsInRange(2,Fantasma.class); 
@@ -173,32 +176,32 @@ public class PacMan extends Personagem {
         for(Fantasma fan : fantasmas){
             switch(fan.getEstado()){
                 case Fantasma.ALIVE:
-                fan.setImage("blank_image.png");
-                SoundPlayer.stop();                
-                Thread.sleep(500);
-                getWorld().repaint();
-                dead();
-                return;
+                    fan.setImage("blank_image.png");
+                    SoundPlayer.stop();                
+                    Thread.sleep(500);
+                    getWorld().repaint();
+                    dead();
+                    return;
                 case Fantasma.RECOVERING:
-                this.setImage("blank_image.png");
-                points = pontuacaoFantasma(fan);
-                GameController.score(points);
-                getWorld().repaint();
-                SoundPlayer.playEffectGhostEaten();
-                timer+=500;
-                Thread.sleep(500);
-                fan.setDead();
-                break;
+                    this.setImage("blank_image.png");
+                    points = pontuacaoFantasma(fan);
+                    GameController.score(points);
+                    getWorld().repaint();
+                    SoundPlayer.playEffectGhostEaten();
+                    timer+=500;
+                    Thread.sleep(500);
+                    fan.setDead();
+                    break;
                 case Fantasma.FEAR:
-                this.setImage("blank_image.png");
-                points = pontuacaoFantasma(fan);
-                GameController.score(points);
-                getWorld().repaint();
-                SoundPlayer.playEffectGhostEaten();
-                timer+=500;
-                Thread.sleep(500);
-                fan.setDead();
-                break;
+                    this.setImage("blank_image.png");
+                    points = pontuacaoFantasma(fan);
+                    GameController.score(points);
+                    getWorld().repaint();
+                    SoundPlayer.playEffectGhostEaten();
+                    timer+=500;
+                    Thread.sleep(500);
+                    fan.setDead();
+                    break;
             }
         }
     }
@@ -249,23 +252,23 @@ public class PacMan extends Personagem {
         if (timeToChangeSprite()) {
             switch (getDirection()) {
                 case Personagem.NORTH:
-                setImage(spritesNORTH[animationOffset[offset % 4]]);
-                break;
+                    setImage(spritesNORTH[animationOffset[offset % 4]]);
+                    break;
                 case Personagem.SOUTH:
-                setImage(spritesSOUTH[animationOffset[offset % 4]]);
-                break;
+                    setImage(spritesSOUTH[animationOffset[offset % 4]]);
+                    break;
                 case Personagem.EAST:
-                setImage(spritesEAST[animationOffset[offset % 4]]);
-                break;
+                    setImage(spritesEAST[animationOffset[offset % 4]]);
+                    break;
                 case Personagem.WEST:
-                setImage(spritesWEST[animationOffset[offset % 4]]);
-                break;
+                    setImage(spritesWEST[animationOffset[offset % 4]]);
+                    break;
             }
             offset++;
         }
         
         try {
-            verificaFantasmas();
+            colisaoComFantasmas();
         } catch (Exception e){
             e.printStackTrace();
         }

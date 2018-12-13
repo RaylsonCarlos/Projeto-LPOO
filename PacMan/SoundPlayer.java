@@ -1,7 +1,3 @@
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import java.io.File;
 import greenfoot.GreenfootSound;
 
 /**
@@ -11,6 +7,7 @@ import greenfoot.GreenfootSound;
  * @version 1.1
  */
 public class SoundPlayer  {
+    private static final GreenfootSound soundOfWind = new GreenfootSound("sounds/wind.wav");
     private static final GreenfootSound backgroundNormal = new GreenfootSound("sounds/background_normal.wav");
     private static final GreenfootSound backgroundEyes = new GreenfootSound("sounds/background_eyes.wav");
     private static final GreenfootSound backgroundFrightened = new GreenfootSound("sounds/background_ghosts_frightened.wav");    
@@ -36,12 +33,40 @@ public class SoundPlayer  {
             backgroundFrightened.stop();
         }
     }
+    
+    public static void playSoundOfWind(){
+        soundOfWind.playLoop();
+    }
+    
+    /**
+     * Informa se o som de fundo normal está sendo executado
+     * @return true se o som de fundo normal está sendo executado, false caso contrário.
+     */
+    public static boolean backgroundNormalIsPlaying(){
+        return backgroundNormal.isPlaying();
+    }
+    
+    /**
+     * Informa se o som de fundo dos fantasmas amedrontados está sendo executado
+     * @return true se o som de fundo dos fantasmas amedrontados está sendo executado, false caso contrário.
+     */
+    public static boolean backgroundFrightenedIsPlaying(){
+        return backgroundFrightened.isPlaying();
+    }
+    
+    /**
+     * Informa se o som de fundo quando um dos fantasmas foi capturado está sendo executado
+     * @return true se o som de fundo quando um dos fantasmas foi capturado está sendo executado, false caso contrário.
+     */
+    public static boolean backgroundEyesIsPlaying(){
+        return backgroundEyes.isPlaying();
+    }
 
     /**
      * Executa o som de fundo normal do labirinto.
      */
     public static void playBackgroundNormal(){       
-        backgroundNormal.playLoop();
+        backgroundNormal.playLoop();        
     }
 
     /**

@@ -65,17 +65,16 @@ public class PacManWorld extends World {
     public void act() {
         // Cria um portal, em que os Personagens podem passar para
         // atravessarem ao local oposto no cenário do mundo.
-
         portal();
         liberarFantasma();
         passarFase();
+        ajustaSomFundo();
     }
     
     /**
      * Reseta as condições do labirinto.
      * @param resetarPastilhas caso seja necessário resetar as pastilhas do labirinto.
      */
-
     public void resetar(boolean resetarPastilhas){
         List<Life> lifes = getObjects(Life.class);
         
@@ -103,40 +102,101 @@ public class PacManWorld extends World {
             }
         }
         
+        //reposiciona os fantasmas
         removeObjects(getObjects(Fantasma.class));
         populateFantasma();
-
+        
+        //reposiciona o pacman
         List<PacMan> pacmanLista = getObjects(PacMan.class);
-
         if(pacmanLista.size() <= 0){
             addObject(new PacMan(),28,47);
         } else {
             PacMan pacman = pacmanLista.get(0);
             pacman.setLocation(28,47);
-            pacman.setImage("images/west_0.png");
+            pacman.setImage("images/west_1.png");
             pacman.changeDirection(Personagem.WEST);
         }
-
+        
+        //dá uma pausa...
         repaint();
-
         try{
             Thread.sleep(1000);
         } catch(Exception e){
             e.printStackTrace();
         }
 
-        //No caso de ter comido todas as pastilhas
+        //caso o pacman tenha comido todas as pastilhas, põe-se pastilhas novas
         if(resetarPastilhas){
             populatePastilha();
         }
 
-        // Define a velocidade de execucação das ações.
-        // Esse método pertence à um classe do pacote do greenfoot,
-        // antecipamente importada.
+        //ajusta a velocidade
         Greenfoot.setSpeed(39);
-        SoundPlayer.stop();
-        SoundPlayer.playBackgroundNormal();
+        
+        //ajusta o som
+        //SoundPlayer.stop();
+        //SoundPlayer.playBackgroundNormal();
+        
+        //reseta o timer da cela
         timerCela = System.currentTimeMillis();
+    }
+    
+    /**
+     * Ajusta o som de fundo à situação dos fantasmas.
+     */
+    private void ajustaSomFundo(){
+        List<Fantasma> fantasmas = getObjects(Fantasma.class);
+        
+        //nenhum fantasma
+        if(fantasmas.size() <= 0){
+            SoundPlayer.stop();
+            return;
+        }
+        
+        boolean algumFantasmaFear = false;
+        boolean algumFantasmaDead = false;
+        
+        for(Fantasma fan : fantasmas){
+            int estadoFantasma = fan.getEstado();
+            if(estadoFantasma == Fantasma.FEAR || estadoFantasma == Fantasma.RECOVERING){
+                algumFantasmaFear = true;
+            }
+            if(estadoFantasma == Fantasma.DEAD){
+                algumFantasmaDead = true;
+            }
+        }
+        
+        //caso todos os fantasmas estejam vivos
+        if(!algumFantasmaFear && !algumFantasmaDead){
+            if(SoundPlayer.backgroundNormalIsPlaying()){
+                //do nothing...
+            } else {
+                SoundPlayer.stop();
+                SoundPlayer.playBackgroundNormal();
+            }
+            return;
+        }
+        
+        //caso algum fantasma esteja amedrontado
+        if(algumFantasmaFear && ! algumFantasmaDead){
+            if(SoundPlayer.backgroundFrightenedIsPlaying()){
+                //do nothing...
+            } else {
+                SoundPlayer.stop();
+                SoundPlayer.playBackgroundFrightened();
+            }
+            return;
+        }
+        
+        //caso algum fantasma ter sido capturado
+        if(algumFantasmaDead){
+            if(SoundPlayer.backgroundEyesIsPlaying()){
+                //do nothing...
+            } else {
+                SoundPlayer.stop();
+                SoundPlayer.playBackgroundEyes();
+            }
+        }
     }
 
     /**
@@ -217,8 +277,7 @@ public class PacManWorld extends World {
      * portal (X: 0 ou X: 56 & Y: 29).
      * 
      * @param per um objeto do tipo Personagem.
-     * @return true se o Personagem per estiver em determinada célula do eixo X e
-     *         false se não estiver.
+     * @return true se o Personagem per estiver em determinada célula do eixo X e false se não estiver.
      */
     private boolean isInsidePortal(Personagem per) {
         // Cria uma variável que recebe o valor da célula do eixo X

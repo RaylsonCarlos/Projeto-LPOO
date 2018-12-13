@@ -84,10 +84,16 @@ public class Fantasma extends Personagem
             {new GreenfootImage("ghost_brown_south_0.png"),new GreenfootImage("ghost_brown_south_1.png")}
         };
         spritesAmedrontado = new GreenfootImage [][] {
-            {new GreenfootImage("frightened_0.png"), new GreenfootImage("frightened_1.png"),new GreenfootImage("recovering_1.png"), new GreenfootImage("recovering_0.png")}
+            {new GreenfootImage("frightened_0.png"),
+             new GreenfootImage("frightened_1.png"),
+             new GreenfootImage("recovering_1.png"),
+             new GreenfootImage("recovering_0.png")}
         };
         spritesMorto = new GreenfootImage [][] {
-            {new GreenfootImage("ghost_eye_east.png"), new GreenfootImage("ghost_eye_west.png"),new GreenfootImage("ghost_eye_north.png"), new GreenfootImage("ghost_eye_south.png")}
+            {new GreenfootImage("ghost_eye_east.png"),
+             new GreenfootImage("ghost_eye_west.png"),
+             new GreenfootImage("ghost_eye_north.png"),
+             new GreenfootImage("ghost_eye_south.png")}
         };
         sprites = new GreenfootImage[][][]{spritesRed,spritesPink,spritesBlue,spritesBrown,spritesAmedrontado,spritesMorto};
 
@@ -357,7 +363,7 @@ public class Fantasma extends Personagem
      * O fantasma se desloca até o sistema prisional e sai recuperado (glória a deuxxx!).
      */
     private void rotaDead(){
-        //(23,28) é a coodenada da entrada da cela.
+        //(23,28) é a coordenada da entrada da cela.
         int x = getX();
         int y = getY();
         
