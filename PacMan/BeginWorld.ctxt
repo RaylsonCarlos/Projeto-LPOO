@@ -1,15 +1,15 @@
 #BlueJ class context
-comment0.params=
-comment0.target=BeginWorld()
-comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ BeginWorld.\r\n
+comment0.target=BeginWorld
 comment1.params=
-comment1.target=void\ act()
+comment1.target=BeginWorld()
 comment2.params=
 comment2.target=void\ act()
 comment3.params=
 comment3.target=void\ act()
 comment4.params=
 comment4.target=void\ act()
-comment5.params=sizeX\ sizeY
-comment5.target=void\ scaleSprite(int,\ int)
-numComments=6
+comment5.params=
+comment5.target=void\ act()
+comment6.params=sizeX\ sizeY
+comment6.target=void\ scaleSprite(int,\ int)
+numComments=7
