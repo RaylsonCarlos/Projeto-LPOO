@@ -5,119 +5,75 @@ import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.IOException;
 
 public class BeginWorld extends World {
+
+    private final int minSize = 16;
+    private final int maxSize = 64;
+    private final String increaseKey = "up";
+    private final String decreaseKey = "down";
+    private final int defaultSpeed = 35;
 
     private Actor pacman;
     private int size;
     private GreenfootImage pacmanSprite;
 
     public BeginWorld() {
-        super(50, 50, 4);
+        super(50, 50, 5);
 
-        SoundPlayer.playSoundOfWind();
-
-        try {
-            File[] allFilesAtImage = new File("images").listFiles();
-
-            for (int i = 0; i < allFilesAtImage.length; i++) {
-                allFilesAtImage[i].delete();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        size = 16;
-        setBackground("sprites/cell.png");
-
-        String msg1 = "Pressione [F1/F2]\npara aumentar/diminuir \no tamanho";
-        String msg2 = "[Enter] para prosseguir";
-
-        GreenfootImage img1 = new GreenfootImage(msg1, 20, Color.GREEN, null);
-        GreenfootImage img2 = new GreenfootImage(msg2, 20, Color.GREEN, null);
-
-        pacmanSprite = new GreenfootImage("sprites/west_1.png");
-
-        Actor actor1 = new Actor() {
-            public void act() {
-            }
-        };
-
-        Actor actor2 = new Actor() {
-            public void act() {
-            }
-        };
-
-        pacman = new Actor() {
-            public void act() {
-            }
-        };
-
-        actor1.setImage(img1);
-        actor2.setImage(img2);
-        pacman.setImage(pacmanSprite);
-
-        addObject(actor1, 25, 7);
-        addObject(actor2, 25, 45);
-        addObject(pacman, 25, 27);
+        checkImagesFolder();
+        setDefaults();
+        prepare();
     }
 
     public void act() {
-        if (size == 64) {
-            showText("maior ainda?", 25, 40);
-        } else {
-            showText("", 25, 40);
-        }
+        SoundPlayer.playSoundOfWind();
 
-        if (Greenfoot.isKeyDown("F1")) {
-            if (size >= 64) {
-                SoundPlayer.playEffectYouCegoMan();
+        if (Greenfoot.isKeyDown("up")) {
+            if (size >= maxSize) {
+                showText("Tamanho máximo!", 25, 40);
             } else {
                 size += 4;
                 scaleSprite(size, size);
             }
-
-            try {
-                Thread.sleep(200);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (Greenfoot.isKeyDown("F2")) {
+        } else if (Greenfoot.isKeyDown("down")) {
             if (size <= 16) {
                 SoundPlayer.playEffectJaAvisei();
             } else {
                 size -= 4;
                 scaleSprite(size, size);
             }
-
-            try {
-                Thread.sleep(200);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         } else if (Greenfoot.isKeyDown("enter")) {
             try {
                 File[] spriteFiles = new File("sprites").listFiles();
-                for (int i = 0; i < spriteFiles.length; i++) {
-                    BufferedImage bfiSprite = ImageIO.read(spriteFiles[i]);
+
+                for (File spriteFile : spriteFiles) {
+                    BufferedImage bfiSprite = ImageIO.read(spriteFile);
+
                     int width = bfiSprite.getWidth();
                     int height = bfiSprite.getHeight();
                     int newWidth = width * size / 16;
                     int newHeight = height * size / 16;
                     int typeImageSprite = bfiSprite.getType();
+
                     BufferedImage bfiSpriteResized = new BufferedImage(newWidth, newHeight, typeImageSprite);
+
                     Graphics2D gph2D = bfiSpriteResized.createGraphics();
                     gph2D.drawImage(bfiSprite, 0, 0, newWidth, newHeight, null);
                     gph2D.dispose();
-                    File spriteFileResized = new File("images/" + spriteFiles[i].getName());
-                    int lastPonctuation = spriteFiles[i].getName().lastIndexOf(".");
-                    String format = spriteFiles[i].getName().substring(lastPonctuation + 1);
+
+                    File spriteFileResized = new File("images/" + spriteFile.getName());
+                    int lastPonctuation = spriteFile.getName().lastIndexOf(".");
+                    String format = spriteFile.getName().substring(lastPonctuation + 1);
                     ImageIO.write(bfiSpriteResized, format, spriteFileResized);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
+
             PacManWorld pw = new PacManWorld(size);
+
             new GameController(pw);
             Greenfoot.setWorld(pw);
         }
@@ -125,26 +81,77 @@ public class BeginWorld extends World {
 
     /**
      * Redimensiona o pacman de acordo com o X e Y recebidos
-     * 
+     *
      * @param sizeX X em pixels
      * @param sizeY Y em pixels
      */
     private void scaleSprite(int sizeX, int sizeY) {
-        BufferedImage biPacmanSprite = pacmanSprite.getAwtImage();
-        int typeOfPacmanSprite = biPacmanSprite.getType();
-        BufferedImage bi = new BufferedImage(sizeX, sizeY, typeOfPacmanSprite);
-        Graphics2D gph2D = bi.createGraphics();
-        gph2D.drawImage(biPacmanSprite, 0, 0, sizeX, sizeY, null);
-        gph2D.dispose();
-
         try {
+            BufferedImage biPacmanSprite = pacmanSprite.getAwtImage();
+            int typeImageSprite = biPacmanSprite.getType();
+            BufferedImage bi = new BufferedImage(sizeX, sizeY, typeImageSprite);
+
+            Graphics2D gph2D = bi.createGraphics();
+            gph2D.drawImage(biPacmanSprite, 0, 0, sizeX, sizeY, null);
+            gph2D.dispose();
+
             File newSprite = new File("pacman_sprite_resized" + Integer.toString(size) + ".png");
             ImageIO.write(bi, "png", newSprite);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        pacman.setImage("pacman_sprite_resized" + Integer.toString(size) + ".png");
+            pacman.setImage("pacman_sprite_resized" + Integer.toString(size) + ".png");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
+    /**
+     * Define os valores iniciais de tamanho, velocidade e plano de fundo.
+     */
+    private void setDefaults() {
+        size = minSize;
+        setBackground("sprites/cell.png");
+        Greenfoot.setSpeed(defaultSpeed);
+    }
+
+    /**
+     * Verifica se a pasta imagens existe, caso não, cria. Então limpa todo seu
+     * conteúdo.
+     */
+    private void checkImagesFolder() {
+        try {
+            File images = new File("images");
+
+            if (!images.exists()) {
+                images.mkdir();
+            }
+
+            File[] allFilesAtImage = new File("images").listFiles();
+
+            for (File file : allFilesAtImage) {
+                file.delete();
+            }
+        } catch (SecurityException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Prepara a apresentação da tela inicial com uma explicação de como
+     * redefinir o tamanho do pacman.
+     */
+    private void prepare() {
+        String msgTop = "Pressione [" + increaseKey + "/" + decreaseKey + "]\n"
+                + "para aumentar/diminuir\n"
+                + "o tamanho";
+        String msgBottom = "[Enter] para prosseguir";
+
+        ImageActor textTop = new ImageActor(new GreenfootImage(msgTop, 20, Color.GREEN, null));
+        ImageActor textBottom = new ImageActor(new GreenfootImage(msgBottom, 20, Color.GREEN, null));
+        pacmanSprite = new GreenfootImage("sprites/west_1.png");
+        pacman = new ImageActor(pacmanSprite);
+
+        addObject(textTop, 25, 7);
+        addObject(textBottom, 25, 45);
+        addObject(pacman, 25, 27);
+    }
 }
