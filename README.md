@@ -22,10 +22,16 @@ Ferramentas: Greenfoot versão 2.4.2
 
 Cronograma:
 01/09 ~ 17/09 : Animações e implementação de Classes
+
 17/09 ~ 24/09 : Som
+
 24/09 ~ 01/10 : Implementação da mecânica do Jogo
+
 01/10 ~ 08/10 : Entrega do protótipo para avaliação
+
 08/10 ~ 15/10 : Testes
+
 15/10 ~ 22/10 : Correção de bugs, melhorias e entrega final
+
 
 
