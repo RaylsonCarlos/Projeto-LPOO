@@ -29,7 +29,7 @@ public class PacManWorld extends World {
 
     @Override
     public void stopped() {
-        SoundPlayer.stop();
+        SoundPlayer.getInstance().stop();
         super.stopped();
     }
 
@@ -68,7 +68,7 @@ public class PacManWorld extends World {
 
         resetar(true);
 
-        SoundPlayer.playEffectPacmanBeginning();
+        SoundPlayer.getInstance().playEffectPacmanBeginning();
     }
 
     /**
@@ -161,7 +161,7 @@ public class PacManWorld extends World {
 
         //nenhum Ghost
         if (fantasmas.size() <= 0) {
-            SoundPlayer.stop();
+            SoundPlayer.getInstance().stop();
             return;
         }
 
@@ -180,33 +180,33 @@ public class PacManWorld extends World {
 
         //caso todos os fantasmas estejam vivos
         if (!algumFantasmaFear && !algumFantasmaDead) {
-            if (SoundPlayer.backgroundNormalIsPlaying()) {
+            if (SoundPlayer.getInstance().backgroundNormalIsPlaying()) {
                 //do nothing...
             } else {
-                SoundPlayer.stop();
-                SoundPlayer.playBackgroundNormal();
+                SoundPlayer.getInstance().stop();
+                SoundPlayer.getInstance().playBackgroundNormal();
             }
             return;
         }
 
         //caso algum Ghost esteja amedrontado
         if (algumFantasmaFear && !algumFantasmaDead) {
-            if (SoundPlayer.backgroundFrightenedIsPlaying()) {
+            if (SoundPlayer.getInstance().backgroundFrightenedIsPlaying()) {
                 //do nothing...
             } else {
-                SoundPlayer.stop();
-                SoundPlayer.playBackgroundFrightened();
+                SoundPlayer.getInstance().stop();
+                SoundPlayer.getInstance().playBackgroundFrightened();
             }
             return;
         }
 
         //caso algum Ghost tenha sido capturado
         if (algumFantasmaDead) {
-            if (SoundPlayer.backgroundEyesIsPlaying()) {
+            if (SoundPlayer.getInstance().backgroundEyesIsPlaying()) {
                 //do nothing...
             } else {
-                SoundPlayer.stop();
-                SoundPlayer.playBackgroundEyes();
+                SoundPlayer.getInstance().stop();
+                SoundPlayer.getInstance().playBackgroundEyes();
             }
         }
     }
@@ -278,7 +278,7 @@ public class PacManWorld extends World {
         List<Pastilha> pastilhas = getObjects(Pastilha.class);
 
         if (pastilhas.size() <= 0) {
-            SoundPlayer.stop();
+            SoundPlayer.getInstance().stop();
             try {
                 Thread.sleep(2000);
             } catch (Exception e) {

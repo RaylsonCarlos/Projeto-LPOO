@@ -151,8 +151,8 @@ public class PacMan extends Characters {
             fan.pelletEffect();
         });
 
-        SoundPlayer.stop();
-        SoundPlayer.playBackgroundFrightened();
+        SoundPlayer.getInstance().stop();
+        SoundPlayer.getInstance().playBackgroundFrightened();
     }
 
     /**
@@ -201,7 +201,7 @@ public class PacMan extends Characters {
             switch (fan.getStatus()) {
                 case Ghost.ALIVE:
                     fan.setImage("blank_image.png");
-                    SoundPlayer.stop();
+                    SoundPlayer.getInstance().stop();
                     Thread.sleep(500);
                     getWorld().repaint();
                     dead();
@@ -212,7 +212,7 @@ public class PacMan extends Characters {
                     points = pontuacaoFantasma(fan);
                     GameController.score(points);
                     getWorld().repaint();
-                    SoundPlayer.playEffectGhostEaten();
+                    SoundPlayer.getInstance().playEffectGhostEaten();
                     timer += 500;
                     Thread.sleep(500);
                     fan.setDead();
@@ -223,7 +223,7 @@ public class PacMan extends Characters {
                     points = pontuacaoFantasma(fan);
                     GameController.score(points);
                     getWorld().repaint();
-                    SoundPlayer.playEffectGhostEaten();
+                    SoundPlayer.getInstance().playEffectGhostEaten();
                     timer += 500;
                     Thread.sleep(500);
                     fan.setDead();
@@ -244,7 +244,7 @@ public class PacMan extends Characters {
     }
 
     public void dead() throws InterruptedException {
-        SoundPlayer.playEffectPacmanDeath();
+        SoundPlayer.getInstance().playEffectPacmanDeath();
 
         for (int i = 0; i < 11; i++) {
             setImage(spritesDead[i]);
@@ -266,7 +266,7 @@ public class PacMan extends Characters {
         GameController.score(points);
 
         if (points > 0) {
-            SoundPlayer.playEffectPillEaten();
+            SoundPlayer.getInstance().playEffectPillEaten();
         }
 
         verificarTeclado();

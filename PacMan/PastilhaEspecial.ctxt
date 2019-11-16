@@ -1,9 +1,0 @@
-#BlueJ class context
-comment0.target=PastilhaEspecial
-comment0.text=\r\n\ Uma\ pastilha\ grande\ que\ pisca\ aleatoriamente\r\n\r\n\ @author\ Carlos,\ Raylson,\ Weydson\r\n\ @version\ 1.0\r\n
-comment1.params=
-comment1.target=PastilhaEspecial()
-comment2.params=
-comment2.target=void\ act()
-comment2.text=\r\n\r\n
-numComments=3

@@ -28,7 +28,7 @@ public class BeginWorld extends World {
     }
 
     public void act() {
-        SoundPlayer.playSoundOfWind();
+        SoundPlayer.getInstance().playSoundOfWind();
 
         if (Greenfoot.isKeyDown("up")) {
             if (size >= maxSize) {
@@ -39,7 +39,7 @@ public class BeginWorld extends World {
             }
         } else if (Greenfoot.isKeyDown("down")) {
             if (size <= 16) {
-                SoundPlayer.playEffectJaAvisei();
+                SoundPlayer.getInstance().playEffectJaAvisei();
             } else {
                 size -= 4;
                 scaleSprite(size, size);

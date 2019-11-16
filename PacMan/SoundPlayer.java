@@ -9,22 +9,51 @@ import greenfoot.GreenfootSound;
  */
 public class SoundPlayer {
 
-    private static final GreenfootSound soundOfWind = new GreenfootSound("sounds/wind.wav");
-    private static final GreenfootSound backgroundNormal = new GreenfootSound("sounds/background_normal.wav");
-    private static final GreenfootSound backgroundEyes = new GreenfootSound("sounds/background_eyes.wav");
-    private static final GreenfootSound backgroundFrightened = new GreenfootSound("sounds/background_ghosts_frightened.wav");
-    private static final GreenfootSound pacmanDeath = new GreenfootSound("sounds/pacman_death.wav");
-    private static final GreenfootSound ghostEaten = new GreenfootSound("sounds/ghost_eaten.wav");
-    private static final GreenfootSound pillEaten = new GreenfootSound("sounds/pill_eaten.wav");
-    private static final GreenfootSound pacmanBeginning = new GreenfootSound("sounds/pacman_beginning.wav");
-    private static final GreenfootSound pacmanIntermission = new GreenfootSound("sounds/pacman_intermission.wav");
-    private static final GreenfootSound youCegoMan = new GreenfootSound("sounds/you_cego_man.wav");
-    private static final GreenfootSound jaAvisei = new GreenfootSound("sounds/ja_avisei.wav");
+    private GreenfootSound soundOfWind;
+    private GreenfootSound backgroundNormal;
+    private GreenfootSound backgroundEyes;
+    private GreenfootSound backgroundFrightened;
+    private GreenfootSound pacmanDeath;
+    private GreenfootSound ghostEaten;
+    private GreenfootSound pillEaten;
+    private GreenfootSound pacmanBeginning;
+    private GreenfootSound pacmanIntermission;
+    private GreenfootSound youCegoMan;
+    private GreenfootSound jaAvisei;
+    
+    //volatile to avoid cache reading this variable.
+    private static volatile SoundPlayer instance;
+    
+    private SoundPlayer(){
+        soundOfWind = new GreenfootSound("sounds/wind.wav");
+        backgroundNormal = new GreenfootSound("sounds/background_normal.wav");
+        backgroundEyes = new GreenfootSound("sounds/background_eyes.wav");
+        backgroundFrightened = new GreenfootSound("sounds/background_ghosts_frightened.wav");
+        pacmanDeath = new GreenfootSound("sounds/pacman_death.wav");
+        ghostEaten = new GreenfootSound("sounds/ghost_eaten.wav");
+        pillEaten = new GreenfootSound("sounds/pill_eaten.wav");
+        pacmanBeginning = new GreenfootSound("sounds/pacman_beginning.wav");
+        pacmanIntermission = new GreenfootSound("sounds/pacman_intermission.wav");
+        youCegoMan = new GreenfootSound("sounds/you_cego_man.wav");
+        jaAvisei = new GreenfootSound("sounds/ja_avisei.wav");
+    }
+    
+    public static SoundPlayer getInstance(){
+        //double lock checking!
+        if(instance == null){
+            synchronized(SoundPlayer.class){
+                if(instance == null){
+                    instance = new SoundPlayer();
+                }
+            }
+        }
+        return instance;
+    }
 
     /**
      * Para a execução do som de fundo.
      */
-    public static void stop() {
+    public void stop() {
         if (backgroundNormal != null) {
             backgroundNormal.stop();
         }
@@ -36,7 +65,7 @@ public class SoundPlayer {
         }
     }
 
-    public static void playSoundOfWind() {
+    public void playSoundOfWind() {
         soundOfWind.playLoop();
     }
 
@@ -46,7 +75,7 @@ public class SoundPlayer {
      * @return true se o som de fundo normal está sendo executado, false caso
      * contrário.
      */
-    public static boolean backgroundNormalIsPlaying() {
+    public boolean backgroundNormalIsPlaying() {
         return backgroundNormal.isPlaying();
     }
 
@@ -56,7 +85,7 @@ public class SoundPlayer {
      * @return true se o som de fundo dos fantasmas amedrontados está sendo
      * executado, false caso contrário.
      */
-    public static boolean backgroundFrightenedIsPlaying() {
+    public boolean backgroundFrightenedIsPlaying() {
         return backgroundFrightened.isPlaying();
     }
 
@@ -67,77 +96,77 @@ public class SoundPlayer {
      * @return true se o som de fundo quando um dos fantasmas foi capturado está
      * sendo executado, false caso contrário.
      */
-    public static boolean backgroundEyesIsPlaying() {
+    public boolean backgroundEyesIsPlaying() {
         return backgroundEyes.isPlaying();
     }
 
     /**
      * Executa o som de fundo normal do labirinto.
      */
-    public static void playBackgroundNormal() {
+    public void playBackgroundNormal() {
         backgroundNormal.playLoop();
     }
 
     /**
      * Executa o som de fundo em que um fantasma foi capturado.
      */
-    public static void playBackgroundEyes() {
+    public void playBackgroundEyes() {
         backgroundEyes.playLoop();
     }
 
     /**
      * Executa o som de fundo em que os fantasmas estão amedrontados.
      */
-    public static void playBackgroundFrightened() {
+    public void playBackgroundFrightened() {
         backgroundFrightened.playLoop();
     }
 
     /**
      * Executa o efeito sonoro da morte do pacman.
      */
-    public static void playEffectPacmanDeath() {
+    public void playEffectPacmanDeath() {
         pacmanDeath.play();
     }
 
     /**
      * Executa o efeito sonoro quando do pacman comendo um fantasma.
      */
-    public static void playEffectGhostEaten() {
+    public void playEffectGhostEaten() {
         ghostEaten.play();
     }
 
     /**
      * Executa o efeito sonoro de uma pastilha sendo comida.
      */
-    public static void playEffectPillEaten() {
+    public void playEffectPillEaten() {
         pillEaten.play();
     }
 
     /**
      * Executa o efeito sonoro do início do jogo.
      */
-    public static void playEffectPacmanBeginning() {
+    public void playEffectPacmanBeginning() {
         pacmanBeginning.play();
     }
 
     /**
      * Executa o efeito sonoro do final do jogo.
      */
-    public static void playEffectPacmanIntermission() {
+    public void playEffectPacmanIntermission() {
         pacmanIntermission.play();
     }
 
     /**
      * Executa o efeito sonoro YOU CEGO MAN!
      */
-    public static void playEffectYouCegoMan() {
+    public void playEffectYouCegoMan() {
         youCegoMan.play();
     }
 
     /**
      * Executa o efeito sonoro JÁ AVISEI!
      */
-    public static void playEffectJaAvisei() {
+    public void playEffectJaAvisei() {
         jaAvisei.play();
     }
 }

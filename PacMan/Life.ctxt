@@ -1,6 +1,0 @@
-#BlueJ class context
-comment0.target=Life
-comment0.text=\r\n\ Representa\ uma\ vida\ do\ pacman\r\n\r\n\ @author\ Raylson,\ Carlos,\ Weydson\r\n\ @version\ 1.0\r\n
-comment1.params=
-comment1.target=void\ act()
-numComments=2
