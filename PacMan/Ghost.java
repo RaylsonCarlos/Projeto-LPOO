@@ -210,7 +210,7 @@ public class Ghost extends Characters {
     }
 
     /**
-     * Informa a direção oposto a que o Ghost está olhando.
+     * Informa a direção oposta a que o Ghost está olhando.
      *
      * @param direction a direção que o Ghost está olhando
      * @return a direção oposta
