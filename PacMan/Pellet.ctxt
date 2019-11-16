@@ -1,4 +1,6 @@
 #BlueJ class context
 comment0.target=Pellet
 comment0.text=\r\n\ Representa\ uma\ pastilha\ no\ mundo\ do\ PacManWorld.\r\n\r\n\ O\ PacMan\ pode\ com\u00EA-la\ para\ adicionar\ pontos\ a\ sua\ pontua\u00E7\u00E3o.\r\n\r\n\ @author\ Raylson,\ Carlon,\ Weydson\r\n\ @version\ 1.0\r\n
-numComments=1
+comment1.params=
+comment1.target=Pellet()
+numComments=2

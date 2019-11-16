@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=PacMan
-comment0.text=\r\n\ A\ classe\ PacMan\ representa\ o\ Characters\ do\ usu\u00E1rio\ no\ jogo,\ controlado\ pelo\r\n\ teclado\r\n\r\n\ @author\ Raylson,\ Carlos,\ Weydson\r\n\ @version\ 1.0\r\n
+comment0.text=\r\n\ A\ classe\ PacMan\ representa\ o\ Character\ do\ usu\u00E1rio\ no\ jogo,\ controlado\ pelo\r\n\ teclado\r\n\r\n\ @author\ Raylson,\ Carlos,\ Weydson\r\n\ @version\ 1.0\r\n
 comment1.params=
 comment1.target=PacMan()
 comment1.text=\r\n\ Inicializa\ o\ Pacman\ com\ velocidade\ 3,\ e\ dire\u00E7\u00E3o\ WEST\r\n\r\n
@@ -25,5 +25,5 @@ comment8.params=
 comment8.target=void\ dead()
 comment9.params=
 comment9.target=void\ act()
-comment9.text=\r\n\ Faz\ o\ pac-man\ agir\:\ consome\ objetos\ pastilha,\ aplica\ efeito\ sonoro,\r\n\ verifica\ mudan\u00E7a\ de\ dire\u00E7\u00E3o,\ move\ e\ muda\ os\ sprites\ do\ Characters.\r\n
+comment9.text=\r\n\ Faz\ o\ pac-man\ agir\:\ consome\ objetos\ pastilha,\ aplica\ efeito\ sonoro,\r\n\ verifica\ mudan\u00E7a\ de\ dire\u00E7\u00E3o,\ move\ e\ muda\ os\ sprites\ do\ Character.\r\n
 numComments=10

@@ -14,13 +14,12 @@ public class BeginWorld extends World {
     private final String increaseKey = "up";
     private final String decreaseKey = "down";
     private final int defaultSpeed = 35;
+    private final Actor textMinSize = new ImageActor(new GreenfootImage("Tamanho mínimo!", 20, Color.RED, null));
+    private final Actor textMaxSize = new ImageActor(new GreenfootImage("Tamanho máximo!", 20, Color.RED, null));
 
     private Actor pacman;
     private int size;
     private GreenfootImage pacmanSprite;
-
-    private final Actor textMinSize = new ImageActor(new GreenfootImage("Tamanho mínimo!", 20, Color.RED, null));
-    private final Actor textMaxSize = new ImageActor(new GreenfootImage("Tamanho máximo!", 20, Color.RED, null));
 
     public BeginWorld() {
         super(50, 50, 5);

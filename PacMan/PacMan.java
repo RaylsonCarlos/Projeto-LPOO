@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Iterator;
 
 /**
- * A classe PacMan representa o Characters do usuário no jogo, controlado pelo
- * teclado
+ * A classe PacMan representa o Character do usuário no jogo, controlado pelo
+ teclado
  *
  * @author Raylson, Carlos, Weydson
  * @version 1.0
  */
-public class PacMan extends Characters {
+public class PacMan extends Character {
 
     // Variável para controlar o deslocamento no array de sprites.
     private int offset = 0;
@@ -24,12 +24,12 @@ public class PacMan extends Characters {
 
     // Controla em até quantos turnos o comando do jogador de mudar de direção
     // será executado (se possível). Valores maiores suavizam a tomada de
-    // direção do Characters, valores menores diminuem a janela de tempo para o
+    // direção do Character, valores menores diminuem a janela de tempo para o
     // jogador apertar das teclas.
     private static final int delayDirection = 6;
 
     // Armazena o última direção escolhida pelo jogador
-    private int possibleDirection = Characters.WEST;
+    private int possibleDirection = Character.WEST;
 
     // Variável para controle do tempo do efeito de pastilha especial
     private long timer;
@@ -61,7 +61,7 @@ public class PacMan extends Characters {
     public PacMan() {
         super(defaultSpeed);
         inicializaSprites();
-        changeDirection(Characters.WEST);
+        changeDirection(Character.WEST);
         setImage(spritesWEST[0]);
     }
 
@@ -164,19 +164,19 @@ public class PacMan extends Characters {
         if (key != null) {
             offset = 1;
             if (key.equals("up")) {
-                possibleDirection = Characters.NORTH;
+                possibleDirection = Character.NORTH;
                 counterDirection = 0;
             }
             if (key.equals("down")) {
-                possibleDirection = Characters.SOUTH;
+                possibleDirection = Character.SOUTH;
                 counterDirection = 0;
             }
             if (key.equals("right")) {
-                possibleDirection = Characters.EAST;
+                possibleDirection = Character.EAST;
                 counterDirection = 0;
             }
             if (key.equals("left")) {
-                possibleDirection = Characters.WEST;
+                possibleDirection = Character.WEST;
                 counterDirection = 0;
             }
         }
@@ -253,12 +253,12 @@ public class PacMan extends Characters {
         }
 
         Thread.sleep(1000);
-        ((PacManWorld) getWorld()).resetar(false);
+        ((PacManWorld) getWorld()).reset(false);
     }
 
     /**
      * Faz o pac-man agir: consome objetos pastilha, aplica efeito sonoro,
-     * verifica mudança de direção, move e muda os sprites do Characters.
+ verifica mudança de direção, move e muda os sprites do Character.
      */
     @Override
     public void act() {
@@ -281,16 +281,16 @@ public class PacMan extends Characters {
 
         if (timeToChangeSprite()) {
             switch (getDirection()) {
-                case Characters.NORTH:
+                case Character.NORTH:
                     setImage(spritesNORTH[animationOffset[offset % 4]]);
                     break;
-                case Characters.SOUTH:
+                case Character.SOUTH:
                     setImage(spritesSOUTH[animationOffset[offset % 4]]);
                     break;
-                case Characters.EAST:
+                case Character.EAST:
                     setImage(spritesEAST[animationOffset[offset % 4]]);
                     break;
-                case Characters.WEST:
+                case Character.WEST:
                     setImage(spritesWEST[animationOffset[offset % 4]]);
                     break;
             }

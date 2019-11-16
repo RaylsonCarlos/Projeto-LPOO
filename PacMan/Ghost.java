@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Raylson, Carlos, Weydson
  * @version 1.0
  */
-public class Ghost extends Characters {
+public class Ghost extends Character {
 
     // Cores dos fantasmas
     public final static int RED = 0;
@@ -136,7 +136,7 @@ public class Ghost extends Characters {
     }
 
     /**
-     * Modifica o estado do Characters .
+     * Modifica o estado do Character .
      *
      * @param status dos estados possíveis: ALIVE, DEAD, FEAR ou RECOVERING.
      * Parâmetro inválido gera o estado ALIVE.
@@ -157,19 +157,19 @@ public class Ghost extends Characters {
         switch (status) {
             case ALIVE:
                 switch (getDirection()) {
-                    case Characters.NORTH:
+                    case Character.NORTH:
                         setImage(sprites[color][2][offset % 2]);
                         break;
 
-                    case Characters.SOUTH:
+                    case Character.SOUTH:
                         setImage(sprites[color][3][offset % 2]);
                         break;
 
-                    case Characters.EAST:
+                    case Character.EAST:
                         setImage(sprites[color][0][offset % 2]);
                         break;
 
-                    case Characters.WEST:
+                    case Character.WEST:
                         setImage(sprites[color][1][offset % 2]);
                         break;
                 }
@@ -185,19 +185,19 @@ public class Ghost extends Characters {
 
             case DEAD:
                 switch (getDirection()) {
-                    case Characters.NORTH:
+                    case Character.NORTH:
                         setImage(sprites[5][0][2]);
                         break;
 
-                    case Characters.SOUTH:
+                    case Character.SOUTH:
                         setImage(sprites[5][0][3]);
                         break;
 
-                    case Characters.EAST:
+                    case Character.EAST:
                         setImage(sprites[5][0][0]);
                         break;
 
-                    case Characters.WEST:
+                    case Character.WEST:
                         setImage(sprites[5][0][1]);
                         break;
                 }
@@ -210,29 +210,29 @@ public class Ghost extends Characters {
     }
 
     /**
-     * Informa a direção oposto a que o Ghost está olhando.
+     * Informa a direção oposta a que o Ghost está olhando.
      *
      * @param direction a direção que o Ghost está olhando
      * @return a direção oposta
      */
     private int oppositeDirection(int direction) {
-        int oppositeDirection = Characters.NORTH;
+        int oppositeDirection = Character.NORTH;
 
         switch (direction) {
-            case Characters.NORTH:
-                oppositeDirection = Characters.SOUTH;
+            case Character.NORTH:
+                oppositeDirection = Character.SOUTH;
                 break;
 
-            case Characters.SOUTH:
-                oppositeDirection = Characters.NORTH;
+            case Character.SOUTH:
+                oppositeDirection = Character.NORTH;
                 break;
 
-            case Characters.EAST:
-                oppositeDirection = Characters.WEST;
+            case Character.EAST:
+                oppositeDirection = Character.WEST;
                 break;
 
-            case Characters.WEST:
-                oppositeDirection = Characters.EAST;
+            case Character.WEST:
+                oppositeDirection = Character.EAST;
                 break;
         }
 
@@ -264,14 +264,14 @@ public class Ghost extends Characters {
             if (x != 28) {
                 setSpeed(defaultSpeed);
 
-                if (x < 28 && getDirection() != Characters.EAST) {
-                    changeDirection(Characters.EAST);
-                } else if (x > 28 && getDirection() != Characters.WEST) {
-                    changeDirection(Characters.WEST);
+                if (x < 28 && getDirection() != Character.EAST) {
+                    changeDirection(Character.EAST);
+                } else if (x > 28 && getDirection() != Character.WEST) {
+                    changeDirection(Character.WEST);
                 }
             } else {
-                if (getDirection() != Characters.NORTH) {
-                    changeDirection(Characters.NORTH);
+                if (getDirection() != Character.NORTH) {
+                    changeDirection(Character.NORTH);
                 }
 
                 setLocation(x, getY() - 1);
@@ -280,11 +280,11 @@ public class Ghost extends Characters {
             setSpeed(defaultSpeed - 1);
 
             if (!canMoveNorth()) {
-                changeDirection(Characters.SOUTH);
+                changeDirection(Character.SOUTH);
             }
 
             if (!canMoveSouth()) {
-                changeDirection(Characters.NORTH);
+                changeDirection(Character.NORTH);
             }
         }
     }
@@ -299,19 +299,19 @@ public class Ghost extends Characters {
         int oppositeDirection = oppositeDirection(direction);
 
         if (canMoveNorth()) {
-            routes.add(Characters.NORTH);
+            routes.add(Character.NORTH);
         }
 
         if (canMoveSouth()) {
-            routes.add(Characters.SOUTH);
+            routes.add(Character.SOUTH);
         }
 
         if (canMoveEast()) {
-            routes.add(Characters.EAST);
+            routes.add(Character.EAST);
         }
 
         if (canMoveWest()) {
-            routes.add(Characters.WEST);
+            routes.add(Character.WEST);
         }
 
         if (!routes.isEmpty()) {
@@ -449,23 +449,23 @@ public class Ghost extends Characters {
         List<Integer> routes = new ArrayList<>();
         List<Integer> distance = new ArrayList<>();
 
-        if (canMoveNorth() && getDirection() != Characters.SOUTH) {
-            routes.add(Characters.NORTH);
+        if (canMoveNorth() && getDirection() != Character.SOUTH) {
+            routes.add(Character.NORTH);
             distance.add(dist(x, y - 1, 23, 28));
         }
 
-        if (canMoveSouth() && getDirection() != Characters.NORTH) {
-            routes.add(Characters.SOUTH);
+        if (canMoveSouth() && getDirection() != Character.NORTH) {
+            routes.add(Character.SOUTH);
             distance.add(dist(x, y + 1, 23, 28));
         }
 
-        if (canMoveEast() && getDirection() != Characters.WEST) {
-            routes.add(Characters.EAST);
+        if (canMoveEast() && getDirection() != Character.WEST) {
+            routes.add(Character.EAST);
             distance.add(dist(x + 1, y, 23, 28));
         }
 
-        if (canMoveWest() && getDirection() != Characters.EAST) {
-            routes.add(Characters.WEST);
+        if (canMoveWest() && getDirection() != Character.EAST) {
+            routes.add(Character.WEST);
             distance.add(dist(x - 1, y, 23, 28));
         }
 
@@ -474,13 +474,13 @@ public class Ghost extends Characters {
         if (distance.size() <= 0) {
             if (!canMove(getDirection())) {
                 if (canMoveNorth()) {
-                    changeDirection(Characters.NORTH);
+                    changeDirection(Character.NORTH);
                 } else if (canMoveSouth()) {
-                    changeDirection(Characters.SOUTH);
+                    changeDirection(Character.SOUTH);
                 } else if (canMoveEast()) {
-                    changeDirection(Characters.EAST);
+                    changeDirection(Character.EAST);
                 } else if (canMoveWest()) {
-                    changeDirection(Characters.WEST);
+                    changeDirection(Character.WEST);
                 }
             }
             return;
@@ -514,20 +514,20 @@ public class Ghost extends Characters {
         List<Integer> rotas = new ArrayList<Integer>();
         List<Integer> distancias = new ArrayList<Integer>();
 
-        if (canMoveNorth() && getDirection() != Characters.SOUTH) {//
-            rotas.add(Characters.NORTH);
+        if (canMoveNorth() && getDirection() != Character.SOUTH) {//
+            rotas.add(Character.NORTH);
             distancias.add(dist(x, y - 1, pacmanX, pacmanY));
         }
-        if (canMoveSouth() && getDirection() != Characters.NORTH) {// 
-            rotas.add(Characters.SOUTH);
+        if (canMoveSouth() && getDirection() != Character.NORTH) {// 
+            rotas.add(Character.SOUTH);
             distancias.add(dist(x, y + 1, pacmanX, pacmanY));
         }
-        if (canMoveEast() && getDirection() != Characters.WEST) {// 
-            rotas.add(Characters.EAST);
+        if (canMoveEast() && getDirection() != Character.WEST) {// 
+            rotas.add(Character.EAST);
             distancias.add(dist(x + 1, y, pacmanX, pacmanY));
         }
-        if (canMoveWest() && getDirection() != Characters.EAST) {// 
-            rotas.add(Characters.WEST);
+        if (canMoveWest() && getDirection() != Character.EAST) {// 
+            rotas.add(Character.WEST);
             distancias.add(dist(x - 1, y, pacmanX, pacmanY));
         }
 
@@ -536,13 +536,13 @@ public class Ghost extends Characters {
         if (distancias.size() <= 0) {
             if (!canMove(getDirection())) {
                 if (canMoveNorth()) {
-                    changeDirection(Characters.NORTH);
+                    changeDirection(Character.NORTH);
                 } else if (canMoveSouth()) {
-                    changeDirection(Characters.SOUTH);
+                    changeDirection(Character.SOUTH);
                 } else if (canMoveEast()) {
-                    changeDirection(Characters.EAST);
+                    changeDirection(Character.EAST);
                 } else if (canMoveWest()) {
-                    changeDirection(Characters.WEST);
+                    changeDirection(Character.WEST);
                 }
             }
             return;
@@ -569,7 +569,7 @@ public class Ghost extends Characters {
     }
 
     /**
-     * Faz o Ghost se mover e mudar os sprites do Characters
+     * Faz o Ghost se mover e mudar os sprites do Character
      *
      */
     public void act() {

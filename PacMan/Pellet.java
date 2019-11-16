@@ -11,4 +11,10 @@ import greenfoot.*;
  */
 public class Pellet extends Actor {
 
+    private static GreenfootImage sprite;
+
+    public Pellet() {
+        sprite = new GreenfootImage("images/pastilha.png");
+        setImage(sprite);
+    }
 }

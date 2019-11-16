@@ -13,10 +13,10 @@ import greenfoot.*;
 public class Wall extends Actor {
 
     // Cria uma parede invisível.
-    public final static GreenfootImage parede = new GreenfootImage("wall.png");
+    private final GreenfootImage wall = new GreenfootImage("wall.png");
 
     // Cria uma parede visível para debug.
-    public final static GreenfootImage parede_debugger = new GreenfootImage("wall_debugger.png");
+    private final GreenfootImage debugger = new GreenfootImage("wall_debugger.png");
 
     /**
      * Define a imagem que representa a Wall. parede_debugger permite a
@@ -24,6 +24,6 @@ public class Wall extends Actor {
      */
     public Wall() {
         // Define a imagem usando o objeto parede.
-        setImage(parede);
+        setImage(debugger);
     }
 }

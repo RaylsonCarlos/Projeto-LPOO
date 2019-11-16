@@ -51,7 +51,7 @@ public class GameController {
     /**
      * Finaliza o jogo.
      */
-    public static void fim() {
+    public static void end() {
         String msg = "O jogo acabou!\n tá okey?!\n você fez \n";
         msg += Integer.toString(points);
         msg += "\n pontos.";

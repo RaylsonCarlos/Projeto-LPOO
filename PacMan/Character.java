@@ -10,7 +10,7 @@ import greenfoot.*;
  * @author Raylson, Carlos, Weydson
  * @version 1.0
  */
-public class Characters extends Actor {
+public class Character extends Actor {
 
     // Direções
     public static final int NORTH = 0;
@@ -39,7 +39,7 @@ public class Characters extends Actor {
      *
      * @param howManyTurns A quantidade de turns até a próximo sprite
      */
-    public Characters(int howManyTurns) {
+    public Character(int howManyTurns) {
         turns = 0;
         direction = NORTH;
 
