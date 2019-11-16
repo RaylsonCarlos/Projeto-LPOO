@@ -24,23 +24,23 @@ public class Characters extends Actor {
     // Direção que o personagem está encarando.
     private int direction;
 
-    // Total de turnos
-    private int turnos;
+    // Total de turns
+    private int turns;
 
-    // Conta os turnos antes de mudar de sprite.
+    // Conta os turns antes de mudar de sprite.
     private int tick = 0;
 
-    // Quantidade de turnos até o próximo sprite.
+    // Quantidade de turns até o próximo sprite.
     private int howManyTurns;
 
     /**
-     * Cria um personagem que muda de sprite em howManyTurns turnos e com a
-     * direção norte
+     * Cria um personagem que muda de sprite em howManyTurns turns e com a
+ direção norte
      *
-     * @param howManyTurns A quantidade de turnos até a próximo sprite
+     * @param howManyTurns A quantidade de turns até a próximo sprite
      */
     public Characters(int howManyTurns) {
-        turnos = 0;
+        turns = 0;
         direction = NORTH;
 
         if (howManyTurns < 0) {
@@ -251,11 +251,11 @@ public class Characters extends Actor {
      * esse método por último dentro do método act() da sua subclasse.
      */
     public void act() {
-        if (speed > turnos % 3) {
+        if (speed > turns % 3) {
             move();
         }
 
-        turnos++;
+        turns++;
         tick++;
 
         if (tick >= howManyTurns - 1) {

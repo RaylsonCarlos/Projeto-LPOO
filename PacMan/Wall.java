@@ -12,14 +12,10 @@ import greenfoot.*;
  */
 public class Wall extends Actor {
 
-    /**
-     * Cria uma imagem invisível.
-     */
+    // Cria uma parede invisível.
     public final static GreenfootImage parede = new GreenfootImage("wall.png");
 
-    /**
-     * Cria uma imagem visível para debug.
-     */
+    // Cria uma parede visível para debug.
     public final static GreenfootImage parede_debugger = new GreenfootImage("wall_debugger.png");
 
     /**

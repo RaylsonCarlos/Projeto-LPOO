@@ -49,7 +49,7 @@ public class PacMan extends Characters {
     private static GreenfootImage[] spritesDead;
 
     // Sprites da pontuação
-    private static GreenfootImage[] spritesPontos;
+    private static GreenfootImage[] spritesPoints;
 
     // Velocidade padrão dos ghosts
     private static final int defaultSpeed = 3;
@@ -102,7 +102,7 @@ public class PacMan extends Characters {
             new GreenfootImage("dead_9.png"),
             new GreenfootImage("dead_10.png")
         };
-        spritesPontos = new GreenfootImage[]{
+        spritesPoints = new GreenfootImage[]{
             new GreenfootImage("points_200.png"),
             new GreenfootImage("points_400.png"),
             new GreenfootImage("points_800.png"),
@@ -111,18 +111,18 @@ public class PacMan extends Characters {
     }
 
     /**
-     * Consome os objetos tipo {@link Pastilha} que estejam num raio de 1 célula
+     * Consome os objetos tipo {@link Pellet} que estejam num raio de 1 célula
      * return true se o pac-man encontrou alguma comida
      */
     private int foundFood() {
         int points = 0;
-        List<Pastilha> food = getObjectsInRange(1, Pastilha.class);
+        List<Pellet> food = getObjectsInRange(1, Pellet.class);
 
         if (food.size() > 0) {
             Iterator it = food.iterator();
 
             while (it.hasNext()) {
-                if (it.next() instanceof PastilhaEspecial) {
+                if (it.next() instanceof SpecialPellet) {
                     if ((System.currentTimeMillis() - timer) > effectiveTime) {
                         countEatGhosts = 0;
                     }
@@ -233,7 +233,7 @@ public class PacMan extends Characters {
     }
 
     private int pontuacaoFantasma(Ghost fan) {
-        fan.setImage(spritesPontos[countEatGhosts]);
+        fan.setImage(spritesPoints[countEatGhosts]);
 
         if (countEatGhosts < 3) {
             countEatGhosts++;

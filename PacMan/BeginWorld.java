@@ -19,6 +19,9 @@ public class BeginWorld extends World {
     private int size;
     private GreenfootImage pacmanSprite;
 
+    private final Actor textMinSize = new ImageActor(new GreenfootImage("Tamanho mínimo!", 20, Color.RED, null));
+    private final Actor textMaxSize = new ImageActor(new GreenfootImage("Tamanho máximo!", 20, Color.RED, null));
+
     public BeginWorld() {
         super(50, 50, 5);
 
@@ -32,15 +35,17 @@ public class BeginWorld extends World {
 
         if (Greenfoot.isKeyDown("up")) {
             if (size >= maxSize) {
-                showText("Tamanho máximo!", 25, 40);
+                addObject(textMaxSize, 25, 40);
             } else {
+                removeObject(textMinSize);
                 size += 4;
                 scaleSprite(size, size);
             }
         } else if (Greenfoot.isKeyDown("down")) {
-            if (size <= 16) {
-                SoundPlayer.getInstance().playEffectJaAvisei();
+            if (size <= minSize) {
+                addObject(textMinSize, 25, 40);
             } else {
+                removeObject(textMaxSize);
                 size -= 4;
                 scaleSprite(size, size);
             }
@@ -68,14 +73,14 @@ public class BeginWorld extends World {
                     String format = spriteFile.getName().substring(lastPonctuation + 1);
                     ImageIO.write(bfiSpriteResized, format, spriteFileResized);
                 }
+
+                PacManWorld pw = new PacManWorld(size);
+
+                new GameController(pw);
+                Greenfoot.setWorld(pw);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-
-            PacManWorld pw = new PacManWorld(size);
-
-            new GameController(pw);
-            Greenfoot.setWorld(pw);
         }
     }
 
@@ -144,10 +149,10 @@ public class BeginWorld extends World {
                 + "para aumentar/diminuir\n"
                 + "o tamanho";
         String msgBottom = "[Enter] para prosseguir";
+        pacmanSprite = new GreenfootImage("sprites/west_1.png");
 
         ImageActor textTop = new ImageActor(new GreenfootImage(msgTop, 20, Color.GREEN, null));
         ImageActor textBottom = new ImageActor(new GreenfootImage(msgBottom, 20, Color.GREEN, null));
-        pacmanSprite = new GreenfootImage("sprites/west_1.png");
         pacman = new ImageActor(pacmanSprite);
 
         addObject(textTop, 25, 7);

@@ -20,11 +20,11 @@ public class SoundPlayer {
     private GreenfootSound pacmanIntermission;
     private GreenfootSound youCegoMan;
     private GreenfootSound jaAvisei;
-    
+
     //volatile to avoid cache reading this variable.
     private static volatile SoundPlayer instance;
-    
-    private SoundPlayer(){
+
+    private SoundPlayer() {
         soundOfWind = new GreenfootSound("sounds/wind.wav");
         backgroundNormal = new GreenfootSound("sounds/background_normal.wav");
         backgroundEyes = new GreenfootSound("sounds/background_eyes.wav");
@@ -37,12 +37,12 @@ public class SoundPlayer {
         youCegoMan = new GreenfootSound("sounds/you_cego_man.wav");
         jaAvisei = new GreenfootSound("sounds/ja_avisei.wav");
     }
-    
-    public static SoundPlayer getInstance(){
+
+    public static SoundPlayer getInstance() {
         //double lock checking!
-        if(instance == null){
-            synchronized(SoundPlayer.class){
-                if(instance == null){
+        if (instance == null) {
+            synchronized (SoundPlayer.class) {
+                if (instance == null) {
                     instance = new SoundPlayer();
                 }
             }

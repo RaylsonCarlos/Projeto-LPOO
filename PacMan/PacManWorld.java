@@ -17,14 +17,13 @@ public class PacManWorld extends World {
     // Estabelece a imagem de fundo padrão do jogo e um inteiro para
     // a contagem de pontos.
     private static GreenfootImage background;
-    /**
-     * Timer para contar o tempo para libertar fantasmas
-     */
+    
+    // Timer para contar o tempo para libertar fantasmas
     private long timerCela = 0l;
-    /**
-     * Tempo em milisegundos para libertar um Ghost
-     */
+     
+    // Tempo em milisegundos para libertar um Ghost
     private int tempoCela = 6000;
+    
     private int points = 0;
 
     @Override
@@ -64,7 +63,7 @@ public class PacManWorld extends World {
         addObject(new Life(), 8, 65);
         addObject(new Life(), 13, 65);
 
-        setPaintOrder(Ghost.class, PacMan.class, Pastilha.class);
+        setPaintOrder(Ghost.class, PacMan.class, Pellet.class);
 
         resetar(true);
 
@@ -275,7 +274,7 @@ public class PacManWorld extends World {
      * Quando o PacMan come todas as pastilhas do mundo, ele ganha o jogo.
      */
     private void passarFase() {
-        List<Pastilha> pastilhas = getObjects(Pastilha.class);
+        List<Pellet> pastilhas = getObjects(Pellet.class);
 
         if (pastilhas.size() <= 0) {
             SoundPlayer.getInstance().stop();
@@ -317,8 +316,8 @@ public class PacManWorld extends World {
     }
 
     /**
-     * Cria os objetos do tipo Pastilha e coloca-os dentro do mundo do
-     * PacManWorld.
+     * Cria os objetos do tipo Pellet e coloca-os dentro do mundo do
+ PacManWorld.
      */
     private void populatePastilha() {
         // Um monte de linha de código pra colocar as pastilhas.
@@ -349,49 +348,49 @@ public class PacManWorld extends World {
         pastilhasHorizontal(41, 3, 27);
         pastilhasVertical(3, 43, 49);
         pastilhasVertical(53, 43, 49);
-        addObject(new Pastilha(), 5, 47);
-        addObject(new Pastilha(), 7, 47);
-        addObject(new Pastilha(), 49, 47);
-        addObject(new Pastilha(), 51, 47);
+        addObject(new Pellet(), 5, 47);
+        addObject(new Pellet(), 7, 47);
+        addObject(new Pellet(), 49, 47);
+        addObject(new Pellet(), 51, 47);
         pastilhasVertical(7, 49, 55);
         pastilhasVertical(19, 49, 55);
         pastilhasVertical(37, 49, 55);
         pastilhasVertical(49, 49, 55);
-        addObject(new Pastilha(), 3, 53);
-        addObject(new Pastilha(), 5, 53);
-        addObject(new Pastilha(), 9, 53);
-        addObject(new Pastilha(), 11, 53);
-        addObject(new Pastilha(), 45, 53);
-        addObject(new Pastilha(), 47, 53);
-        addObject(new Pastilha(), 51, 53);
-        addObject(new Pastilha(), 53, 53);
+        addObject(new Pellet(), 3, 53);
+        addObject(new Pellet(), 5, 53);
+        addObject(new Pellet(), 9, 53);
+        addObject(new Pellet(), 11, 53);
+        addObject(new Pellet(), 45, 53);
+        addObject(new Pellet(), 47, 53);
+        addObject(new Pellet(), 51, 53);
+        addObject(new Pellet(), 53, 53);
         pastilhasVertical(3, 55, 61);
         pastilhasVertical(53, 55, 61);
         pastilhasHorizontal(53, 21, 27);
         pastilhasHorizontal(53, 31, 37);
-        addObject(new Pastilha(), 25, 55);
-        addObject(new Pastilha(), 25, 57);
-        addObject(new Pastilha(), 31, 55);
-        addObject(new Pastilha(), 31, 57);
+        addObject(new Pellet(), 25, 55);
+        addObject(new Pellet(), 25, 57);
+        addObject(new Pellet(), 31, 55);
+        addObject(new Pellet(), 31, 57);
         pastilhasHorizontal(59, 5, 53);
-        populatePastilhaEspecial();
+        populateSpecialPellet();
     }
 
     /**
      * Cria as pastilhas especiais.
      */
-    private void populatePastilhaEspecial() {
-        removeObjects(getObjectsAt(3, 7, Pastilha.class));
-        removeObjects(getObjectsAt(53, 7, Pastilha.class));
-        removeObjects(getObjectsAt(3, 47, Pastilha.class));
-        removeObjects(getObjectsAt(53, 47, Pastilha.class));
-        addObject(new Pastilha(), 3, 9);
-        addObject(new Pastilha(), 53, 9);
-        addObject(new Pastilha(), 5, 47);
-        addObject(new PastilhaEspecial(), 3, 7);
-        addObject(new PastilhaEspecial(), 53, 7);
-        addObject(new PastilhaEspecial(), 3, 47);
-        addObject(new PastilhaEspecial(), 53, 47);
+    private void populateSpecialPellet() {
+        removeObjects(getObjectsAt(3, 7, Pellet.class));
+        removeObjects(getObjectsAt(53, 7, Pellet.class));
+        removeObjects(getObjectsAt(3, 47, Pellet.class));
+        removeObjects(getObjectsAt(53, 47, Pellet.class));
+        addObject(new Pellet(), 3, 9);
+        addObject(new Pellet(), 53, 9);
+        addObject(new Pellet(), 5, 47);
+        addObject(new SpecialPellet(), 3, 7);
+        addObject(new SpecialPellet(), 53, 7);
+        addObject(new SpecialPellet(), 3, 47);
+        addObject(new SpecialPellet(), 53, 47);
     }
 
     /**
@@ -404,7 +403,7 @@ public class PacManWorld extends World {
     private void pastilhasVertical(int x, int y0, int y1) {
         // Ele começa no eixo y0 e vai até o eixo y1, pulando de 1 em 1.
         for (int i = y0; i < y1; i += 2) {
-            addObject(new Pastilha(), x, i);
+            addObject(new Pellet(), x, i);
         }
     }
 
@@ -418,7 +417,7 @@ public class PacManWorld extends World {
     private void pastilhasHorizontal(int y, int x0, int x1) {
         // Ele começa no eixo x0 e vai até o eixo x1, pulando de 1 em 1.
         for (int i = x0; i < x1; i += 2) {
-            addObject(new Pastilha(), i, y);
+            addObject(new Pellet(), i, y);
         }
     }
 

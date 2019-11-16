@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=BeginWorld
+comment1.params=
+comment1.target=BeginWorld()
+comment2.params=
+comment2.target=void\ act()
+comment3.params=sizeX\ sizeY
+comment3.target=void\ scaleSprite(int,\ int)
+comment3.text=\r\n\ Redimensiona\ o\ pacman\ de\ acordo\ com\ o\ X\ e\ Y\ recebidos\r\n\r\n\ @param\ sizeX\ X\ em\ pixels\r\n\ @param\ sizeY\ Y\ em\ pixels\r\n
+comment4.params=
+comment4.target=void\ setDefaults()
+comment4.text=\r\n\ Define\ os\ valores\ iniciais\ de\ tamanho,\ velocidade\ e\ plano\ de\ fundo.\r\n
+comment5.params=
+comment5.target=void\ checkImagesFolder()
+comment5.text=\r\n\ Verifica\ se\ a\ pasta\ imagens\ existe,\ caso\ n\u00E3o,\ cria.\ Ent\u00E3o\ limpa\ todo\ seu\r\n\ conte\u00FAdo.\r\n
+comment6.params=
+comment6.target=void\ prepare()
+comment6.text=\r\n\ Prepara\ a\ apresenta\u00E7\u00E3o\ da\ tela\ inicial\ com\ uma\ explica\u00E7\u00E3o\ de\ como\r\n\ redefinir\ o\ tamanho\ do\ pacman.\r\n
+numComments=7

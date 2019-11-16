@@ -8,8 +8,4 @@ import greenfoot.*;
  * @version 1.0
  */
 public class Life extends Actor {
-
-    public void act() {
-        // Do nothing...
-    }
 }

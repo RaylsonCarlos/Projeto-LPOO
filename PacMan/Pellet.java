@@ -9,10 +9,6 @@ import greenfoot.*;
  * @author Raylson, Carlon, Weydson
  * @version 1.0
  */
-public class Pastilha extends Actor {
+public class Pellet extends Actor {
 
-    @Override
-    public void act() {
-
-    }
 }

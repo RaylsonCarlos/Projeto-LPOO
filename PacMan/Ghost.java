@@ -446,8 +446,8 @@ public class Ghost extends Characters {
         }
 
         //Calcula a direção que deve seguir para a entrada da cela.
-        List<Integer> routes = new ArrayList<Integer>();
-        List<Integer> distance = new ArrayList<Integer>();
+        List<Integer> routes = new ArrayList<>();
+        List<Integer> distance = new ArrayList<>();
 
         if (canMoveNorth() && getDirection() != Characters.SOUTH) {
             routes.add(Characters.NORTH);

@@ -7,31 +7,29 @@ import greenfoot.*;
  * @author Carlos, Raylson, Weydson
  * @version 1.0
  */
-public class PastilhaEspecial extends Pastilha {
+public class SpecialPellet extends Pellet {
 
     private int chance = 90;
 
     private static GreenfootImage sprite;
+    private static GreenfootImage emptySprite;
 
-    private static GreenfootImage spriteVazio;
-
-    public PastilhaEspecial() {
+    public SpecialPellet() {
         sprite = new GreenfootImage("images/pastilha_especial.png");
-        spriteVazio = new GreenfootImage("wall.png");
+        emptySprite = new GreenfootImage("wall.png");
         setImage(sprite);
     }
 
-    /**
-     *
-     */
     public void act() {
-        if (getImage().equals(spriteVazio)) {
+        int rand = Greenfoot.getRandomNumber(100);
+
+        if (getImage().equals(emptySprite)) {
             setImage(sprite);
             getWorld().repaint();
         }
-        int rand = Greenfoot.getRandomNumber(100);
+
         if (chance < rand) {
-            setImage(spriteVazio);
+            setImage(emptySprite);
             getWorld().repaint();
         }
     }
