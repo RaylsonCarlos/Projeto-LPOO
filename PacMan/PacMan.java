@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 /**
  * A classe PacMan representa o Character do usuário no jogo, controlado pelo
- teclado
+ * teclado
  *
  * @author Raylson, Carlos, Weydson
  * @version 1.0
@@ -151,8 +151,8 @@ public class PacMan extends Character {
             fan.pelletEffect();
         });
 
-        SoundPlayer.getInstance().stop();
-        SoundPlayer.getInstance().playBackgroundFrightened();
+        SoundPlayer.getInstance().stopBackgroundSound();
+        SoundPlayer.getInstance().playSound(SoundPlayer.BACKGROUND_FRIGHTENED);
     }
 
     /**
@@ -197,11 +197,11 @@ public class PacMan extends Character {
 
         int points = 0;
 
-        for (Ghost fan : ghosts) {
-            switch (fan.getStatus()) {
+        for (Ghost ghost : ghosts) {
+            switch (ghost.getStatus()) {
                 case Ghost.ALIVE:
-                    fan.setImage("blank_image.png");
-                    SoundPlayer.getInstance().stop();
+                    ghost.setImage("blank_image.png");
+                    SoundPlayer.getInstance().stopBackgroundSound();
                     Thread.sleep(500);
                     getWorld().repaint();
                     dead();
@@ -209,24 +209,24 @@ public class PacMan extends Character {
 
                 case Ghost.RECOVERING:
                     this.setImage("blank_image.png");
-                    points = pontuacaoFantasma(fan);
+                    points = pontuacaoFantasma(ghost);
                     GameController.score(points);
                     getWorld().repaint();
-                    SoundPlayer.getInstance().playEffectGhostEaten();
+                    SoundPlayer.getInstance().playSound(SoundPlayer.GHOST_EATEN);
                     timer += 500;
                     Thread.sleep(500);
-                    fan.setDead();
+                    ghost.setDead();
                     break;
 
                 case Ghost.FEAR:
                     this.setImage("blank_image.png");
-                    points = pontuacaoFantasma(fan);
+                    points = pontuacaoFantasma(ghost);
                     GameController.score(points);
                     getWorld().repaint();
-                    SoundPlayer.getInstance().playEffectGhostEaten();
+                    SoundPlayer.getInstance().playSound(SoundPlayer.GHOST_EATEN);
                     timer += 500;
                     Thread.sleep(500);
-                    fan.setDead();
+                    ghost.setDead();
                     break;
             }
         }
@@ -244,7 +244,7 @@ public class PacMan extends Character {
     }
 
     public void dead() throws InterruptedException {
-        SoundPlayer.getInstance().playEffectPacmanDeath();
+        SoundPlayer.getInstance().playSound(SoundPlayer.PACMAN_DEATH);
 
         for (int i = 0; i < 11; i++) {
             setImage(spritesDead[i]);
@@ -258,7 +258,7 @@ public class PacMan extends Character {
 
     /**
      * Faz o pac-man agir: consome objetos pastilha, aplica efeito sonoro,
- verifica mudança de direção, move e muda os sprites do Character.
+     * verifica mudança de direção, move e muda os sprites do Character.
      */
     @Override
     public void act() {
@@ -266,7 +266,7 @@ public class PacMan extends Character {
         GameController.score(points);
 
         if (points > 0) {
-            SoundPlayer.getInstance().playEffectPillEaten();
+            SoundPlayer.getInstance().playSound(SoundPlayer.PELLET_EATEN);
         }
 
         verificarTeclado();

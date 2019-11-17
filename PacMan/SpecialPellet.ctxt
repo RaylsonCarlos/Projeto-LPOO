@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.target=SpecialPellet
-comment0.text=\r\n\ Uma\ pastilha\ grande\ que\ pisca\ aleatoriamente\r\n\r\n\ @author\ Carlos,\ Raylson,\ Weydson\r\n\ @version\ 1.0\r\n
-comment1.params=
-comment1.target=SpecialPellet()
-comment2.params=
-comment2.target=void\ act()
-numComments=3

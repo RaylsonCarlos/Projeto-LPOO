@@ -16,13 +16,12 @@ public class PacManWorld extends World {
 
     private final GreenfootImage background = new GreenfootImage("background.png");
     private final int defaultSpeed = 39;
+    private final int jailTime = 6000;
     private final int yPortal = 29;
     private final int xPortalLeft = 0;
     private final int xPortalRight = 56;
 
     private long jailTimer = 0l;
-    private int jailTime = 6000;
-    private int points = 0;
 
     /**
      * Cria o cenário do mundo, define a velocidade padrão, estabelece a imagem
@@ -52,7 +51,7 @@ public class PacManWorld extends World {
         reset(true);
 
         // Executa o som de início do jogo.
-        SoundPlayer.getInstance().playEffectPacmanBeginning();
+        SoundPlayer.getInstance().playSound(SoundPlayer.PACMAN_BEGINNING);
     }
 
     /**
@@ -77,8 +76,7 @@ public class PacManWorld extends World {
      * Para a reprodução de som quando o Greenfoot é pausado.
      */
     public void stopped() {
-        SoundPlayer.getInstance().stop();
-        super.stopped();
+        SoundPlayer.getInstance().stopBackgroundSound();
     }
 
     /**
@@ -161,7 +159,7 @@ public class PacManWorld extends World {
 
         // Verifica se não há nenhum fantasma.
         if (ghosts.size() <= 0) {
-            SoundPlayer.getInstance().stop();
+            SoundPlayer.getInstance().stopBackgroundSound();
 
             return;
         }
@@ -182,9 +180,9 @@ public class PacManWorld extends World {
 
         // Verifica se todos os fantasmas estão vivos.
         if (!fearGhost && !deadGhost) {
-            if (!SoundPlayer.getInstance().backgroundNormalIsPlaying()) {
-                SoundPlayer.getInstance().stop();
-                SoundPlayer.getInstance().playBackgroundNormal();
+            if (!SoundPlayer.getInstance().getSound(SoundPlayer.BACKGROUND_NORMAL)) {
+                SoundPlayer.getInstance().stopBackgroundSound();
+                SoundPlayer.getInstance().playSound(SoundPlayer.BACKGROUND_NORMAL);
             }
 
             return;
@@ -192,9 +190,9 @@ public class PacManWorld extends World {
 
         // Verifica se há algum fantasma preso ou amedrontado.
         if (fearGhost && !deadGhost) {
-            if (!SoundPlayer.getInstance().backgroundFrightenedIsPlaying()) {
-                SoundPlayer.getInstance().stop();
-                SoundPlayer.getInstance().playBackgroundFrightened();
+            if (!SoundPlayer.getInstance().getSound(SoundPlayer.BACKGROUND_FRIGHTENED)) {
+                SoundPlayer.getInstance().stopBackgroundSound();
+                SoundPlayer.getInstance().playSound(SoundPlayer.BACKGROUND_FRIGHTENED);
             }
 
             return;
@@ -202,9 +200,9 @@ public class PacManWorld extends World {
 
         // Verifica se há algum fantasma preso.
         if (deadGhost) {
-            if (!SoundPlayer.getInstance().backgroundEyesIsPlaying()) {
-                SoundPlayer.getInstance().stop();
-                SoundPlayer.getInstance().playBackgroundEyes();
+            if (!SoundPlayer.getInstance().getSound(SoundPlayer.BACKGROUND_EYES)) {
+                SoundPlayer.getInstance().stopBackgroundSound();
+                SoundPlayer.getInstance().playSound(SoundPlayer.BACKGROUND_EYES);
             }
         }
     }
@@ -259,7 +257,7 @@ public class PacManWorld extends World {
 
             // Verifica se há alguma pastilha no mundo.
             if (pellets.size() <= 0) {
-                SoundPlayer.getInstance().stop();
+                SoundPlayer.getInstance().stopBackgroundSound();
 
                 Thread.sleep(2000);
 

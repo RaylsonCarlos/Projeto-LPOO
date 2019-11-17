@@ -21,18 +21,29 @@ public class BeginWorld extends World {
     private int size;
     private GreenfootImage pacmanSprite;
 
+    /**
+     * Cria o cenário de configuração inicial do mundo, em que o jogador pode
+     * redimensionar o tamanho do jogo.
+     */
     public BeginWorld() {
         super(50, 50, 5);
 
+        // Verifica a pasta de imagens.
         checkImagesFolder();
+
+        // Define as configurações iniciais padrões.
         setDefaults();
+
+        // Prepara o cenário de redimensonamento do jogo.
         prepare();
     }
 
+    /**
+     * O jogador pode redimensionar o mundo utilizando as teclas de up e down,
+     * respectivamente, até seu tamanho máximo ou mínimo.
+     */
     public void act() {
-        SoundPlayer.getInstance().playSoundOfWind();
-
-        if (Greenfoot.isKeyDown("up")) {
+        if (Greenfoot.isKeyDown(increaseKey)) {
             if (size >= maxSize) {
                 addObject(textMaxSize, 25, 40);
             } else {
@@ -40,7 +51,7 @@ public class BeginWorld extends World {
                 size += 4;
                 scaleSprite(size, size);
             }
-        } else if (Greenfoot.isKeyDown("down")) {
+        } else if (Greenfoot.isKeyDown(decreaseKey)) {
             if (size <= minSize) {
                 addObject(textMinSize, 25, 40);
             } else {
@@ -76,11 +87,26 @@ public class BeginWorld extends World {
                 PacManWorld pw = new PacManWorld(size);
 
                 new GameController(pw);
+                SoundPlayer.getInstance().stopSound(SoundPlayer.SOUND_OF_WIND);
                 Greenfoot.setWorld(pw);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Ao iniciar o jogo, tocar uma música de fundo.
+     */
+    public void started() {
+        SoundPlayer.getInstance().playSound(SoundPlayer.SOUND_OF_WIND);
+    }
+
+    /**
+     * Ao pausar o jogo, parar a música de fundo.
+     */
+    public void stopped() {
+        SoundPlayer.getInstance().stopSound(SoundPlayer.SOUND_OF_WIND);
     }
 
     /**

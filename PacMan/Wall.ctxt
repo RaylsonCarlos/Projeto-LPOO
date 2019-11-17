@@ -1,7 +1,0 @@
-#BlueJ class context
-comment0.target=Wall
-comment0.text=\r\n\ A\ classe\ Wall\ representa\ as\ paredes\ no\ mundo\ do\ PacManWorld.\r\n\r\n\ Elas\ implementam\ as\ restri\u00E7\u00F5es\ do\ labirinto,\ impedindo\ os\ Personagens\ de\r\n\ atravessarem\ as\ paredes\r\n\r\n\ @author\ Raylson,\ Carlos,\ Weydson\r\n\ @version\ 2.0\r\n
-comment1.params=
-comment1.target=Wall()
-comment1.text=\r\n\ Define\ a\ imagem\ que\ representa\ a\ Wall.\ parede_debugger\ permite\ a\r\n\ visualiza\u00E7\u00E3o\ das\ paredes.\r\n
-numComments=2
