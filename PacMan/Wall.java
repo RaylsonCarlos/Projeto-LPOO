@@ -24,6 +24,6 @@ public class Wall extends Actor {
      */
     public Wall() {
         // Define a imagem usando o objeto parede.
-        setImage(debugger);
+        setImage(wall);
     }
 }

@@ -31,11 +31,11 @@ public class Character extends Actor {
     private int tick = 0;
 
     // Quantidade de turns até o próximo sprite.
-    private int howManyTurns;
+    private final int howManyTurns;
 
     /**
      * Cria um personagem que muda de sprite em howManyTurns turns e com a
- direção norte
+     * direção norte
      *
      * @param howManyTurns A quantidade de turns até a próximo sprite
      */

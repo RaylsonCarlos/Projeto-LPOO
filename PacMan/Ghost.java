@@ -18,7 +18,7 @@ public class Ghost extends Character {
     public final static int BROWN = 3;
 
     // Variável para armazenar a cor do Ghost
-    private int color;
+    private final int color;
 
     // Estados dos fantasmas
     public final static int ALIVE = 0;
@@ -51,7 +51,7 @@ public class Ghost extends Character {
     private static GreenfootImage[][][] sprites;
 
     // Velocidade padrão dos fantasmas
-    private static final int defaultSpeed = 3;
+    private static final int DEFAULT_SPEED = 3;
 
     /**
      * Cria um Ghost com velocidade padrão
@@ -59,7 +59,7 @@ public class Ghost extends Character {
      * @param color do Ghost: RED, PINK, BLUE ou BROWN.
      */
     public Ghost(int color) {
-        super(defaultSpeed);
+        super(DEFAULT_SPEED);
         spritesRed = new GreenfootImage[][]{
             {new GreenfootImage("ghost_red_east_0.png"), new GreenfootImage("ghost_red_east_1.png")},
             {new GreenfootImage("ghost_red_west_0.png"), new GreenfootImage("ghost_red_west_1.png")},
@@ -103,6 +103,7 @@ public class Ghost extends Character {
         } else {
             this.color = color;
         }
+
         status = ALIVE;
         setSprite();
     }
@@ -133,20 +134,6 @@ public class Ghost extends Character {
      */
     public int getStatus() {
         return status;
-    }
-
-    /**
-     * Modifica o estado do Character .
-     *
-     * @param status dos estados possíveis: ALIVE, DEAD, FEAR ou RECOVERING.
-     * Parâmetro inválido gera o estado ALIVE.
-     */
-    private void setStatus(int status) {
-        if (status < 0 || status > 3) {
-            this.status = ALIVE;
-        } else {
-            this.status = status;
-        }
     }
 
     /**
@@ -262,7 +249,7 @@ public class Ghost extends Character {
             int x = getX();
 
             if (x != 28) {
-                setSpeed(defaultSpeed);
+                setSpeed(DEFAULT_SPEED);
 
                 if (x < 28 && getDirection() != Character.EAST) {
                     changeDirection(Character.EAST);
@@ -277,7 +264,7 @@ public class Ghost extends Character {
                 setLocation(x, getY() - 1);
             }
         } else {
-            setSpeed(defaultSpeed - 1);
+            setSpeed(DEFAULT_SPEED - 1);
 
             if (!canMoveNorth()) {
                 changeDirection(Character.SOUTH);
@@ -360,7 +347,7 @@ public class Ghost extends Character {
 
         status = Ghost.FEAR;
         timer = System.currentTimeMillis();
-        setSpeed(defaultSpeed - 1);
+        setSpeed(DEFAULT_SPEED - 1);
     }
 
     /**
@@ -370,7 +357,7 @@ public class Ghost extends Character {
     public void setRecovering() {
         status = Ghost.RECOVERING;
         timer = System.currentTimeMillis();
-        setSpeed(defaultSpeed - 1);
+        setSpeed(DEFAULT_SPEED - 1);
     }
 
     /**
@@ -379,7 +366,7 @@ public class Ghost extends Character {
      */
     public void setAlive() {
         status = Ghost.ALIVE;
-        setSpeed(defaultSpeed);
+        setSpeed(DEFAULT_SPEED);
     }
 
     /**
@@ -388,7 +375,7 @@ public class Ghost extends Character {
      */
     public void setDead() {
         status = Ghost.DEAD;
-        setSpeed(defaultSpeed);
+        setSpeed(DEFAULT_SPEED);
     }
 
     /**
@@ -418,8 +405,8 @@ public class Ghost extends Character {
     }
 
     /**
-     * Rota do Ghost no estado DEAD. O Ghost se desloca até o sistema
-     * prisional e sai recuperado (glória a deuxxx!).
+     * Rota do Ghost no estado DEAD. O Ghost se desloca até o sistema prisional
+     * e sai recuperado (glória a deuxxx!).
      */
     private void deadRoute() {
         //(23,28) é a coordenada da entrada da cela.

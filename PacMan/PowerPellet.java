@@ -7,14 +7,14 @@ import greenfoot.*;
  * @author Carlos, Raylson, Weydson
  * @version 1.0
  */
-public class SpecialPellet extends Pellet {
+public class PowerPellet extends Pellet {
 
     private int chance = 90;
 
     private static GreenfootImage sprite;
     private static GreenfootImage emptySprite;
 
-    public SpecialPellet() {
+    public PowerPellet() {
         sprite = new GreenfootImage("images/pastilha_especial.png");
         emptySprite = new GreenfootImage("wall.png");
         setImage(sprite);

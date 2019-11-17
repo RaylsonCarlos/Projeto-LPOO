@@ -133,7 +133,7 @@ public class PacManWorld extends World {
                 pacman.changeDirection(Character.WEST);
             }
 
-            //caso o pacman tenha comido todas as pellets, põe-se pellets novas
+            // Verifica se o pacman comeu todas as pellets.
             if (resetPellets) {
                 populatePellets();
             }
@@ -350,13 +350,13 @@ public class PacManWorld extends World {
         addObject(new Pellet(), 53, 53);
 
         // Pastilhas especiais.
-        populateSpecialPellet();
+        populatePowerPellet();
     }
 
     /**
      * Cria as pastilhas especiais.
      */
-    private void populateSpecialPellet() {
+    private void populatePowerPellet() {
         // Remove as pastilhas normais da posição das pastilhas especiais.
         removeObjects(getObjectsAt(3, 7, Pellet.class));
         removeObjects(getObjectsAt(3, 47, Pellet.class));
@@ -364,10 +364,10 @@ public class PacManWorld extends World {
         removeObjects(getObjectsAt(53, 47, Pellet.class));
 
         // Pastilhas especiais.
-        addObject(new SpecialPellet(), 3, 7);
-        addObject(new SpecialPellet(), 3, 47);
-        addObject(new SpecialPellet(), 53, 7);
-        addObject(new SpecialPellet(), 53, 47);
+        addObject(new PowerPellet(), 3, 7);
+        addObject(new PowerPellet(), 3, 47);
+        addObject(new PowerPellet(), 53, 7);
+        addObject(new PowerPellet(), 53, 47);
     }
 
     /**

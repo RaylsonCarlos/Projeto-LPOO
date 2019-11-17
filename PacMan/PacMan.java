@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Iterator;
 
 /**
- * A classe PacMan representa o Character do usuário no jogo, controlado pelo
+ * A classe PacMan representa o personagem do usuário no jogo, controlado pelo
  * teclado
  *
  * @author Raylson, Carlos, Weydson
@@ -12,33 +12,28 @@ import java.util.Iterator;
  */
 public class PacMan extends Character {
 
-    // Variável para controlar o deslocamento no array de sprites.
+    // Controla o deslocamento no array de sprites.
     private int offset = 0;
 
     // Array para controlar a ordem de exibição dos sprites.
-    private final static int[] animationOffset = {0, 1, 2, 1};
+    private final int[] animationOffset = {0, 1, 2, 1};
 
-    // Armazena a quantidade de turnos que já se passaram desde que o jogador
-    // tentou mudar de direção.
+    // Quantidade de turnos passados desde a última mudança de direção.
     private int counterDirection = 0;
 
-    // Controla em até quantos turnos o comando do jogador de mudar de direção
-    // será executado (se possível). Valores maiores suavizam a tomada de
-    // direção do Character, valores menores diminuem a janela de tempo para o
-    // jogador apertar das teclas.
-    private static final int delayDirection = 6;
+    // Tempo de espera na mudança de direção do pacman.
+    private final int delayDirection = 6;
 
-    // Armazena o última direção escolhida pelo jogador
+    // Última direção escolhida pelo jogador.
     private int possibleDirection = Character.WEST;
 
-    // Variável para controle do tempo do efeito de pastilha especial
+    // Tempo atual de efeito da pastilha especial.
     private long timer;
 
     // Tempo de duração do efeito da pastilha especial
     private final int effectiveTime = 6000;
 
-    // Variavel que controla o número de ghosts comidos no efeito de uma
-    // pastilha especial
+    // Número de fantasmas comidos.
     private int countEatGhosts;
 
     // Sprites do Pacman
@@ -48,27 +43,27 @@ public class PacMan extends Character {
     private static GreenfootImage[] spritesWEST;
     private static GreenfootImage[] spritesDead;
 
-    // Sprites da pontuação
+    // Sprites dos pontos
     private static GreenfootImage[] spritesPoints;
 
-    // Velocidade padrão dos ghosts
-    private static final int defaultSpeed = 3;
+    // Velocidade padrão dos fantasmas
+    private static final int DEFAULT_SPEED = 3;
 
     /**
      * Inicializa o Pacman com velocidade 3, e direção WEST
      *
      */
     public PacMan() {
-        super(defaultSpeed);
-        inicializaSprites();
+        super(DEFAULT_SPEED);
+        initSprites();
         changeDirection(Character.WEST);
         setImage(spritesWEST[0]);
     }
 
     /**
-     * Inicializa as sprites.
+     * Inicializa os sprites.
      */
-    private void inicializaSprites() {
+    private void initSprites() {
         spritesNORTH = new GreenfootImage[]{
             new GreenfootImage("north_0.png"),
             new GreenfootImage("north_1.png"),
@@ -111,31 +106,35 @@ public class PacMan extends Character {
     }
 
     /**
-     * Consome os objetos tipo {@link Pellet} que estejam num raio de 1 célula
-     * return true se o pac-man encontrou alguma comida
+     * Consome as pastilhas que estejam num raio de 1 célula
+     *
+     * @return o total de pontos
      */
     private int foundFood() {
+        List<Pellet> pellets = getObjectsInRange(1, Pellet.class);
         int points = 0;
-        List<Pellet> food = getObjectsInRange(1, Pellet.class);
 
-        if (food.size() > 0) {
-            Iterator it = food.iterator();
+        // Verifica se existe alguma pastilha próxima ao pacman.
+        if (pellets.size() > 0) {
+            Iterator it = pellets.iterator();
 
             while (it.hasNext()) {
-                if (it.next() instanceof SpecialPellet) {
+                // Verifica se a pastilha é uma pastilha especial.
+                if (it.next() instanceof PowerPellet) {
                     if ((System.currentTimeMillis() - timer) > effectiveTime) {
                         countEatGhosts = 0;
                     }
 
                     points += 50;
                     timer = System.currentTimeMillis();
-                    foundSpecialPellet();
+                    foundPowerPellet();
                 } else {
                     points += 10;
                 }
             }
 
-            getWorld().removeObjects(food);
+            // Remove as pastilhas do mundo.
+            getWorld().removeObjects(pellets);
         }
 
         return points;
@@ -144,11 +143,11 @@ public class PacMan extends Character {
     /**
      * Método chamado quando o pacman encontra uma pastilha especial
      */
-    private void foundSpecialPellet() {
+    private void foundPowerPellet() {
         List<Ghost> ghosts = getWorld().getObjects(Ghost.class);
 
-        ghosts.forEach((fan) -> {
-            fan.pelletEffect();
+        ghosts.forEach((ghost) -> {
+            ghost.pelletEffect();
         });
 
         SoundPlayer.getInstance().stopBackgroundSound();
@@ -156,84 +155,95 @@ public class PacMan extends Character {
     }
 
     /**
-     * Verifica o teclado em busca de direções para cima, baixo, esquerda ou
-     * direita.
+     * Verifica se o usuário está utilizando alguma tecla de movimento do jogo.
      */
-    private void verificarTeclado() {
+    private void verifyKeyboard() {
         String key = Greenfoot.getKey();
+
         if (key != null) {
             offset = 1;
-            if (key.equals("up")) {
-                possibleDirection = Character.NORTH;
-                counterDirection = 0;
-            }
-            if (key.equals("down")) {
-                possibleDirection = Character.SOUTH;
-                counterDirection = 0;
-            }
-            if (key.equals("right")) {
-                possibleDirection = Character.EAST;
-                counterDirection = 0;
-            }
-            if (key.equals("left")) {
-                possibleDirection = Character.WEST;
-                counterDirection = 0;
+            switch (key) {
+                case "up":
+                    possibleDirection = Character.NORTH;
+                    counterDirection = 0;
+                    break;
+                case "down":
+                    possibleDirection = Character.SOUTH;
+                    counterDirection = 0;
+                    break;
+                case "right":
+                    possibleDirection = Character.EAST;
+                    counterDirection = 0;
+                    break;
+                case "left":
+                    possibleDirection = Character.WEST;
+                    counterDirection = 0;
+                    break;
+                default:
+                    break;
             }
         }
     }
 
     /**
-     * Verifica a colisão com ghosts.
+     * Gerencia a colisão com fantasmas.
      */
-    private void colisaoComFantasmas() throws InterruptedException {
+    private void ghostCollisions() {
+        try {
+            World world = getWorld();
+            List<Ghost> ghosts = getObjectsInRange(2, Ghost.class);
+            int points = 0;
 
-        World world = getWorld();
-        List<Ghost> ghosts = getObjectsInRange(2, Ghost.class);
-
-        //Lista vazia de ghosts 
-        if (ghosts.size() <= 0) {
-            return;
-        }
-
-        int points = 0;
-
-        for (Ghost ghost : ghosts) {
-            switch (ghost.getStatus()) {
-                case Ghost.ALIVE:
-                    ghost.setImage("blank_image.png");
-                    SoundPlayer.getInstance().stopBackgroundSound();
-                    Thread.sleep(500);
-                    getWorld().repaint();
-                    dead();
-                    return;
-
-                case Ghost.RECOVERING:
-                    this.setImage("blank_image.png");
-                    points = pontuacaoFantasma(ghost);
-                    GameController.score(points);
-                    getWorld().repaint();
-                    SoundPlayer.getInstance().playSound(SoundPlayer.GHOST_EATEN);
-                    timer += 500;
-                    Thread.sleep(500);
-                    ghost.setDead();
-                    break;
-
-                case Ghost.FEAR:
-                    this.setImage("blank_image.png");
-                    points = pontuacaoFantasma(ghost);
-                    GameController.score(points);
-                    getWorld().repaint();
-                    SoundPlayer.getInstance().playSound(SoundPlayer.GHOST_EATEN);
-                    timer += 500;
-                    Thread.sleep(500);
-                    ghost.setDead();
-                    break;
+            if (ghosts.size() <= 0) {
+                return;
             }
+
+            for (Ghost ghost : ghosts) {
+                switch (ghost.getStatus()) {
+                    case Ghost.ALIVE:
+                        ghost.setImage("blank_image.png");
+                        SoundPlayer.getInstance().stopBackgroundSound();
+                        Thread.sleep(500);
+                        getWorld().repaint();
+                        dead();
+                        return;
+
+                    case Ghost.RECOVERING:
+                        this.setImage("blank_image.png");
+                        points = ghostPoints(ghost);
+                        GameController.score(points);
+                        getWorld().repaint();
+                        SoundPlayer.getInstance().playSound(SoundPlayer.GHOST_EATEN);
+                        timer += 500;
+                        Thread.sleep(500);
+                        ghost.setDead();
+                        break;
+
+                    case Ghost.FEAR:
+                        this.setImage("blank_image.png");
+                        points = ghostPoints(ghost);
+                        GameController.score(points);
+                        getWorld().repaint();
+                        SoundPlayer.getInstance().playSound(SoundPlayer.GHOST_EATEN);
+                        timer += 500;
+                        Thread.sleep(500);
+                        ghost.setDead();
+                        break;
+                }
+            }
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
         }
     }
 
-    private int pontuacaoFantasma(Ghost fan) {
-        fan.setImage(spritesPoints[countEatGhosts]);
+    /**
+     * Calcular a pontuação ganha ao comer fanstasmas.
+     *
+     * @param ghost o fanstasma comido
+     * @return a pontuação ganha
+     */
+    private int ghostPoints(Ghost ghost) {
+        ghost.setImage(spritesPoints[countEatGhosts]);
 
         if (countEatGhosts < 3) {
             countEatGhosts++;
@@ -243,17 +253,24 @@ public class PacMan extends Character {
         }
     }
 
-    public void dead() throws InterruptedException {
-        SoundPlayer.getInstance().playSound(SoundPlayer.PACMAN_DEATH);
+    /**
+     * Reproduz a morte do pacman, desenhando os sprites e resetando o mundo.
+     */
+    public void dead() {
+        try {
+            SoundPlayer.getInstance().playSound(SoundPlayer.PACMAN_DEATH);
 
-        for (int i = 0; i < 11; i++) {
-            setImage(spritesDead[i]);
-            getWorld().repaint();
-            Thread.sleep(150);
+            for (int i = 0; i < spritesDead.length; i++) {
+                setImage(spritesDead[i]);
+                getWorld().repaint();
+                Thread.sleep(150);
+            }
+
+            Thread.sleep(1000);
+            ((PacManWorld) getWorld()).reset(false);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
         }
-
-        Thread.sleep(1000);
-        ((PacManWorld) getWorld()).reset(false);
     }
 
     /**
@@ -269,7 +286,7 @@ public class PacMan extends Character {
             SoundPlayer.getInstance().playSound(SoundPlayer.PELLET_EATEN);
         }
 
-        verificarTeclado();
+        verifyKeyboard();
 
         if (counterDirection < delayDirection) {
             if (canMove(possibleDirection)) {
@@ -297,11 +314,7 @@ public class PacMan extends Character {
             offset++;
         }
 
-        try {
-            colisaoComFantasmas();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ghostCollisions();
 
         super.act();
     }
