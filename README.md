@@ -28,9 +28,17 @@ Criar um jogo em que um objeto controlável pelo usuário (PacMan) percorre um c
 
 - Wall extends Actor: representa as paredes do labirinto, impedindo a passagem do PacMan e dos fantasmas.
 
-Recursos/Técnicas: Criação de classes e objetos; interação entre os objetos e o mundo, e entre si; manipulação de objetos através do teclado; utilização de recursos musicais.
+## Recursos/Técnicas
 
-Ferramentas: Greenfoot versão 2.4.2
+- Criação de classes e objetos;
+- Interação entre os objetos e o mundo, e entre si;
+- Manipulação de objetos através do teclado;
+- Utilização de recursos musicais;
+- Implementação de padrões de projeto.
+
+## Ferramentas
+
+Greenfoot versão 2.6.0
 
 ## Cronograma
 
