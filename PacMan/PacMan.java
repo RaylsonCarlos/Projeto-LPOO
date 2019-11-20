@@ -1,5 +1,6 @@
 
 import greenfoot.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
@@ -11,6 +12,8 @@ import java.util.Iterator;
  * @version 1.0
  */
 public class PacMan extends Character {
+
+    private ArrayList<Observer> observers;
 
     // Controla o deslocamento no array de sprites.
     private int offset = 0;
@@ -46,18 +49,85 @@ public class PacMan extends Character {
     // Sprites dos pontos
     private static GreenfootImage[] spritesPoints;
 
-    // Velocidade padrão dos fantasmas
+    // Velocidade padrão do pacman
     private static final int DEFAULT_SPEED = 3;
+    
+    
 
     /**
      * Inicializa o Pacman com velocidade 3, e direção WEST
      *
      */
     public PacMan() {
-        super(DEFAULT_SPEED);
+        super(DEFAULT_SPEED, DEFAULT_SPEED, Character.WEST);
         initSprites();
-        changeDirection(Character.WEST);
         setImage(spritesWEST[0]);
+    }
+
+    /**
+     * Faz o pac-man agir: consome objetos pastilha, aplica efeito sonoro,
+     * verifica mudança de direção, move e muda os sprites do Character.
+     */
+    @Override
+    public void act() {
+        int points = foundFood();
+        GameController.score(points);
+
+        if (points > 0) {
+            SoundPlayer.getInstance().playSound(SoundPlayer.PELLET_EATEN);
+        }
+
+        verifyKeyboard();
+
+        if (counterDirection < delayDirection) {
+            if (canMove(possibleDirection)) {
+                setDirection(possibleDirection);
+            } else {
+                counterDirection++;
+            }
+        }
+
+        if (timeToChangeSprite()) {
+            switch (getDirection()) {
+                case Character.NORTH:
+                    setImage(spritesNORTH[animationOffset[offset % 4]]);
+                    break;
+                case Character.SOUTH:
+                    setImage(spritesSOUTH[animationOffset[offset % 4]]);
+                    break;
+                case Character.EAST:
+                    setImage(spritesEAST[animationOffset[offset % 4]]);
+                    break;
+                case Character.WEST:
+                    setImage(spritesWEST[animationOffset[offset % 4]]);
+                    break;
+            }
+            offset++;
+        }
+
+        ghostCollisions();
+
+        super.act();
+    }
+
+    /**
+     * Reproduz a morte do pacman, desenhando os sprites e resetando o mundo.
+     */
+    public void dead() {
+        try {
+            SoundPlayer.getInstance().playSound(SoundPlayer.PACMAN_DEATH);
+
+            for (int i = 0; i < spritesDead.length; i++) {
+                setImage(spritesDead[i]);
+                getWorld().repaint();
+                Thread.sleep(150);
+            }
+
+            Thread.sleep(1000);
+            ((PacManWorld) getWorld()).reset(false);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -253,69 +323,4 @@ public class PacMan extends Character {
         }
     }
 
-    /**
-     * Reproduz a morte do pacman, desenhando os sprites e resetando o mundo.
-     */
-    public void dead() {
-        try {
-            SoundPlayer.getInstance().playSound(SoundPlayer.PACMAN_DEATH);
-
-            for (int i = 0; i < spritesDead.length; i++) {
-                setImage(spritesDead[i]);
-                getWorld().repaint();
-                Thread.sleep(150);
-            }
-
-            Thread.sleep(1000);
-            ((PacManWorld) getWorld()).reset(false);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    /**
-     * Faz o pac-man agir: consome objetos pastilha, aplica efeito sonoro,
-     * verifica mudança de direção, move e muda os sprites do Character.
-     */
-    @Override
-    public void act() {
-        int points = foundFood();
-        GameController.score(points);
-
-        if (points > 0) {
-            SoundPlayer.getInstance().playSound(SoundPlayer.PELLET_EATEN);
-        }
-
-        verifyKeyboard();
-
-        if (counterDirection < delayDirection) {
-            if (canMove(possibleDirection)) {
-                changeDirection(possibleDirection);
-            } else {
-                counterDirection++;
-            }
-        }
-
-        if (timeToChangeSprite()) {
-            switch (getDirection()) {
-                case Character.NORTH:
-                    setImage(spritesNORTH[animationOffset[offset % 4]]);
-                    break;
-                case Character.SOUTH:
-                    setImage(spritesSOUTH[animationOffset[offset % 4]]);
-                    break;
-                case Character.EAST:
-                    setImage(spritesEAST[animationOffset[offset % 4]]);
-                    break;
-                case Character.WEST:
-                    setImage(spritesWEST[animationOffset[offset % 4]]);
-                    break;
-            }
-            offset++;
-        }
-
-        ghostCollisions();
-
-        super.act();
-    }
 }

@@ -59,7 +59,7 @@ public class Ghost extends Character {
      * @param color do Ghost: RED, PINK, BLUE ou BROWN.
      */
     public Ghost(int color) {
-        super(DEFAULT_SPEED);
+        super(DEFAULT_SPEED, DEFAULT_SPEED, Character.NORTH);
         spritesRed = new GreenfootImage[][]{
             {new GreenfootImage("ghost_red_east_0.png"), new GreenfootImage("ghost_red_east_1.png")},
             {new GreenfootImage("ghost_red_west_0.png"), new GreenfootImage("ghost_red_west_1.png")},
@@ -252,13 +252,13 @@ public class Ghost extends Character {
                 setSpeed(DEFAULT_SPEED);
 
                 if (x < 28 && getDirection() != Character.EAST) {
-                    changeDirection(Character.EAST);
+                    setDirection(Character.EAST);
                 } else if (x > 28 && getDirection() != Character.WEST) {
-                    changeDirection(Character.WEST);
+                    setDirection(Character.WEST);
                 }
             } else {
                 if (getDirection() != Character.NORTH) {
-                    changeDirection(Character.NORTH);
+                    setDirection(Character.NORTH);
                 }
 
                 setLocation(x, getY() - 1);
@@ -266,12 +266,12 @@ public class Ghost extends Character {
         } else {
             setSpeed(DEFAULT_SPEED - 1);
 
-            if (!canMoveNorth()) {
-                changeDirection(Character.SOUTH);
+            if (!canMove(Character.NORTH)) {
+                setDirection(Character.SOUTH);
             }
 
-            if (!canMoveSouth()) {
-                changeDirection(Character.NORTH);
+            if (!canMove(Character.SOUTH)) {
+                setDirection(Character.NORTH);
             }
         }
     }
@@ -285,19 +285,19 @@ public class Ghost extends Character {
         int direction = getDirection();
         int oppositeDirection = oppositeDirection(direction);
 
-        if (canMoveNorth()) {
+        if (canMove(Character.NORTH)) {
             routes.add(Character.NORTH);
         }
 
-        if (canMoveSouth()) {
+        if (canMove(Character.SOUTH)) {
             routes.add(Character.SOUTH);
         }
 
-        if (canMoveEast()) {
+        if (canMove(Character.EAST)) {
             routes.add(Character.EAST);
         }
 
-        if (canMoveWest()) {
+        if (canMove(Character.WEST)) {
             routes.add(Character.WEST);
         }
 
@@ -307,7 +307,7 @@ public class Ghost extends Character {
             }
 
             int rand = Greenfoot.getRandomNumber(routes.size());
-            changeDirection(routes.get(rand));
+            setDirection(routes.get(rand));
         }
     }
 
@@ -436,22 +436,22 @@ public class Ghost extends Character {
         List<Integer> routes = new ArrayList<>();
         List<Integer> distance = new ArrayList<>();
 
-        if (canMoveNorth() && getDirection() != Character.SOUTH) {
+        if (canMove(Character.NORTH) && getDirection() != Character.SOUTH) {
             routes.add(Character.NORTH);
             distance.add(dist(x, y - 1, 23, 28));
         }
 
-        if (canMoveSouth() && getDirection() != Character.NORTH) {
+        if (canMove(Character.SOUTH) && getDirection() != Character.NORTH) {
             routes.add(Character.SOUTH);
             distance.add(dist(x, y + 1, 23, 28));
         }
 
-        if (canMoveEast() && getDirection() != Character.WEST) {
+        if (canMove(Character.EAST) && getDirection() != Character.WEST) {
             routes.add(Character.EAST);
             distance.add(dist(x + 1, y, 23, 28));
         }
 
-        if (canMoveWest() && getDirection() != Character.EAST) {
+        if (canMove(Character.WEST) && getDirection() != Character.EAST) {
             routes.add(Character.WEST);
             distance.add(dist(x - 1, y, 23, 28));
         }
@@ -460,14 +460,14 @@ public class Ghost extends Character {
         // caso esteja bloqueado procura outra direção possível.
         if (distance.size() <= 0) {
             if (!canMove(getDirection())) {
-                if (canMoveNorth()) {
-                    changeDirection(Character.NORTH);
-                } else if (canMoveSouth()) {
-                    changeDirection(Character.SOUTH);
-                } else if (canMoveEast()) {
-                    changeDirection(Character.EAST);
-                } else if (canMoveWest()) {
-                    changeDirection(Character.WEST);
+                if (canMove(Character.NORTH)) {
+                    setDirection(Character.NORTH);
+                } else if (canMove(Character.SOUTH)) {
+                    setDirection(Character.SOUTH);
+                } else if (canMove(Character.EAST)) {
+                    setDirection(Character.EAST);
+                } else if (canMove(Character.WEST)) {
+                    setDirection(Character.WEST);
                 }
             }
             return;
@@ -481,7 +481,7 @@ public class Ghost extends Character {
             }
         }
 
-        changeDirection(routes.get(indexMin));
+        setDirection(routes.get(indexMin));
     }
 
     /**
@@ -501,19 +501,19 @@ public class Ghost extends Character {
         List<Integer> rotas = new ArrayList<Integer>();
         List<Integer> distancias = new ArrayList<Integer>();
 
-        if (canMoveNorth() && getDirection() != Character.SOUTH) {//
+        if (canMove(Character.NORTH) && getDirection() != Character.SOUTH) {//
             rotas.add(Character.NORTH);
             distancias.add(dist(x, y - 1, pacmanX, pacmanY));
         }
-        if (canMoveSouth() && getDirection() != Character.NORTH) {// 
+        if (canMove(Character.SOUTH) && getDirection() != Character.NORTH) {// 
             rotas.add(Character.SOUTH);
             distancias.add(dist(x, y + 1, pacmanX, pacmanY));
         }
-        if (canMoveEast() && getDirection() != Character.WEST) {// 
+        if (canMove(Character.EAST) && getDirection() != Character.WEST) {// 
             rotas.add(Character.EAST);
             distancias.add(dist(x + 1, y, pacmanX, pacmanY));
         }
-        if (canMoveWest() && getDirection() != Character.EAST) {// 
+        if (canMove(Character.WEST) && getDirection() != Character.EAST) {// 
             rotas.add(Character.WEST);
             distancias.add(dist(x - 1, y, pacmanX, pacmanY));
         }
@@ -522,14 +522,14 @@ public class Ghost extends Character {
         //caso esteja bloqueado procura outra direção possível.
         if (distancias.size() <= 0) {
             if (!canMove(getDirection())) {
-                if (canMoveNorth()) {
-                    changeDirection(Character.NORTH);
-                } else if (canMoveSouth()) {
-                    changeDirection(Character.SOUTH);
-                } else if (canMoveEast()) {
-                    changeDirection(Character.EAST);
-                } else if (canMoveWest()) {
-                    changeDirection(Character.WEST);
+                if (canMove(Character.NORTH)) {
+                    setDirection(Character.NORTH);
+                } else if (canMove(Character.SOUTH)) {
+                    setDirection(Character.SOUTH);
+                } else if (canMove(Character.EAST)) {
+                    setDirection(Character.EAST);
+                } else if (canMove(Character.WEST)) {
+                    setDirection(Character.WEST);
                 }
             }
             return;
@@ -544,7 +544,7 @@ public class Ghost extends Character {
         }
 
         //escolhe essa direção.
-        changeDirection(rotas.get(indexMax));
+        setDirection(rotas.get(indexMax));
     }
 
     /**

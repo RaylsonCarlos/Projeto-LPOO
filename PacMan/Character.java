@@ -18,8 +18,14 @@ public class Character extends Actor {
     public static final int EAST = 2;
     public static final int WEST = 3;
 
+    // Velocidades
+    public static final int SLOWLEST = 0;
+    public static final int SLOW = 1;
+    public static final int NORMAL = 2;
+    public static final int FAST = 3;
+
     // Velocidade.
-    private int speed = 3;
+    private int speed;
 
     // Direção que o personagem está encarando.
     private int direction;
@@ -34,32 +40,56 @@ public class Character extends Actor {
     private final int howManyTurns;
 
     /**
-     * Cria um personagem que muda de sprite em howManyTurns turns e com a
-     * direção norte
+     * Cria um personagem que muda de sprite em de turnos em turnos\
      *
-     * @param howManyTurns A quantidade de turns até a próximo sprite
+     * @param howManyTurns quantidade de turnos até a próximo sprite
+     * @param speed velocidade do personagem
+     * @param direction direção que o personagem começa encarando
      */
-    public Character(int howManyTurns) {
-        turns = 0;
-        direction = NORTH;
-
+    public Character(int howManyTurns, int speed, int direction) {
         if (howManyTurns < 0) {
             this.howManyTurns = 0;
         } else {
             this.howManyTurns = howManyTurns;
         }
+
+        setSpeed(speed);
+        setDirection(direction);
+
+        turns = 0;
     }
 
     /**
      * Modifica a velocidade com que o personagem se move pelo labirinto.
      *
-     * @param speed assume valores inteiros entre [0..3].
+     * @param speed SLOWLEST, SLOW, NORMAL, FAST
      */
-    public void setSpeed(int speed) {
-        if (speed > 3 || speed < 0) {
-            this.speed = 3;
-        } else {
-            this.speed = speed;
+    public final void setSpeed(int speed) {
+        switch (speed) {
+            case SLOWLEST:
+                this.speed = SLOWLEST;
+
+                break;
+
+            case SLOW:
+                this.speed = SLOW;
+
+                break;
+
+            case NORMAL:
+                this.speed = NORMAL;
+
+                break;
+
+            case FAST:
+                this.speed = FAST;
+
+                break;
+
+            default:
+                this.speed = FAST;
+
+                break;
         }
     }
 
@@ -75,14 +105,36 @@ public class Character extends Actor {
     /**
      * Muda a direção que o personagem está encarando.
      *
-     * @param direction NORTH, SOUTH, EAST ou WEST
+     * @param direction NORTH, SOUTH, EAST, WEST
      */
-    public void changeDirection(int direction) {
-        if (this.direction == direction) {
-            return;
+    public final void setDirection(int direction) {
+        switch (direction) {
+            case NORTH:
+                this.direction = NORTH;
+
+                break;
+
+            case SOUTH:
+                this.direction = SOUTH;
+
+                break;
+
+            case EAST:
+                this.direction = EAST;
+
+                break;
+
+            case WEST:
+                this.direction = WEST;
+
+                break;
+
+            default:
+                this.direction = NORTH;
+
+                break;
         }
 
-        this.direction = direction;
         tick = 0;
     }
 
@@ -104,92 +156,22 @@ public class Character extends Actor {
         return tick == 0;
     }
 
-    /**
-     * Verifica se o personagem pode se mover na direção NORTH.
-     *
-     * @return True se é possível se mover, false caso contrário.
-     */
-    public boolean canMoveNorth() {
+    private boolean canMoveDirection(int[] x, int[] y) {
         World myWorld = getWorld();
-        int x = getX();
-        // Verificando duas células acima
-        int y = getY() - 2;
 
-        if (myWorld.getObjectsAt(x - 1, y, Wall.class).size() > 0) {
+        if (x.length != 3 && y.length != 3) {
             return false;
         }
 
-        if (myWorld.getObjectsAt(x, y, Wall.class).size() > 0) {
+        if (myWorld.getObjectsAt(x[0], y[0], Wall.class).size() > 0) {
             return false;
         }
 
-        return myWorld.getObjectsAt(x + 1, y, Wall.class).size() <= 0;
-    }
-
-    /**
-     * Verifica se o personagem pode se mover na direção SOUTH.
-     *
-     * @return True se é possível se mover, false caso contrário.
-     */
-    public boolean canMoveSouth() {
-        World myWorld = getWorld();
-        int x = getX();
-        // Verificando duas células abaixo.
-        int y = getY() + 2;
-
-        if (myWorld.getObjectsAt(x + 1, y, Wall.class).size() > 0) {
+        if (myWorld.getObjectsAt(x[1], y[1], Wall.class).size() > 0) {
             return false;
         }
 
-        if (myWorld.getObjectsAt(x, y, Wall.class).size() > 0) {
-            return false;
-        }
-
-        return myWorld.getObjectsAt(x - 1, y, Wall.class).size() <= 0;
-    }
-
-    /**
-     * Verifica se o personagem pode se mover na direção EAST.
-     *
-     * @return True se é possível se mover, false caso contrário.
-     */
-    public boolean canMoveEast() {
-        World myWorld = getWorld();
-        // Verificando duas células à direita.
-        int x = getX() + 2;
-        int y = getY();
-
-        if (myWorld.getObjectsAt(x, y + 1, Wall.class).size() > 0) {
-            return false;
-        }
-
-        if (myWorld.getObjectsAt(x, y, Wall.class).size() > 0) {
-            return false;
-        }
-
-        return myWorld.getObjectsAt(x, y - 1, Wall.class).size() <= 0;
-    }
-
-    /**
-     * Verifica se o personagem pode se mover na direção WEST.
-     *
-     * @return True se é possível se mover, false caso contrário.
-     */
-    public boolean canMoveWest() {
-        World myWorld = getWorld();
-        // Verificando duas células à esquerda.
-        int x = getX() - 2;
-        int y = getY();
-
-        if (myWorld.getObjectsAt(x, y + 1, Wall.class).size() > 0) {
-            return false;
-        }
-
-        if (myWorld.getObjectsAt(x, y, Wall.class).size() > 0) {
-            return false;
-        }
-
-        return myWorld.getObjectsAt(x, y - 1, Wall.class).size() <= 0;
+        return myWorld.getObjectsAt(x[2], y[2], Wall.class).size() <= 0;
     }
 
     /**
@@ -200,21 +182,45 @@ public class Character extends Actor {
      * contrário.
      */
     public boolean canMove(int direction) {
+        int x, y;
+        int[] xArray, yArray;
+
         switch (direction) {
-            case EAST:
-                return canMoveEast();
-
-            case WEST:
-                return canMoveWest();
-
             case NORTH:
-                return canMoveNorth();
+                x = getX();
+                y = getY() - 2;
+                xArray = new int[]{x - 1, x, x + 1};
+                yArray = new int[]{y, y, y};
+
+                return canMoveDirection(xArray, yArray);
 
             case SOUTH:
-                return canMoveSouth();
-        }
+                x = getX();
+                y = getY() + 2;
+                xArray = new int[]{x + 1, x, x - 1};
+                yArray = new int[]{y, y, y};
 
-        return true;
+                return canMoveDirection(xArray, yArray);
+
+            case EAST:
+                x = getX() + 2;
+                y = getY();
+                xArray = new int[]{x, x, x};
+                yArray = new int[]{y + 1, y, y - 1};
+
+                return canMoveDirection(xArray, yArray);
+
+            case WEST:
+                x = getX() - 2;
+                y = getY();
+                xArray = new int[]{x, x, x};
+                yArray = new int[]{y + 1, y, y - 1};
+
+                return canMoveDirection(xArray, yArray);
+
+            default:
+                return true;
+        }
     }
 
     /**
@@ -228,20 +234,20 @@ public class Character extends Actor {
         }
 
         switch (direction) {
-            case EAST:
-                setLocation(getX() + 1, getY());
-                break;
-
-            case WEST:
-                setLocation(getX() - 1, getY());
-                break;
-
             case NORTH:
                 setLocation(getX(), getY() - 1);
                 break;
 
             case SOUTH:
                 setLocation(getX(), getY() + 1);
+                break;
+
+            case EAST:
+                setLocation(getX() + 1, getY());
+                break;
+
+            case WEST:
+                setLocation(getX() - 1, getY());
                 break;
         }
     }

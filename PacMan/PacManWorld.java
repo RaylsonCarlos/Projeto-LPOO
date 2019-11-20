@@ -130,7 +130,7 @@ public class PacManWorld extends World {
 
                 pacman.setLocation(28, 47);
                 pacman.setImage("images/west_1.png");
-                pacman.changeDirection(Character.WEST);
+                pacman.setDirection(Character.WEST);
             }
 
             // Verifica se o pacman comeu todas as pellets.
