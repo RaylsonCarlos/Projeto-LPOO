@@ -1,5 +1,6 @@
 
 import greenfoot.*;
+import java.util.ArrayList;
 
 /**
  * A classe Personagem providencia os movimentos e animações básicas dos
@@ -10,7 +11,7 @@ import greenfoot.*;
  * @author Raylson, Carlos, Weydson
  * @version 1.0
  */
-public class Character extends Actor {
+public class Character extends Actor implements Subject {
 
     // Direções
     public static final int NORTH = 0;
@@ -39,6 +40,9 @@ public class Character extends Actor {
     // Quantidade de turns até o próximo sprite.
     private final int howManyTurns;
 
+    // Observers
+    private ArrayList<Observer> observers;
+
     /**
      * Cria um personagem que muda de sprite em de turnos em turnos\
      *
@@ -57,6 +61,7 @@ public class Character extends Actor {
         setDirection(direction);
 
         turns = 0;
+        observers = new ArrayList<>();
     }
 
     /**
@@ -163,15 +168,15 @@ public class Character extends Actor {
             return false;
         }
 
-        if (myWorld.getObjectsAt(x[0], y[0], Wall.class).size() > 0) {
+        if (myWorld.getObjectsAt(x[0], y[0], DefaultWall.class).size() > 0) {
             return false;
         }
 
-        if (myWorld.getObjectsAt(x[1], y[1], Wall.class).size() > 0) {
+        if (myWorld.getObjectsAt(x[1], y[1], DefaultWall.class).size() > 0) {
             return false;
         }
 
-        return myWorld.getObjectsAt(x[2], y[2], Wall.class).size() <= 0;
+        return myWorld.getObjectsAt(x[2], y[2], DefaultWall.class).size() <= 0;
     }
 
     /**
@@ -267,5 +272,24 @@ public class Character extends Actor {
         if (tick >= howManyTurns - 1) {
             tick = -1;
         }
+
+        notifyObserver();
+    }
+
+    @Override
+    public void registerObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObserver() {
+        observers.forEach((observer) -> {
+            observer.update(this);
+        });
     }
 }
