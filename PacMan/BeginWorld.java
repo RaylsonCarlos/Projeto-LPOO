@@ -86,7 +86,6 @@ public class BeginWorld extends World {
 
                 PacManWorld pw = new PacManWorld(size);
 
-                new GameController(pw);
                 SoundPlayer.getInstance().stopSound(SoundPlayer.SOUND_OF_WIND);
                 Greenfoot.setWorld(pw);
             } catch (IOException ex) {
@@ -171,8 +170,8 @@ public class BeginWorld extends World {
      */
     private void prepare() {
         String msgTop = "Pressione [" + increaseKey + "/" + decreaseKey + "]\n"
-            + "para aumentar/diminuir\n"
-            + "o tamanho";
+                + "para aumentar/diminuir\n"
+                + "o tamanho";
         String msgBottom = "[Enter] para prosseguir";
         pacmanSprite = new GreenfootImage("sprites/west_1.png");
 

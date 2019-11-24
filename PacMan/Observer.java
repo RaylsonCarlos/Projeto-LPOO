@@ -1,5 +1,5 @@
 
 public interface Observer {
 
-    public void update(Character character);
+    public void update(int pointsToAdd);
 }

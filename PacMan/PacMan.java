@@ -11,9 +11,11 @@ import java.util.Iterator;
  * @author Raylson, Carlos, Weydson
  * @version 1.0
  */
-public class PacMan extends Character {
+public class PacMan extends Character implements Subject {
 
     private ArrayList<Observer> observers;
+
+    private int points;
 
     // Controla o deslocamento no array de sprites.
     private int offset = 0;
@@ -51,8 +53,6 @@ public class PacMan extends Character {
 
     // Velocidade padrão do pacman
     private static final int DEFAULT_SPEED = 3;
-    
-    
 
     /**
      * Inicializa o Pacman com velocidade 3, e direção WEST
@@ -62,6 +62,8 @@ public class PacMan extends Character {
         super(DEFAULT_SPEED, DEFAULT_SPEED, Character.WEST);
         initSprites();
         setImage(spritesWEST[0]);
+
+        observers = new ArrayList<>();
     }
 
     /**
@@ -70,8 +72,7 @@ public class PacMan extends Character {
      */
     @Override
     public void act() {
-        int points = foundFood();
-        GameController.score(points);
+        foundFood();
 
         if (points > 0) {
             SoundPlayer.getInstance().playSound(SoundPlayer.PELLET_EATEN);
@@ -180,9 +181,9 @@ public class PacMan extends Character {
      *
      * @return o total de pontos
      */
-    private int foundFood() {
+    private void foundFood() {
         List<Pellet> pellets = getObjectsInRange(1, Pellet.class);
-        int points = 0;
+        int pointsLocal = 0;
 
         // Verifica se existe alguma pastilha próxima ao pacman.
         if (pellets.size() > 0) {
@@ -195,11 +196,11 @@ public class PacMan extends Character {
                         countEatGhosts = 0;
                     }
 
-                    points += 50;
+                    pointsLocal += 50;
                     timer = System.currentTimeMillis();
                     foundPowerPellet();
                 } else {
-                    points += 10;
+                    pointsLocal += 10;
                 }
             }
 
@@ -207,7 +208,7 @@ public class PacMan extends Character {
             getWorld().removeObjects(pellets);
         }
 
-        return points;
+        addPoints(pointsLocal);
     }
 
     /**
@@ -262,7 +263,7 @@ public class PacMan extends Character {
         try {
             World world = getWorld();
             List<Ghost> ghosts = getObjectsInRange(2, Ghost.class);
-            int points = 0;
+            int pointsLocal = 0;
 
             if (ghosts.size() <= 0) {
                 return;
@@ -280,8 +281,8 @@ public class PacMan extends Character {
 
                     case Ghost.RECOVERING:
                         this.setImage("blank_image.png");
-                        points = ghostPoints(ghost);
-                        GameController.score(points);
+                        pointsLocal = ghostPoints(ghost);
+                        addPoints(pointsLocal);
                         getWorld().repaint();
                         SoundPlayer.getInstance().playSound(SoundPlayer.GHOST_EATEN);
                         timer += 500;
@@ -291,8 +292,8 @@ public class PacMan extends Character {
 
                     case Ghost.FEAR:
                         this.setImage("blank_image.png");
-                        points = ghostPoints(ghost);
-                        GameController.score(points);
+                        pointsLocal = ghostPoints(ghost);
+                        addPoints(pointsLocal);
                         getWorld().repaint();
                         SoundPlayer.getInstance().playSound(SoundPlayer.GHOST_EATEN);
                         timer += 500;
@@ -321,6 +322,29 @@ public class PacMan extends Character {
         } else {
             return ((int) Math.pow(2, countEatGhosts + 1)) * 100;
         }
+    }
+
+    private void addPoints(int points) {
+        this.points += points;
+        notifyObservers();
+        this.points = 0;
+    }
+
+    @Override
+    public void registerObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        observers.forEach((observer) -> {
+            observer.update(points);
+        });
     }
 
 }
