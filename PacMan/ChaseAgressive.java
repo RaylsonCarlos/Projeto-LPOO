@@ -4,11 +4,25 @@
  * @author (your name) 
  * @version (a version number or a date)
  */
+
+//Chase Random é o único implementado!
+
 public class ChaseAgressive implements ChaseBehaviour {
-   
-    public ChaseAgressive() {
+    Ghost ghost;
+    
+    //Para ser reescrito!
+    ChaseRandom chaseRandom;
+    
+    public ChaseAgressive(Ghost ghost) {
+        this.ghost = ghost;
         
+        //Para ser reescrito!
+        chaseRandom = new ChaseRandom(ghost);
     }
 
-    public void chase(){}
+    public int chase(){
+        
+        //Para ser reescrito
+        return chaseRandom.chase();
+    }
 }

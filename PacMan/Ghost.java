@@ -10,6 +10,9 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Ghost extends Character {
+    
+    //Como ele vai se movimentar quando estiver nas condições normais
+    ChaseBehaviour cb;
 
     // Cores dos fantasmas
     public final static int RED = 0;
@@ -202,7 +205,7 @@ public class Ghost extends Character {
      * @param direction a direção que o Ghost está olhando
      * @return a direção oposta
      */
-    private int oppositeDirection(int direction) {
+    public int oppositeDirection(int direction) {
         int oppositeDirection = Character.NORTH;
 
         switch (direction) {
@@ -281,34 +284,9 @@ public class Ghost extends Character {
      *
      */
     private void defaultRoute() {
-        List<Integer> routes = new ArrayList<>();
-        int direction = getDirection();
-        int oppositeDirection = oppositeDirection(direction);
-
-        if (canMove(Character.NORTH)) {
-            routes.add(Character.NORTH);
-        }
-
-        if (canMove(Character.SOUTH)) {
-            routes.add(Character.SOUTH);
-        }
-
-        if (canMove(Character.EAST)) {
-            routes.add(Character.EAST);
-        }
-
-        if (canMove(Character.WEST)) {
-            routes.add(Character.WEST);
-        }
-
-        if (!routes.isEmpty()) {
-            if (routes.size() >= 2) {
-                routes.remove(Integer.valueOf(oppositeDirection));
-            }
-
-            int rand = Greenfoot.getRandomNumber(routes.size());
-            setDirection(routes.get(rand));
-        }
+        //pattern strategy!
+        setDirection(cb.chase());
+        
     }
 
     /**

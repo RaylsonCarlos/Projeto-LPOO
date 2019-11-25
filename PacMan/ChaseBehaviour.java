@@ -5,5 +5,5 @@
  * @version (a version number or a date)
  */
 public interface ChaseBehaviour  {
-    public void chase();
+    public int chase();
 }
