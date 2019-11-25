@@ -137,10 +137,16 @@ public class PacManWorld extends World {
                 populaterPellets();
             }
 
+            ImageActor ready = new ImageActor(new GreenfootImage("Ready!", 4 * getCellSize(), Color.YELLOW, null));
+
+            addObject(ready, 28, 35);
+
             repaint();
 
             // Aguarda um tempo.
-            Thread.sleep(1500);
+            Thread.sleep(3000);
+
+            removeObject(ready);
 
             // Reajusta a velocidade.
             Greenfoot.setSpeed(defaultSpeed);

@@ -10,9 +10,9 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Ghost extends Character {
-    
+
     //Como ele vai se movimentar quando estiver nas condições normais
-    ChaseBehaviour cb;
+    public ChaseBehaviour cb;
 
     // Cores dos fantasmas
     public final static int RED = 0;
@@ -286,7 +286,7 @@ public class Ghost extends Character {
     private void defaultRoute() {
         //pattern strategy!
         setDirection(cb.chase());
-        
+
     }
 
     /**

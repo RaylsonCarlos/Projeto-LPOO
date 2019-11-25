@@ -1,20 +1,19 @@
-import greenfoot.*;
-import java.util.List;
-import java.util.ArrayList;
+
 import greenfoot.*;
 import java.util.List;
 import java.util.ArrayList;
 
 //Chase Random é o único implementado!
-
 public class ChaseRandom implements ChaseBehaviour {
+
     Ghost ghost;
-    
+
     public ChaseRandom(Ghost ghost) {
         this.ghost = ghost;
     }
 
-    public int chase(){
+    @Override
+    public int chase() {
         List<Integer> routes = new ArrayList<>();
         int direction = ghost.getDirection();
         int oppositeDirection = ghost.oppositeDirection(direction);
