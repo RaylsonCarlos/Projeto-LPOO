@@ -74,10 +74,6 @@ public class PacMan extends Character implements Subject {
     public void act() {
         foundFood();
 
-        if (points > 0) {
-            SoundPlayer.getInstance().playSound(SoundPlayer.PELLET_EATEN);
-        }
-
         verifyKeyboard();
 
         if (counterDirection < delayDirection) {
@@ -202,6 +198,8 @@ public class PacMan extends Character implements Subject {
                 } else {
                     pointsLocal += 10;
                 }
+
+                SoundPlayer.getInstance().playSound(SoundPlayer.PELLET_EATEN);
             }
 
             // Remove as pastilhas do mundo.
