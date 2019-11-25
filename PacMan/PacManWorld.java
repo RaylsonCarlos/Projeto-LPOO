@@ -137,6 +137,8 @@ public class PacManWorld extends World {
                 populaterPellets();
             }
 
+            repaint();
+
             // Aguarda um tempo.
             Thread.sleep(1500);
 
